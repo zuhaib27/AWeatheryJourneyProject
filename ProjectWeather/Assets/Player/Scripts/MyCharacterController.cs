@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 using KinematicCharacterController;
-using Assets.Scripts;
 
 
 namespace Assets.Player.Scripts

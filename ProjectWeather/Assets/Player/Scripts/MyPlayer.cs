@@ -72,7 +72,7 @@ namespace Assets.Player.Scripts
       characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
       characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
       characterInputs.CameraRotation = OrbitCamera.Transform.rotation;
-      characterInputs.JumpDown = Input.GetKeyDown(KeyCode.Space);
+      characterInputs.JumpDown = Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetButtonDown("Jump"); // xbox A
       characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
       characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
       characterInputs.ClimbLadder = Input.GetKeyUp(KeyCode.E);
