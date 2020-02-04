@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
   public Transform camera;
 
+    Vector3 movement;
+
   float gravity = -9.81f;
   Vector3 curVelocity;
   
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     // Move in direction, relative to the camera
     float x = Input.GetAxis("Horizontal");
     float z = Input.GetAxis("Vertical");
-    Vector3 movement = camera.right * x + camera.forward * z;
+    movement = camera.right * x + camera.forward * z;
     movement.y = 0;
     controller.Move(movement * walkSpeed * Time.deltaTime);
 
@@ -61,13 +63,15 @@ public class PlayerMovement : MonoBehaviour
     curVelocity.y += gravity * Time.deltaTime;
     controller.Move(curVelocity * Time.deltaTime);
 
-    //Vector3 desiredDirection = new Vector3(hor, 0, ver);
-    //Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(hor, 0, ver));
-    //Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, turnSpeed * Time.deltaTime);
-    //Vector3 newDirection = Vector3.RotateTowards(transform.forward, transform.forward + desiredDirection, turnSpeed * Time.deltaTime, 0f);
-    //Quaternion newRotation = Quaternion.LookRotation(newDirection);
+        //Vector3 desiredDirection = new Vector3(hor, 0, ver);
+        //Quaternion desiredRotation = Quaternion.LookRotation(new Vector3(hor, 0, ver));
+        //Quaternion newRotation = Quaternion.RotateTowards(transform.rotation, desiredRotation, turnSpeed * Time.deltaTime);
+        //Vector3 newDirection = Vector3.RotateTowards(transform.forward, transform.forward + desiredDirection, turnSpeed * Time.deltaTime, 0f);
+        //Quaternion newRotation = Quaternion.LookRotation(newDirection);
 
-    //rb.MovePosition(transform.position + newDirection * walkSpeed * Time.deltaTime);
-    //rb.MoveRotation(newRotation);
-  }
+        //rb.MovePosition(transform.position + newDirection * walkSpeed * Time.deltaTime);
+        //rb.MoveRotation(newRotation);
+    }
+
+    public Vector3 GetPlayerSpeed() { return movement * walkSpeed; }
 }
