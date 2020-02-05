@@ -1977,7 +1977,6 @@ GameObject:
   - component: {fileID: 1094249977}
   - component: {fileID: 1094249973}
   - component: {fileID: 1094249979}
-  - component: {fileID: 1094249980}
   - component: {fileID: 1094249981}
   m_Layer: 0
   m_Name: Plant
@@ -2117,19 +2116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 482073720}
---- !u!114 &1094249980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094249971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 947220b51115d1049a9a1952d19e4cf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!114 &1094249981
 MonoBehaviour:
   m_ObjectHideFlags: 0
