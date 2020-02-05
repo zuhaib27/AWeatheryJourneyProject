@@ -23,6 +23,11 @@ public class PlantOnSun : Sunable
   public override void OnSun(int powerLevel)
   {
     base.OnSun(powerLevel);
-    anim.Play("growPlant", -1, 0f);
+    if (!this.anim.GetCurrentAnimatorStateInfo(0).IsName("growPlant"))
+    {
+      anim.Play("growPlant", -1, 0f);
+    }
+    
+    
   }
 }
