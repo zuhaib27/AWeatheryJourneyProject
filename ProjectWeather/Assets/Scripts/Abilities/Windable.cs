@@ -5,9 +5,20 @@ using UnityEngine;
 public class Windable : MonoBehaviour
 {
   // Called when wind ability is activated on/near this object
-  public virtual void OnWind(int powerLevel)
+  public virtual void OnWindDown(int powerLevel)
   {
     // This function is meant to be overwritten
-    Debug.Log("... effected " + gameObject.name);
   }
+
+    // Called when wind ability is activated on/near this object
+    public virtual void OnWind(int powerLevel)
+    {
+        // This function is meant to be overwritten
+    }
+
+    // Called when wind ability is activated on/near this object
+    public virtual void OnWindUp(int powerLevel)
+    {
+        // This function is meant to be overwritten
+    }
 }

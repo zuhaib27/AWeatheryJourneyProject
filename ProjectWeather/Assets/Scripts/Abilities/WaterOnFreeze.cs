@@ -19,10 +19,10 @@ public class WaterOnFreeze : Freezeable
     }
 
     // Define the action taken when frost ability is applied to water
-    public override void OnFreeze(int powerLevel)
+    public override void OnFreezeDown(int powerLevel)
     {
-        base.OnFreeze(powerLevel);
-        Debug.Log("FREEZE!");
+        base.OnFreezeDown(powerLevel);
+        
         collider.isTrigger = false;
         renderer.material = iceMaterial;
     }
