@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Freezeable : MonoBehaviour
 {
@@ -6,6 +6,6 @@ public class Freezeable : MonoBehaviour
     public virtual void OnFreeze(int powerLevel)
     {
         // This function is meant to be overwritten
-        Debug.Log("Activated frost on " + gameObject.name);
+        Debug.Log("... effected " + gameObject.name);
     }
 }

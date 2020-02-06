@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
+    public float powerRadius = 3f;
+
     int powerLevel = 1;
-    float powerRadius = 3f;
+    Weather currentAbility = Weather.None;
 
     // Update is called once per frame
     void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton1))
+        //{
+        //    ActivateAbility(Weather.Frost);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
+        //{
+        //    ActivateAbility(Weather.Sun);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton3))
+        //{
+        //    ActivateAbility(Weather.Rain);
+        //}
+
         if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton1))
         {
-            ActivateAbility(Weather.Frost);
-        }
-        else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton2))
-        {
-            ActivateAbility(Weather.Sun);
-        }
-        else if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton3))
-        {
-            ActivateAbility(Weather.Rain);
+            UseAbility(currentAbility);
         }
     }
 
-    void ActivateAbility(Weather ability)
+    // Set the currently active ability
+    public void ActivateAbility(Weather ability)
     {
-        Debug.Log("Activated ability");
+        currentAbility = ability;
+    }
+
+    // Use the given ability
+    void UseAbility(Weather ability)
+    {
+        Debug.Log("Using ability " + ability);
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
     
@@ -52,9 +66,19 @@ public class PlayerAbility : MonoBehaviour
                     break;
 
                 case Weather.Wind:
+                    Windable windable= affectedObjects[i].GetComponent<Windable>();
+                    if (windable != null)
+                    {
+                        windable.OnWind(powerLevel);
+                    }
                     break;
 
                 case Weather.Rain:
+                    Rainable rainable= affectedObjects[i].GetComponent<Rainable>();
+                    if (rainable != null)
+                    {
+                        rainable.OnRain(powerLevel);
+                    }
                     break;
 
                 default:
@@ -64,4 +88,4 @@ public class PlayerAbility : MonoBehaviour
     }
 }
 
-enum Weather { Sun, Frost, Wind, Rain};
+public enum Weather { None, Sun, Frost, Wind, Rain};

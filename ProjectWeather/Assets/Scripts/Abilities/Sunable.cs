@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,6 @@ public class Sunable : MonoBehaviour
     public virtual void OnSun(int powerLevel)
     {
         // This function is meant to be overwritten
-        Debug.Log("Activated sun on " + gameObject.name);
+        Debug.Log("... effected " + gameObject.name);
     }
 }
