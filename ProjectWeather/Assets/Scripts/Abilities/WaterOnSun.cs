@@ -6,16 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class WaterOnSun : Sunable
 {
-    new MeshCollider collider;
-    new MeshRenderer renderer;
-
     public Material waterMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
-        collider = GetComponent<MeshCollider>();
-        renderer = GetComponent<MeshRenderer>();
     }
 
     // Define the action taken when sun ability is applied to water
@@ -23,7 +18,7 @@ public class WaterOnSun : Sunable
     {
         base.OnSunDown(powerLevel);
 
-        collider.isTrigger = true;
-        renderer.material = waterMaterial;
+        //collider.isTrigger = true;
+        //renderer.material = waterMaterial;
     }
 }
