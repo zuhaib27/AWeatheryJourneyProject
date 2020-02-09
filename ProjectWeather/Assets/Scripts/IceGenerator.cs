@@ -31,10 +31,6 @@ public class IceGenerator : MonoBehaviour
         _gridX = transform.right;
         _gridY = transform.forward;
         _gridNorm = transform.up;
-        //_gridWidth = transform.TransformVector(transform.localScale).x;
-        //_gridHeight = transform.TransformVector(transform.localScale).z;
-        //_gridWidth = transform.localScale.x;
-        //_gridHeight = transform.localScale.z;
         _gridWidth = waterObject.GetComponent<Renderer>().bounds.size.x;
         _gridHeight = waterObject.GetComponent<Renderer>().bounds.size.z;
         _gridOrigin = transform.position - _gridX * _gridWidth / 2 - _gridY * _gridHeight / 2;
@@ -42,16 +38,15 @@ public class IceGenerator : MonoBehaviour
         _grid = new bool[(int)(_gridHeight * resolution), (int)(_gridWidth * resolution)];
         CreateVertices();
         _triangles = new List<int>();
-
-        //GenerateRadius(transform.position);
-        //UpdateMesh();
     }
 
+    // Create a radius of ice around the given position
     public void GenerateRadius(Vector3 center)
     {
         int m = (int)(_gridHeight * resolution);
         int n = (int)(_gridWidth * resolution);
 
+        // Get box surrounding radius
         Vector3 boundX1 = center - radius * _gridX;
         Vector3 boundX2 = center + radius * _gridX;
         Vector3 boundY1 = center - radius * _gridY;
@@ -59,6 +54,7 @@ public class IceGenerator : MonoBehaviour
         Vector3 boundZ1 = center - radius * _gridNorm;
         Vector3 boundZ2 = center + radius * _gridNorm;
 
+        // Compute position of box relative to grid
         float x1 = Vector3.Dot((boundX1 - _gridOrigin), _gridX);
         float x2 = Vector3.Dot((boundX2 - _gridOrigin), _gridX);
         float y1 = Vector3.Dot((boundY1 - _gridOrigin), _gridY);
@@ -66,23 +62,25 @@ public class IceGenerator : MonoBehaviour
         float z1 = Vector3.Dot((boundZ1 - _gridOrigin), _gridNorm);
         float z2 = Vector3.Dot((boundZ2 - _gridOrigin), _gridNorm);
 
+        // Compute intersection of box and grid
         float minX = Mathf.Max(x1, 0);
         float maxX = Mathf.Min(x2, _gridWidth);
         float minY = Mathf.Max(y1, 0);
         float maxY = Mathf.Min(y2, _gridHeight);
 
+        // Convert intersection to grid indeces
         int startX = (int)((minX / _gridWidth) * n);
         int endX = (int)((maxX / _gridWidth) * n);
-        //endX = Mathf.Min(endX, n - 1);
         int startY = (int)((minY / _gridHeight) * m);
         int endY = (int)((maxY / _gridHeight) * m);
-        //endY = Mathf.Min(endY, m - 1);
 
         float resY = _gridHeight / (m - 1);
         float resX = _gridWidth / (n - 1);
 
+        // Check if z in range
         if (z1 * z2 < 0)
         {
+            // Loop over intersection
             for (int i = startY; i < endY; i++)
             {
                 for (int j = startX; j < endX; j++)
@@ -99,6 +97,7 @@ public class IceGenerator : MonoBehaviour
                 }
             }
 
+            // Update mesh
             if (startY < endY && startX < endX)
             {
                 UpdateMesh();
@@ -106,6 +105,7 @@ public class IceGenerator : MonoBehaviour
         }
     }
 
+    // Set a grid cell to ice
     private void SetGridCell(int i, int j)
     {
         int m = (int)(_gridHeight * resolution) + 1;
@@ -121,6 +121,7 @@ public class IceGenerator : MonoBehaviour
         _grid[i, j] = true;
     }
 
+    // Update the mesh and collider
     void UpdateMesh()
     {
         _mesh.Clear();
@@ -134,6 +135,7 @@ public class IceGenerator : MonoBehaviour
         gameObject.AddComponent<MeshCollider>();
     }
 
+    // Create vertices for grid
     private void CreateVertices()
     {
         int m = (int)(_gridHeight * resolution) + 1;
