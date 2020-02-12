@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+using UnityEngine;
 
 namespace Assets.Player.Scripts
 {
@@ -14,6 +13,7 @@ namespace Assets.Player.Scripts
     private const string MouseScrollInput = "Mouse ScrollWheel";
     private const string HorizontalInput = "Horizontal";
     private const string VerticalInput = "Vertical";
+    private const string JumpInput = "Jump";
 
     private void Start()
     {
@@ -53,6 +53,9 @@ namespace Assets.Player.Scripts
 
       // Input for zooming the camera (disabled in WebGL because it can cause problems)
       float scrollInput = -Input.GetAxis(MouseScrollInput);
+#if UNITY_WEBGL
+        scrollInput = 0f;
+#endif
 
       // Apply inputs to the camera
       OrbitCamera.UpdateWithInput(Time.deltaTime, scrollInput, lookInputVector);
@@ -66,16 +69,16 @@ namespace Assets.Player.Scripts
 
     private void HandleCharacterInput()
     {
-      PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
+      var characterInputs = new PlayerCharacterInputs
+      {
 
-      // Build the CharacterInputs struct
-      characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
-      characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
-      characterInputs.CameraRotation = OrbitCamera.Transform.rotation;
-      characterInputs.JumpDown = Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetButtonDown("Jump"); // xbox A
-      characterInputs.CrouchDown = Input.GetKeyDown(KeyCode.C);
-      characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
-      characterInputs.ClimbLadder = Input.GetKeyUp(KeyCode.E);
+        // Build the CharacterInputs struct
+        MoveAxisForward = Input.GetAxisRaw(VerticalInput),
+        MoveAxisRight = Input.GetAxisRaw(HorizontalInput),
+        CameraRotation = OrbitCamera.Transform.rotation,
+        JumpDown = Input.GetButtonDown(JumpInput) || Input.GetKeyDown(KeyCode.JoystickButton0),
+        ImpulseDown = Input.GetKeyDown(KeyCode.JoystickButton3)
+      };
 
       // Apply inputs to character
       Character.SetInputs(ref characterInputs);
