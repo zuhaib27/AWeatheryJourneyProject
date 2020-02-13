@@ -14,6 +14,9 @@ public class IceGenerator : MonoBehaviour
     Vector3[] _vertices;
     List<int> _triangles;
 
+    bool _refreshMesh = false;
+    bool _refreshCollider = false;
+
     bool[,] _grid;
     Vector3 _gridOrigin;
     Vector3 _gridX;
@@ -27,12 +30,14 @@ public class IceGenerator : MonoBehaviour
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-        
+
         _gridX = transform.right;
         _gridY = transform.forward;
         _gridNorm = transform.up;
-        _gridWidth = waterObject.GetComponent<Renderer>().bounds.size.x;
-        _gridHeight = waterObject.GetComponent<Renderer>().bounds.size.z;
+        //_gridWidth = waterObject.GetComponent<Renderer>().bounds.size.x;
+        //_gridHeight = waterObject.GetComponent<Renderer>().bounds.size.z;
+        _gridWidth = transform.parent.lossyScale.x * transform.localScale.x;
+        _gridHeight = transform.parent.lossyScale.z * transform.localScale.z;
         _gridOrigin = transform.position - _gridX * _gridWidth / 2 - _gridY * _gridHeight / 2;
         
         _grid = new bool[(int)(_gridHeight * resolution), (int)(_gridWidth * resolution)];
@@ -96,13 +101,10 @@ public class IceGenerator : MonoBehaviour
                     }
                 }
             }
-
-            // Update mesh
-            if (startY < endY && startX < endX)
-            {
-                UpdateMesh();
-            }
         }
+
+        // Update mesh
+        UpdateMesh();
     }
 
     // Set a grid cell to ice
@@ -119,20 +121,35 @@ public class IceGenerator : MonoBehaviour
         _triangles.Add(i * n + j + 1);
 
         _grid[i, j] = true;
+        _refreshMesh = true;
+        _refreshCollider = true;
     }
 
     // Update the mesh and collider
     void UpdateMesh()
     {
+        if (!_refreshMesh)
+            return;
+
         _mesh.Clear();
 
         _mesh.vertices = _vertices;
         _mesh.triangles = _triangles.ToArray();
         _mesh.RecalculateNormals();
 
-        // Update mesh collider
+        _refreshMesh = false;
+    }
+
+    // Update mesh collider
+    public void UpdateCollider()
+    {
+        if (!_refreshCollider)
+            return;
+
         MeshCollider.Destroy(GetComponent<MeshCollider>());
         gameObject.AddComponent<MeshCollider>();
+
+        _refreshCollider = false;
     }
 
     // Create vertices for grid
@@ -140,9 +157,9 @@ public class IceGenerator : MonoBehaviour
     {
         int m = (int)(_gridHeight * resolution) + 1;
         int n = (int)(_gridWidth * resolution) + 1;
-
-        float resY = _gridHeight / (m - 1);
-        float resX = _gridWidth / (n - 1);
+        
+        float resY = (float)1 / resolution;
+        float resX = (float)1 / resolution;
 
         _vertices = new Vector3[m * n];
 

@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshCollider))]
-[RequireComponent(typeof(MeshRenderer))]
 public class WaterOnFreeze : Freezeable
 {
     IceGenerator iceGenerator;
