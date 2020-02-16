@@ -5,8 +5,6 @@ using UnityEngine;
 public class WaterOnFreeze : Freezeable
 {
     IceGenerator iceGenerator;
-
-    public Transform player;
     
     // Start is called before the first frame update
     void Start()
@@ -15,10 +13,10 @@ public class WaterOnFreeze : Freezeable
     }
 
     // Define the action taken when frost ability is applied to water
-    public override void OnFreeze(int powerLevel)
+    public override void OnFreeze(AbilityEvent e)
     {
-        base.OnFreeze(powerLevel);
+        base.OnFreeze(e);
 
-        iceGenerator.GenerateRadius(player.position);
+        iceGenerator.GenerateRadius(e.playerPosition);
     }
 }

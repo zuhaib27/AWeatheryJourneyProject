@@ -12,9 +12,9 @@ public class WaterOnSun : Sunable
     }
 
     // Define the action taken when sun ability is applied to water
-    public override void OnSunDown(int powerLevel)
+    public override void OnSunDown(AbilityEvent e)
     {
-        base.OnSunDown(powerLevel);
+        base.OnSunDown(e);
 
         //collider.isTrigger = true;
         //renderer.material = waterMaterial;

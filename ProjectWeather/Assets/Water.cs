@@ -13,7 +13,6 @@ public class Water : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger water");
         _iceGenerator.UpdateCollider();
     }
 }

@@ -20,9 +20,9 @@ public class PlantOnSun : Sunable
   }
 
   // Define the action taken when sun ability is applied to plant
-  public override void OnSunDown(int powerLevel)
+  public override void OnSunDown(AbilityEvent e)
   {
-    base.OnSunDown(powerLevel);
+    base.OnSunDown(e);
 
     if (!this.anim.GetCurrentAnimatorStateInfo(0).IsName("growPlant"))
     {
