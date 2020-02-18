@@ -90,7 +90,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 1c3e3feecb16c6148a39db1e8a794cdf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 2
-  resolution: 100
-  waterObject: {fileID: 0}
+  resolution: 16
+  _rateOfColliderUpdate: 0.1
 --- !u!1 &8960755111468774302
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +140,6 @@ GameObject:
   - component: {fileID: 3776316667569314404}
   - component: {fileID: 8790486537129638287}
   - component: {fileID: 6981674355440703402}
-  - component: {fileID: 1957379085132617994}
   - component: {fileID: 6441990286266328257}
   m_Layer: 0
   m_Name: WaterObject
@@ -236,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42fc7b37eb688a64e8954f6ee60a71c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!114 &6981674355440703402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,19 +245,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68ffa9b382e11104e84fdc321681e124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterMaterial: {fileID: 0}
---- !u!114 &1957379085132617994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8960755111468774302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 684e949d0701c2e4aaea380d000e70aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &6441990286266328257
