@@ -10,8 +10,9 @@ public class IceGenerator : MonoBehaviour
 
     Transform _waterTransform;
 
-    Mesh _mesh;
     Vector3[] _vertices;
+    Mesh _mesh;
+    MeshCollider _meshCollider;
 
     public float _rateOfColliderUpdate = .1f;
     bool _refreshMesh = false;
@@ -27,6 +28,7 @@ public class IceGenerator : MonoBehaviour
         _waterTransform = transform.parent;
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
+        _meshCollider = GetComponent<MeshCollider>();
 
         _localRadius = new Vector3
         {
@@ -131,6 +133,7 @@ public class IceGenerator : MonoBehaviour
 
         List<int> triangles = new List<int>();
 
+        // Can be optimized if needed so that triangles are combined when possible
         for (int i = 0; i < _gridSize[0]; i++)
         {
             for (int j = 0; j < _gridSize[1]; j++)
@@ -155,14 +158,12 @@ public class IceGenerator : MonoBehaviour
     }
 
     // Update mesh collider
-    // (is called on water trigger for performance reasons)
     public void UpdateCollider()
     {
         if (!_refreshCollider)
             return;
-
-        MeshCollider.Destroy(GetComponent<MeshCollider>());
-        gameObject.AddComponent<MeshCollider>();
+        
+        _meshCollider.sharedMesh = _mesh;
 
         _refreshCollider = false;
     }
