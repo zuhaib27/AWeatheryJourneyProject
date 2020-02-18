@@ -1476,6 +1476,11 @@ PrefabInstance:
       propertyPath: radius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2557153965854439631, guid: 9b48d7dfcc49f58428bd4a4c65fe6b33,
+        type: 3}
+      propertyPath: _rateOfColliderUpdate
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2970829455510896616, guid: 9b48d7dfcc49f58428bd4a4c65fe6b33,
         type: 3}
       propertyPath: m_LocalRotation.w

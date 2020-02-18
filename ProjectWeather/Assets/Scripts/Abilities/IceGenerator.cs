@@ -12,8 +12,8 @@ public class IceGenerator : MonoBehaviour
 
     Mesh _mesh;
     Vector3[] _vertices;
-    List<int> _triangles;
 
+    public float _rateOfColliderUpdate = .1f;
     bool _refreshMesh = false;
     bool _refreshCollider = false;
 
@@ -21,43 +21,56 @@ public class IceGenerator : MonoBehaviour
     int[] _gridSize;
     bool[,] _grid;
 
-    // Start is called before the first frame update
+    // Initialize
     void Start()
     {
         _waterTransform = transform.parent;
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
 
-        _localRadius = new Vector3();
-        _localRadius.x = radius / transform.lossyScale.x;
-        _localRadius.y = radius / transform.lossyScale.y;
-        _localRadius.z = radius / transform.lossyScale.z;
+        _localRadius = new Vector3
+        {
+            x = radius / transform.lossyScale.x,
+            y = radius / transform.lossyScale.y,
+            z = radius / transform.lossyScale.z
+        };
 
-        _gridSize = new int[2];
-        _gridSize[0] = (int)transform.lossyScale.z * resolution;
-        _gridSize[1] = (int)transform.lossyScale.x * resolution;
-
-        // Initialize the grid
+        _gridSize = new int[]
+        {
+            (int)transform.lossyScale.z * resolution,
+            (int)transform.lossyScale.x * resolution
+        };
+        
         ResetGrid();
+        
+        StartCoroutine("DoColliderUpdate");
 
         //FillGrid();
     }
 
-    // Reset the grid entirely
+    // Update the collider on intervals
+    IEnumerator DoColliderUpdate()
+    {
+        for (;;)
+        {
+            UpdateCollider();
+
+            yield return new WaitForSeconds(_rateOfColliderUpdate);
+        }
+    }
+
+    // Reset the grid
     public void ResetGrid()
     {
         _grid = new bool[_gridSize[0], _gridSize[1]];
         CreateVertices();
-        _triangles = new List<int>();
 
         _refreshMesh = true;
-        _refreshCollider = true;
         UpdateMesh();
-        UpdateCollider();
     }
 
-    // Create a radius of ice around the given position
-    public void GenerateRadius(Vector3 center)
+    // Create a radius of ice around the given position (or remove it)
+    public void GenerateRadius(Vector3 center, bool isMelting)
     {
         int m = _gridSize[0];
         int n = _gridSize[1];
@@ -67,7 +80,7 @@ public class IceGenerator : MonoBehaviour
         // Check height
         if (Mathf.Abs(localCenter.y) < _localRadius.y)
         {
-            // Get intersection of box around center position and the grid
+            // Get intersection of grid with the box around the given center position
             int startX = (int)(n / 2f + (localCenter.x - _localRadius.x) * n);
             int endX = (int)(n / 2f + (localCenter.x + _localRadius.x) * n);
             int startY = (int)(m / 2f + (localCenter.z - _localRadius.z) * m);
@@ -78,12 +91,14 @@ public class IceGenerator : MonoBehaviour
             startY = (startY < 0) ? 0 : startY;
             endY = (endY > m) ? m : endY;
 
+            bool isIce = !isMelting;
+
             // Loop over intersection
             for (int i = startY; i < endY; i++)
             {
                 for (int j = startX; j < endX; j++)
                 {
-                    if (!_grid[i, j])
+                    if (_grid[i, j] != isIce)
                     {
                         Vector3 localPoint = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
                         Vector3 pointFromCenter = localPoint - localCenter;
@@ -92,7 +107,8 @@ public class IceGenerator : MonoBehaviour
                             + pointFromCenter.y * pointFromCenter.y / (_localRadius.y * _localRadius.y)
                             + pointFromCenter.z * pointFromCenter.z / (_localRadius.z * _localRadius.z) < 1f)
                         {
-                            SetGridCell(i, j);
+                            _grid[i, j] = isIce;
+                            _refreshMesh = true;
                         }
                     }
                 }
@@ -103,41 +119,43 @@ public class IceGenerator : MonoBehaviour
         }
     }
 
-    // Set a grid cell to ice
-    private void SetGridCell(int i, int j)
-    {
-        int m = _gridSize[0] + 1;
-        int n = _gridSize[1] + 1;
-
-        _triangles.Add(i * n + j);
-        _triangles.Add((i+1) * n + j);
-        _triangles.Add(i * n + j + 1);
-        _triangles.Add((i + 1) * n + j);
-        _triangles.Add((i + 1) * n + j + 1);
-        _triangles.Add(i * n + j + 1);
-
-        _grid[i, j] = true;
-        _refreshMesh = true;
-        _refreshCollider = true;
-    }
-
-    // Update the mesh and collider
+    // Update the mesh
+    // (call this before UpdateCollider())
     void UpdateMesh()
     {
         if (!_refreshMesh)
             return;
 
-        _mesh.Clear();
+        int m = _gridSize[0] + 1;
+        int n = _gridSize[1] + 1;
 
-        _mesh.vertices = _vertices;
-        _mesh.triangles = _triangles.ToArray();
-        _mesh.RecalculateNormals();
+        List<int> triangles = new List<int>();
+
+        for (int i = 0; i < _gridSize[0]; i++)
+        {
+            for (int j = 0; j < _gridSize[1]; j++)
+            {
+                if (_grid[i, j])
+                {
+                    triangles.Add(i * n + j);
+                    triangles.Add((i + 1) * n + j);
+                    triangles.Add(i * n + j + 1);
+                    triangles.Add((i + 1) * n + j);
+                    triangles.Add((i + 1) * n + j + 1);
+                    triangles.Add(i * n + j + 1);
+                }
+            }
+        }
+        
+        _mesh.triangles = triangles.ToArray();
         _mesh.RecalculateBounds();
 
         _refreshMesh = false;
+        _refreshCollider = true;
     }
 
     // Update mesh collider
+    // (is called on water trigger for performance reasons)
     public void UpdateCollider()
     {
         if (!_refreshCollider)
@@ -164,6 +182,13 @@ public class IceGenerator : MonoBehaviour
                 _vertices[i * (n + 1) + j] = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
             }
         }
+
+        // Compute normals now so that we don't have to on every update
+        _mesh.Clear();
+        _mesh.vertices = _vertices;
+        FillGrid();
+        _mesh.RecalculateNormals();
+        _grid = new bool[_gridSize[0], _gridSize[1]];
     }
 
     // Fill the entire grid (for debugging)
@@ -176,10 +201,11 @@ public class IceGenerator : MonoBehaviour
         {
             for (int j = 0; j < n; j++)
             {
-                SetGridCell(i, j);
+                _grid[i, j] = true;
             }
         }
 
+        _refreshMesh = true;
         UpdateMesh();
     }
 
@@ -192,7 +218,7 @@ public class IceGenerator : MonoBehaviour
     // Draw the grid (remember the grid is only initialized on start up)
     void DrawIceGrid()
     {
-        if (_vertices != null)
+        if (_grid != null)
         {
             Gizmos.color = Color.white;
 

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WaterOnFreeze : Freezeable
 {
-    IceGenerator iceGenerator;
+    IceGenerator _iceGenerator;
     
     // Start is called before the first frame update
     void Start()
     {
-        iceGenerator = GetComponentInChildren<IceGenerator>();
+        _iceGenerator = GetComponentInChildren<IceGenerator>();
     }
 
     // Define the action taken when frost ability is applied to water
@@ -17,6 +17,6 @@ public class WaterOnFreeze : Freezeable
     {
         base.OnFreeze(e);
 
-        iceGenerator.GenerateRadius(e.playerPosition);
+        _iceGenerator.GenerateRadius(e.playerPosition, false);
     }
 }

@@ -10,6 +10,7 @@ public class RisingWater : Rainable
     Transform _iceLevel;
     IceGenerator _iceGenerator;
 
+    // Start
     private void Start()
     {
         _maxWaterLevel = transform.parent.GetChild(1).position.y;
@@ -18,14 +19,15 @@ public class RisingWater : Rainable
         _iceGenerator = _iceLevel.gameObject.GetComponent<IceGenerator>();
     }
 
+    // Remove ice
     public override void OnRainDown(AbilityEvent e)
     {
         base.OnRainDown(e);
-
-        // Remove ice
+        
         _iceGenerator.ResetGrid();
     }
 
+    // Increase water level
     public override void OnRain(AbilityEvent e)
     {
         base.OnRain(e);
@@ -37,17 +39,14 @@ public class RisingWater : Rainable
             transform.localScale = newScale;
 
             transform.Translate(transform.up * floodSpeed / 2f * Time.deltaTime);
-
-            // Move ice level
-            //_iceLevel.Translate(transform.up * floodSpeed * Time.deltaTime);
         }
     }
 
+    // Reset ice grid
     public override void OnRainUp(AbilityEvent e)
     {
         base.OnRainUp(e);
-
-        // Recalculate ice grid
+        
         _iceGenerator.ResetGrid();
     }
 }
