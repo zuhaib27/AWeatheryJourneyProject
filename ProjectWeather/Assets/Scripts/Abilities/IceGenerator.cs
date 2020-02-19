@@ -8,171 +8,240 @@ public class IceGenerator : MonoBehaviour
     public float radius;
     public int resolution;
 
-    public GameObject waterObject;
+    Transform _waterTransform;
 
-    Mesh _mesh;
     Vector3[] _vertices;
-    List<int> _triangles;
+    Mesh _mesh;
+    MeshCollider _meshCollider;
 
+    public float _rateOfColliderUpdate = .1f;
+    bool _refreshMesh = false;
+    bool _refreshCollider = false;
+
+    Vector3 _localRadius;
+    int[] _gridSize;
     bool[,] _grid;
-    Vector3 _gridOrigin;
-    Vector3 _gridX;
-    Vector3 _gridY;
-    Vector3 _gridNorm;
-    float _gridWidth;
-    float _gridHeight;
 
-    // Start is called before the first frame update
+    // Initialize
     void Start()
     {
+        _waterTransform = transform.parent;
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
+        _meshCollider = GetComponent<MeshCollider>();
+
+        _localRadius = new Vector3
+        {
+            x = radius / transform.lossyScale.x,
+            y = radius / transform.lossyScale.y,
+            z = radius / transform.lossyScale.z
+        };
+
+        _gridSize = new int[]
+        {
+            (int)transform.lossyScale.z * resolution,
+            (int)transform.lossyScale.x * resolution
+        };
         
-        _gridX = transform.right;
-        _gridY = transform.forward;
-        _gridNorm = transform.up;
-        _gridWidth = waterObject.GetComponent<Renderer>().bounds.size.x;
-        _gridHeight = waterObject.GetComponent<Renderer>().bounds.size.z;
-        _gridOrigin = transform.position - _gridX * _gridWidth / 2 - _gridY * _gridHeight / 2;
+        ResetGrid();
         
-        _grid = new bool[(int)(_gridHeight * resolution), (int)(_gridWidth * resolution)];
-        CreateVertices();
-        _triangles = new List<int>();
+        StartCoroutine("DoColliderUpdate");
+
+        //FillGrid();
     }
 
-    // Create a radius of ice around the given position
-    public void GenerateRadius(Vector3 center)
+    // Update the collider on intervals
+    IEnumerator DoColliderUpdate()
     {
-        int m = (int)(_gridHeight * resolution);
-        int n = (int)(_gridWidth * resolution);
-
-        // Get box surrounding radius
-        Vector3 boundX1 = center - radius * _gridX;
-        Vector3 boundX2 = center + radius * _gridX;
-        Vector3 boundY1 = center - radius * _gridY;
-        Vector3 boundY2 = center + radius * _gridY;
-        Vector3 boundZ1 = center - radius * _gridNorm;
-        Vector3 boundZ2 = center + radius * _gridNorm;
-
-        // Compute position of box relative to grid
-        float x1 = Vector3.Dot((boundX1 - _gridOrigin), _gridX);
-        float x2 = Vector3.Dot((boundX2 - _gridOrigin), _gridX);
-        float y1 = Vector3.Dot((boundY1 - _gridOrigin), _gridY);
-        float y2 = Vector3.Dot((boundY2 - _gridOrigin), _gridY);
-        float z1 = Vector3.Dot((boundZ1 - _gridOrigin), _gridNorm);
-        float z2 = Vector3.Dot((boundZ2 - _gridOrigin), _gridNorm);
-
-        // Compute intersection of box and grid
-        float minX = Mathf.Max(x1, 0);
-        float maxX = Mathf.Min(x2, _gridWidth);
-        float minY = Mathf.Max(y1, 0);
-        float maxY = Mathf.Min(y2, _gridHeight);
-
-        // Convert intersection to grid indeces
-        int startX = (int)((minX / _gridWidth) * n);
-        int endX = (int)((maxX / _gridWidth) * n);
-        int startY = (int)((minY / _gridHeight) * m);
-        int endY = (int)((maxY / _gridHeight) * m);
-
-        float resY = _gridHeight / (m - 1);
-        float resX = _gridWidth / (n - 1);
-
-        // Check if z in range
-        if (z1 * z2 < 0)
+        for (;;)
         {
+            UpdateCollider();
+
+            yield return new WaitForSeconds(_rateOfColliderUpdate);
+        }
+    }
+
+    // Reset the grid
+    public void ResetGrid()
+    {
+        _grid = new bool[_gridSize[0], _gridSize[1]];
+        CreateVertices();
+
+        _refreshMesh = true;
+        UpdateMesh();
+    }
+
+    // Create a radius of ice around the given position (or remove it)
+    public void GenerateRadius(Vector3 center, bool isMelting)
+    {
+        int m = _gridSize[0];
+        int n = _gridSize[1];
+
+        Vector3 localCenter = transform.InverseTransformPoint(center);
+
+        // Check height
+        if (Mathf.Abs(localCenter.y) < _localRadius.y)
+        {
+            // Get intersection of grid with the box around the given center position
+            int startX = (int)(n / 2f + (localCenter.x - _localRadius.x) * n);
+            int endX = (int)(n / 2f + (localCenter.x + _localRadius.x) * n);
+            int startY = (int)(m / 2f + (localCenter.z - _localRadius.z) * m);
+            int endY = (int)(m / 2f + (localCenter.z + _localRadius.z) * m);
+
+            startX = (startX < 0) ? 0 : startX;
+            endX = (endX > n) ? n : endX;
+            startY = (startY < 0) ? 0 : startY;
+            endY = (endY > m) ? m : endY;
+
+            bool isIce = !isMelting;
+
             // Loop over intersection
             for (int i = startY; i < endY; i++)
             {
                 for (int j = startX; j < endX; j++)
                 {
-                    if (!_grid[i, j])
+                    if (_grid[i, j] != isIce)
                     {
-                        Vector3 realWorldPoint = _gridOrigin + (float)i * resY * _gridY + (float)j * resX * _gridX;
+                        Vector3 localPoint = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
+                        Vector3 pointFromCenter = localPoint - localCenter;
 
-                        if (Vector3.SqrMagnitude(realWorldPoint - center) < radius * radius)
+                        if (pointFromCenter.x * pointFromCenter.x / (_localRadius.x * _localRadius.x)
+                            + pointFromCenter.y * pointFromCenter.y / (_localRadius.y * _localRadius.y)
+                            + pointFromCenter.z * pointFromCenter.z / (_localRadius.z * _localRadius.z) < 1f)
                         {
-                            SetGridCell(i, j);
+                            _grid[i, j] = isIce;
+                            _refreshMesh = true;
                         }
                     }
                 }
             }
 
             // Update mesh
-            if (startY < endY && startX < endX)
-            {
-                UpdateMesh();
-            }
+            UpdateMesh();
         }
     }
 
-    // Set a grid cell to ice
-    private void SetGridCell(int i, int j)
-    {
-        int m = (int)(_gridHeight * resolution) + 1;
-        int n = (int)(_gridWidth * resolution) + 1;
-
-        _triangles.Add(i * n + j);
-        _triangles.Add((i+1) * n + j);
-        _triangles.Add(i * n + j + 1);
-        _triangles.Add((i + 1) * n + j);
-        _triangles.Add((i + 1) * n + j + 1);
-        _triangles.Add(i * n + j + 1);
-
-        _grid[i, j] = true;
-    }
-
-    // Update the mesh and collider
+    // Update the mesh
+    // (call this before UpdateCollider())
     void UpdateMesh()
     {
-        _mesh.Clear();
+        if (!_refreshMesh)
+            return;
 
-        _mesh.vertices = _vertices;
-        _mesh.triangles = _triangles.ToArray();
-        _mesh.RecalculateNormals();
+        int m = _gridSize[0] + 1;
+        int n = _gridSize[1] + 1;
 
-        // Update mesh collider
-        MeshCollider.Destroy(GetComponent<MeshCollider>());
-        gameObject.AddComponent<MeshCollider>();
+        List<int> triangles = new List<int>();
+
+        // Can be optimized if needed so that triangles are combined when possible
+        for (int i = 0; i < _gridSize[0]; i++)
+        {
+            for (int j = 0; j < _gridSize[1]; j++)
+            {
+                if (_grid[i, j])
+                {
+                    triangles.Add(i * n + j);
+                    triangles.Add((i + 1) * n + j);
+                    triangles.Add(i * n + j + 1);
+                    triangles.Add((i + 1) * n + j);
+                    triangles.Add((i + 1) * n + j + 1);
+                    triangles.Add(i * n + j + 1);
+                }
+            }
+        }
+        
+        _mesh.triangles = triangles.ToArray();
+        _mesh.RecalculateBounds();
+
+        _refreshMesh = false;
+        _refreshCollider = true;
+    }
+
+    // Update mesh collider
+    public void UpdateCollider()
+    {
+        if (!_refreshCollider)
+            return;
+        
+        _meshCollider.sharedMesh = _mesh;
+
+        _refreshCollider = false;
     }
 
     // Create vertices for grid
     private void CreateVertices()
     {
-        int m = (int)(_gridHeight * resolution) + 1;
-        int n = (int)(_gridWidth * resolution) + 1;
+        int m = _gridSize[0];
+        int n = _gridSize[1];
 
-        float resY = _gridHeight / (m - 1);
-        float resX = _gridWidth / (n - 1);
+        _vertices = new Vector3[(m + 1) * (n + 1)];
 
-        _vertices = new Vector3[m * n];
+        for (int i = 0; i < m + 1; i++)
+        {
+            for (int j = 0; j < n + 1; j++)
+            {
+                _vertices[i * (n + 1) + j] = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
+            }
+        }
+
+        // Compute normals now so that we don't have to on every update
+        _mesh.Clear();
+        _mesh.vertices = _vertices;
+        FillGrid();
+        _mesh.RecalculateNormals();
+        _grid = new bool[_gridSize[0], _gridSize[1]];
+    }
+
+    // Fill the entire grid (for debugging)
+    void FillGrid()
+    {
+        int m = _gridSize[0];
+        int n = _gridSize[1];
 
         for (int i = 0; i < m; i++)
         {
             for (int j = 0; j < n; j++)
             {
-                _vertices[i * n + j] = transform.InverseTransformPoint(_gridOrigin + (float)i * resY * _gridY + (float)j * resX * _gridX);
+                _grid[i, j] = true;
             }
         }
+
+        _refreshMesh = true;
+        UpdateMesh();
     }
 
+    // Gizmos
     private void OnDrawGizmos()
     {
-        if (_gridHeight != 0 && _gridWidth != 0)
+        DrawIceGrid();
+    }
+
+    // Draw the grid (remember the grid is only initialized on start up)
+    void DrawIceGrid()
+    {
+        if (_grid != null)
         {
-            int m = (int)(_gridHeight * resolution) + 1;
-            int n = (int)(_gridWidth * resolution) + 1;
+            Gizmos.color = Color.white;
+
+            int m = _gridSize[0] + 1;
+            int n = _gridSize[1] + 1;
 
             for (int i = 0; i < m; i++)
             {
-                Gizmos.DrawLine(_vertices[i * n], _vertices[i * n + n - 1]);
+                Vector3 p1 = transform.TransformPoint(_vertices[i * n]);
+                Vector3 p2 = transform.TransformPoint(_vertices[i * n + n - 1]);
+                Gizmos.DrawLine(p1, p2);
             }
 
             for (int i = 0; i < n; i++)
             {
-                Gizmos.DrawLine(_vertices[i], _vertices[(m - 1) * n + i]);
+                Vector3 p1 = transform.TransformPoint(_vertices[i]);
+                Vector3 p2 = transform.TransformPoint(_vertices[(m - 1) * n + i]);
+                Gizmos.DrawLine(p1, p2);
             }
 
-            Gizmos.DrawWireSphere(_gridOrigin, .1f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, .1f);
         }
     }
 }

@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
-
-    private int _powerLevel = 1;
+    
     private Weather _currentAbility = Weather.None;
 
     private const KeyCode _keyCode1 = KeyCode.F;
@@ -37,9 +36,20 @@ public class PlayerAbility : MonoBehaviour
         _currentAbility = ability;
     }
 
+    // Create a player ability event for sending to interactable objects
+    AbilityEvent CreateAbilityEvent()
+    {
+        AbilityEvent e = new AbilityEvent();
+        e.playerPosition = transform.position;
+
+        return e;
+    }
+
     // Called first frame that ability is used
     void OnAbilityDown(Weather ability)
     {
+        AbilityEvent e = CreateAbilityEvent();
+
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
@@ -52,7 +62,7 @@ public class PlayerAbility : MonoBehaviour
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
-                        sunable.OnSunDown(_powerLevel);
+                        sunable.OnSunDown(e);
                     }
                     break;
 
@@ -60,7 +70,7 @@ public class PlayerAbility : MonoBehaviour
                     Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
                     if (freezeable != null)
                     {
-                        freezeable.OnFreezeDown(_powerLevel);
+                        freezeable.OnFreezeDown(e);
                     }
                     break;
 
@@ -68,7 +78,7 @@ public class PlayerAbility : MonoBehaviour
                     Windable windable= affectedObjects[i].GetComponent<Windable>();
                     if (windable != null)
                     {
-                        windable.OnWindDown(_powerLevel);
+                        windable.OnWindDown(e);
                     }
                     break;
 
@@ -76,7 +86,7 @@ public class PlayerAbility : MonoBehaviour
                     Rainable rainable= affectedObjects[i].GetComponent<Rainable>();
                     if (rainable != null)
                     {
-                        rainable.OnRainDown(_powerLevel);
+                        rainable.OnRainDown(e);
                     }
                     break;
 
@@ -91,6 +101,8 @@ public class PlayerAbility : MonoBehaviour
     // Called every frame (except first and last) that ability is used
     void OnAbility(Weather ability)
     {
+        AbilityEvent e = CreateAbilityEvent();
+
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
@@ -103,7 +115,7 @@ public class PlayerAbility : MonoBehaviour
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
-                        sunable.OnSun(_powerLevel);
+                        sunable.OnSun(e);
                     }
                     break;
 
@@ -111,7 +123,7 @@ public class PlayerAbility : MonoBehaviour
                     Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
                     if (freezeable != null)
                     {
-                        freezeable.OnFreeze(_powerLevel);
+                        freezeable.OnFreeze(e);
                     }
                     break;
 
@@ -119,7 +131,7 @@ public class PlayerAbility : MonoBehaviour
                     Windable windable = affectedObjects[i].GetComponent<Windable>();
                     if (windable != null)
                     {
-                        windable.OnWind(_powerLevel);
+                        windable.OnWind(e);
                     }
                     break;
 
@@ -127,7 +139,7 @@ public class PlayerAbility : MonoBehaviour
                     Rainable rainable = affectedObjects[i].GetComponent<Rainable>();
                     if (rainable != null)
                     {
-                        rainable.OnRain(_powerLevel);
+                        rainable.OnRain(e);
                     }
                     break;
 
@@ -141,6 +153,8 @@ public class PlayerAbility : MonoBehaviour
     // Called last frame that ability is used
     void OnAbilityUp(Weather ability)
     {
+        AbilityEvent e = CreateAbilityEvent();
+
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
@@ -153,7 +167,7 @@ public class PlayerAbility : MonoBehaviour
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
-                        sunable.OnSunUp(_powerLevel);
+                        sunable.OnSunUp(e);
                     }
                     break;
 
@@ -161,7 +175,7 @@ public class PlayerAbility : MonoBehaviour
                     Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
                     if (freezeable != null)
                     {
-                        freezeable.OnFreezeUp(_powerLevel);
+                        freezeable.OnFreezeUp(e);
                     }
                     break;
 
@@ -169,7 +183,7 @@ public class PlayerAbility : MonoBehaviour
                     Windable windable = affectedObjects[i].GetComponent<Windable>();
                     if (windable != null)
                     {
-                        windable.OnWindUp(_powerLevel);
+                        windable.OnWindUp(e);
                     }
                     break;
 
@@ -177,7 +191,7 @@ public class PlayerAbility : MonoBehaviour
                     Rainable rainable = affectedObjects[i].GetComponent<Rainable>();
                     if (rainable != null)
                     {
-                        rainable.OnRainUp(_powerLevel);
+                        rainable.OnRainUp(e);
                     }
                     break;
 
@@ -189,4 +203,11 @@ public class PlayerAbility : MonoBehaviour
     }
 }
 
+// Weather enum
 public enum Weather { None, Sun, Frost, Wind, Rain};
+
+// The event that will be sent to objects that are affected by an ability
+public struct AbilityEvent
+{
+    public Vector3 playerPosition;
+}

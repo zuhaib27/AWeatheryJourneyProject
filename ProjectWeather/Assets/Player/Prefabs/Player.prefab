@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 3288141709617235938}
   - component: {fileID: 2662635300575954322}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,6 +397,7 @@ GameObject:
   - component: {fileID: 817077239653325385}
   - component: {fileID: 4701148054126060510}
   - component: {fileID: 7449950406236918107}
+  - component: {fileID: 631711224951036556}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -499,3 +500,16 @@ MonoBehaviour:
   ImpulseMagnitude: 30
   Gravity: {x: 0, y: -30, z: 0}
   MeshRoot: {fileID: 6313937206028173902}
+--- !u!114 &631711224951036556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838181918674108801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dca27e5399edf4c8901438e730306f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerRadius: 3

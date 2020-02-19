@@ -2,25 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshCollider))]
-[RequireComponent(typeof(MeshRenderer))]
 public class WaterOnFreeze : Freezeable
 {
-    IceGenerator iceGenerator;
-
-    public Transform player;
+    IceGenerator _iceGenerator;
     
     // Start is called before the first frame update
     void Start()
     {
-        iceGenerator = GetComponentInChildren<IceGenerator>();
+        _iceGenerator = GetComponentInChildren<IceGenerator>();
     }
 
     // Define the action taken when frost ability is applied to water
-    public override void OnFreeze(int powerLevel)
+    public override void OnFreeze(AbilityEvent e)
     {
-        base.OnFreeze(powerLevel);
+        base.OnFreeze(e);
 
-        iceGenerator.GenerateRadius(player.position);
+        _iceGenerator.GenerateRadius(e.playerPosition, false);
     }
 }
