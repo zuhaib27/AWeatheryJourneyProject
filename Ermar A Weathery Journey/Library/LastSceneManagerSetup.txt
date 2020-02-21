@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/LevelMultipleSwitches1.unity
+- path: Assets/Scenes/WeatherSystems.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
