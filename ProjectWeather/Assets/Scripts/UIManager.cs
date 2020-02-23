@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 // Manages bringing up the pause menu
 public class UIManager : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject player;
+    public EventSystem eventSystem;
+    public GameObject selectedObjectOnPause;
 
     private static bool _gameIsPaused = false;
 
@@ -46,6 +49,7 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
+        eventSystem.SetSelectedGameObject(selectedObjectOnPause);
         Cursor.lockState = CursorLockMode.None;
         player.GetComponent<Assets.Player.Scripts.MyPlayer>().enabled = false;
         Time.timeScale = 0f;
