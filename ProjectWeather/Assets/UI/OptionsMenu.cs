@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Player.Scripts;
 
-public class OptionsMenu : MonoBehaviour
+public class OptionsMenu : Menu
 {
     public GameObject player;
     private MyPlayer _player;

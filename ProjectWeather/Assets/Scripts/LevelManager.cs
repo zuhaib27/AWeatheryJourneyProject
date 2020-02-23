@@ -10,12 +10,14 @@ public class LevelManager : MonoBehaviour
 
     private int _levelToLoad;
 
+    #region singleton
     public static LevelManager Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
     }
+    #endregion
 
     private void LoadLevel(int levelIndex)
     {

@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 // Manages bringing up the pause menu
 public class UIManager : MonoBehaviour
 {
+    public bool canPause = true;
+
     public GameObject pauseMenu;
     public GameObject player;
     public EventSystem eventSystem;
@@ -14,12 +16,20 @@ public class UIManager : MonoBehaviour
 
     private static bool _gameIsPaused = false;
 
-    private const KeyCode _keyCode1 = KeyCode.Escape;
-    private const KeyCode _keyCode2 = KeyCode.P;
-    
+    private const string _pauseInput = "Pause";
+
+    #region singleton
+    public static UIManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    #endregion
+
     void Update()
     {
-        if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
+        if (canPause && Input.GetButtonDown(_pauseInput))
         {
             if (_gameIsPaused)
             {
@@ -55,5 +65,10 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         _gameIsPaused = true;
+    }
+
+    public EventSystem GetEventSystem()
+    {
+        return eventSystem;
     }
 }
