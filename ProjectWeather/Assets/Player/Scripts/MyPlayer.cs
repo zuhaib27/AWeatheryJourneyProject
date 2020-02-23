@@ -2,8 +2,15 @@ using UnityEngine;
 
 namespace Assets.Player.Scripts
 {
+    public struct PlayerSettings
+    {
+        public bool invertCameraY;
+    }
+
   public class MyPlayer : MonoBehaviour
   {
+    public PlayerSettings Settings { get; set; }
+
     public CharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
     public MyCharacterController Character;
@@ -41,7 +48,7 @@ namespace Assets.Player.Scripts
     private void HandleCameraInput()
     {
       // Create the look input vector for the camera
-      float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput);
+      float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput) * (Settings.invertCameraY ? -1 : 1);
       float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput);
       Vector3 lookInputVector = new Vector3(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
