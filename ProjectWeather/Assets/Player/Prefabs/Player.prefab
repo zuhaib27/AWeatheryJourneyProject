@@ -347,6 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3288141709617235938}
   - component: {fileID: 2662635300575954322}
+  - component: {fileID: 5286632908429716834}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -385,6 +386,59 @@ MonoBehaviour:
   OrbitCamera: {fileID: 2523965124049238671}
   CameraFollowPoint: {fileID: 5948516879987355738}
   Character: {fileID: 7449950406236918107}
+--- !u!114 &5286632908429716834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853324270227336523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8344f04eddd74ba4780c28975ae41772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioFloorA:
+    name: Floor A
+    clip: {fileID: 8300000, guid: ad9344ebfae776949b984c8101f06fbc, type: 3}
+    volume: 0.4
+    volumeVariance: 0.2
+    pitch: 1
+    pitchVariance: 0.4
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 3d3db332159127c4f9b901d4c920a3e2, type: 2}
+    source: {fileID: 0}
+  audioFloorB:
+    name: 
+    clip: {fileID: 0}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  audioFloorC:
+    name: 
+    clip: {fileID: 0}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  audioFloorD:
+    name: 
+    clip: {fileID: 0}
+    volume: 0.75
+    volumeVariance: 0.1
+    pitch: 1
+    pitchVariance: 0.1
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
+  playSpeed: 2
 --- !u!1 &8838181918674108801
 GameObject:
   m_ObjectHideFlags: 0
