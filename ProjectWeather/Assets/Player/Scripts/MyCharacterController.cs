@@ -45,6 +45,8 @@ namespace Assets.Player.Scripts
 
     private Vector3 _moveInputVector;
     private Vector3 _lookInputVector;
+    private Vector3 _currentVelocity = Vector3.zero;    // used for getter function
+    private bool _isOnStableGround = true;              // used for getter function
     private bool _jumpRequested = false;
     private bool _jumpConsumed = false;
     private bool _jumpedThisFrame = false;
@@ -125,7 +127,7 @@ namespace Assets.Player.Scripts
 
     /// <summary>
     /// (Called by KinematicCharacterMotor during its update cycle)
-    /// This is where you tell your character what its rotation should be right now. 
+    /// This is where you tell your character what its rotation should be right now.
     /// This is the ONLY place where you should set the character's rotation
     /// </summary>
     public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
@@ -143,7 +145,7 @@ namespace Assets.Player.Scripts
 
     /// <summary>
     /// (Called by KinematicCharacterMotor during its update cycle)
-    /// This is where you tell your character what its velocity should be right now. 
+    /// This is where you tell your character what its velocity should be right now.
     /// This is the ONLY place where you can set the character's velocity
     /// </summary>
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
@@ -202,6 +204,9 @@ namespace Assets.Player.Scripts
         currentVelocity += _internalVelocityAdd;
         _internalVelocityAdd = Vector3.zero;
       }
+
+      // Update internal private current velocity
+      _currentVelocity = currentVelocity;
     }
 
     private void HandleJumping(ref Vector3 currentVelocity, float deltaTime)
@@ -245,7 +250,7 @@ namespace Assets.Player.Scripts
             jumpDirection = Motor.GroundingStatus.GroundNormal;
           }
 
-          // Makes the character skip ground probing/snapping on its next update. 
+          // Makes the character skip ground probing/snapping on its next update.
           // If this line weren't here, the character would remain snapped to the ground when trying to jump. Try commenting this line out and see.
           Motor.ForceUnground(0.1f);
 
@@ -350,6 +355,16 @@ namespace Assets.Player.Scripts
 
     public void OnDiscreteCollisionDetected(Collider hitCollider)
     {
+    }
+
+    public bool IsPlayerOnGround()
+    {
+      return Motor.GroundingStatus.IsStableOnGround;
+    }
+
+    public float GetPlayerCurrentVelocity()
+    {
+      return _currentVelocity.magnitude;
     }
   }
 }
