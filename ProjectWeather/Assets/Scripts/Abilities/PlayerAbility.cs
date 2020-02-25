@@ -11,6 +11,8 @@ public class PlayerAbility : MonoBehaviour
     private const KeyCode _keyCode1 = KeyCode.F;
     private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
 
+    public ParticleSystem sunParticle;
+
     // Update is called once per frame
     void Update()
     {
@@ -59,11 +61,13 @@ public class PlayerAbility : MonoBehaviour
             switch(ability)
             {
                 case Weather.Sun:
+                    sunParticle.Play();
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
                         sunable.OnSunDown(e);
                     }
+                    
                     break;
 
                 case Weather.Frost:
