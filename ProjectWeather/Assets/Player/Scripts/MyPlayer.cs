@@ -2,11 +2,6 @@ using UnityEngine;
 
 namespace Assets.Player.Scripts
 {
-    public struct PlayerSettings
-    {
-        public bool invertCameraY;
-    }
-
   public class MyPlayer : MonoBehaviour
   {
     public PlayerSettings Settings { get; set; }
@@ -32,6 +27,9 @@ namespace Assets.Player.Scripts
       // Ignore the character's collider(s) for camera obstruction checks
       OrbitCamera.IgnoredColliders.Clear();
       OrbitCamera.IgnoredColliders.AddRange(Character.GetComponentsInChildren<Collider>());
+
+      // Get settings for player
+      Settings = SettingsManager.Instance.Settings.playerSettings;
     }
 
     private void Update()

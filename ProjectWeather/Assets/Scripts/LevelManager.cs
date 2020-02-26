@@ -6,23 +6,31 @@ using UnityEngine.SceneManagement;
 // Use this to load levels
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance { get; private set; }
+
     public Animator animator;
 
     private int _levelToLoad;
 
-    #region singleton
-    public static LevelManager Instance { get; private set; }
-
     private void Awake()
     {
-        Instance = this;
+        #region singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        #endregion
     }
-    #endregion
 
     private void LoadLevel(int levelIndex)
     {
         animator.SetTrigger("FadeOut");
         _levelToLoad = levelIndex;
+        StartCoroutine(FindObjectOfType<MusicPlayer>().FadeOutSong(1));
     }
 
     public void LoadLevel(LevelIndex levelIndex)
