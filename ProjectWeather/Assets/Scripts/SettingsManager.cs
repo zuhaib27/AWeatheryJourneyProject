@@ -50,11 +50,6 @@ public class SettingsManager : MonoBehaviour
     }
 
     #region loading and saving
-    private void OnLevelWasLoaded(int level)
-    {
-        LoadGameSettings();
-    }
-
     private void OnApplicationQuit()
     {
         if (Instance == this)

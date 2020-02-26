@@ -11,18 +11,19 @@ public class AudioManager : MonoBehaviour
 	public Sound[] sounds;
 
 	void Awake()
-	{
-		if (Instance != null)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
+    {
+        #region singleton
+        if (Instance == null)
+        {
             Instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        #endregion
 
-		foreach (Sound s in sounds)
+        foreach (Sound s in sounds)
 		{
 			s.source = gameObject.AddComponent<AudioSource>();
 			s.source.clip = s.clip;
