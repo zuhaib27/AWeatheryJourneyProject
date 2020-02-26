@@ -2,21 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Player.Scripts;
+using UnityEngine.UI;
 
 public class OptionsMenu : Menu
 {
-    public GameObject player;
-    private MyPlayer _player;
+    public Toggle invertCameraY;
+
+    public Slider gameVolumeSlider;
+    public Slider musicVolumeSlider;
 
     private void Start()
     {
-        _player = player.GetComponent<MyPlayer>();
+        invertCameraY.isOn = SettingsManager.Instance.Settings.playerSettings.invertCameraY;
+
+        gameVolumeSlider.value = SettingsManager.Instance.Settings.gameVolume;
+        musicVolumeSlider.value = SettingsManager.Instance.Settings.musicVolume;
     }
 
-    public void SetInvertCameraY(bool invert)
+    public void SetInvertCameraY(bool value)
     {
-        PlayerSettings settings = _player.Settings;
-        settings.invertCameraY = invert;
-        _player.Settings = settings;
+        SettingsManager.Instance.SetPlayerInvertCameraY(value);
+    }
+
+    public void SetGameVolume(float value)
+    {
+        SettingsManager.Instance.SetMasterVolume(value);
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        SettingsManager.Instance.SetMusicVolume(value);
     }
 }

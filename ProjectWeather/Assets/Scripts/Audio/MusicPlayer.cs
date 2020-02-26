@@ -7,7 +7,7 @@ public class MusicPlayer : MonoBehaviour
     public AudioMixerGroup mixerGroup;
 
     [Range(0f, 5f)]
-    public double delayBetweenSongs = 1;
+    public float delayBetweenSongs = 1;
     [Range(0f, 5f)]
     public float fadeTimeOnSongEnd = 1f;
 
@@ -20,6 +20,7 @@ public class MusicPlayer : MonoBehaviour
     void Start()
     {
         _source = gameObject.AddComponent<AudioSource>();
+        _source.outputAudioMixerGroup = mixerGroup;
     }
 
     // Update is called once per frame
@@ -33,7 +34,7 @@ public class MusicPlayer : MonoBehaviour
             Song nextSong = playlist[_currentTrack];
             _source.clip = nextSong.clip;
             _source.volume = nextSong.volume;
-            _source.Play((ulong)(_source.clip.frequency * delayBetweenSongs));
+            _source.PlayDelayed(delayBetweenSongs);
 
             StartCoroutine(WaitForFadeOut(_source.clip.length - fadeTimeOnSongEnd));
         }
