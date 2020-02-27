@@ -71,6 +71,7 @@ public class PlayerAbility : MonoBehaviour
     {
         _currentAbility = ability;
         uiOverlay.SetUIIcon(ability);
+        MusicPlayer.Instance.SwitchSong((int)ability);
     }
 
     // Create a player ability event for sending to interactable objects
