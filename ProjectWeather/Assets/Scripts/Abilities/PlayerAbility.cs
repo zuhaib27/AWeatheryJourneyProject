@@ -7,6 +7,7 @@ public class PlayerAbility : MonoBehaviour
     public float powerRadius = 3f;
     
     private Weather _currentAbility = Weather.None;
+    private bool _isBeingPressed = false;
 
     private const KeyCode _keyCode1 = KeyCode.F;
     private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
@@ -35,20 +36,32 @@ public class PlayerAbility : MonoBehaviour
             _currentAbility = Weather.Sun;
         }
 
+        bool isPressed = false;
+
         if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
         {
             OnAbilityDown(_currentAbility);
+            isPressed = true;
         }
 
         if (Input.GetKey(_keyCode1) || Input.GetKey(_keyCode2))
         {
             OnAbility(_currentAbility);
+            isPressed = true;
         }
 
         if (Input.GetKeyUp(_keyCode1) || Input.GetKeyUp(_keyCode2))
         {
             OnAbilityUp(_currentAbility);
+            isPressed = true;
         }
+
+        _isBeingPressed = isPressed;
+    }
+
+    public bool IsAbilityBeingPressed(Weather ability)
+    {
+        return _isBeingPressed && (_currentAbility == ability);
     }
 
     // Set the currently active ability
