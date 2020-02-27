@@ -302,6 +302,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerRadius: 3
   uiOverlay: {fileID: 0}
+  sunParticle: {fileID: 7184947495555736097, guid: bda0f728a959849439a0a66789411a86,
+    type: 3}
+  rainParticle: {fileID: 4612925296540604017, guid: 83f035d80141c2244984be08ef997854,
+    type: 3}
+  snowParticle: {fileID: 8435884294568645658, guid: c02bfc5dbeb958a488f860eef99c34aa,
+    type: 3}
+  windParticle: {fileID: 2845849004315266004, guid: 7329ad818ab1892419ac5857989ad568,
+    type: 3}
 --- !u!95 &1002664340
 Animator:
   serializedVersion: 3

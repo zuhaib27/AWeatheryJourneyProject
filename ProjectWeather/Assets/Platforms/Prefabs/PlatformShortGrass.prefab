@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Mover: {fileID: 4034191811987025131}
-  TranslationAxis: {x: 1, y: 0, z: 0}
+  TranslationAxis: {x: 1, y: 1, z: 0}
   TranslationPeriod: 10
   TranslationSpeed: 1.5
   RotationAxis: {x: 0, y: 0, z: 0}
