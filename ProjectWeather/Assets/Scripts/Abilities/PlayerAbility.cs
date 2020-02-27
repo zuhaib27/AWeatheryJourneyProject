@@ -17,6 +17,17 @@ public class PlayerAbility : MonoBehaviour
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
 
+    private void Start()
+    {
+        #region dependency checks
+        if (!uiOverlay)
+            Debug.LogWarning("No UIOverlay found in scene.");
+
+        if (!MusicPlayer.Instance)
+            Debug.LogWarning("No MusicPlayer found in scene.");
+        #endregion
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -70,8 +81,10 @@ public class PlayerAbility : MonoBehaviour
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
-        uiOverlay.SetUIIcon(ability);
-        MusicPlayer.Instance.SwitchSong((int)ability);
+        if (uiOverlay)
+            uiOverlay.SetUIIcon(ability);
+        if (MusicPlayer.Instance)
+            MusicPlayer.Instance.SwitchSong((int)ability);
     }
 
     // Create a player ability event for sending to interactable objects
