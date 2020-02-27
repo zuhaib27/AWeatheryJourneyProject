@@ -44,9 +44,9 @@ namespace Assets.Player.Scripts
     public Transform MeshRoot;
 
     private Vector3 _moveInputVector;
+    private Vector3 _moveInputVectorPure;
     private Vector3 _lookInputVector;
     private Vector3 _currentVelocity = Vector3.zero;    // used for getter function
-    private bool _isOnStableGround = true;              // used for getter function
     private bool _jumpRequested = false;
     private bool _jumpConsumed = false;
     private bool _jumpedThisFrame = false;
@@ -85,6 +85,7 @@ namespace Assets.Player.Scripts
       Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, Motor.CharacterUp);
 
       // Move and look inputs
+      _moveInputVectorPure = moveInputVector;
       _moveInputVector = cameraPlanarRotation * moveInputVector;
       _lookInputVector = cameraPlanarDirection;
 
@@ -113,7 +114,7 @@ namespace Assets.Player.Scripts
       {
         _impulseConsumed = true;
         Motor.ForceUnground(0.1f);
-        AddVelocity((_moveInputVector + Vector3.up) * ImpulseMagnitude);
+        AddVelocity((_moveInputVector.normalized + Vector3.up) * ImpulseMagnitude);
       }
     }
 
@@ -365,6 +366,31 @@ namespace Assets.Player.Scripts
     public float GetPlayerCurrentVelocity()
     {
       return _currentVelocity.magnitude;
+    }
+
+    public Vector3 GetMovementInputVector()
+    {
+        return _moveInputVectorPure;
+    }
+
+    public Vector3 GetCurrentVelocityVector()
+    {
+        return _currentVelocity;
+    }
+
+    public bool DidPlayerJump()
+    {
+        return _jumpConsumed;
+    }
+
+    public bool DidPlayerDoubleJump()
+    {
+        return _doubleJumpConsumed;
+    }
+
+    public bool DidPlayerActivateWind()
+    {
+        return _impulseConsumed;
     }
   }
 }
