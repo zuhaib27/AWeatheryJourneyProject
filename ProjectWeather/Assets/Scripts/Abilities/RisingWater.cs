@@ -48,9 +48,4 @@ public class RisingWater : Rainable
     {
         base.OnRainUp(e);
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawSphere(transform.TransformPoint(0, .5f, 0), .1f);
-    }
 }
