@@ -284,7 +284,7 @@ MonoBehaviour:
   JumpPreGroundingGraceTime: 0
   JumpPostGroundingGraceTime: 0
   AllowCharacterImpulse: 1
-  ImpulseMagnitude: 30
+  ImpulseMagnitude: 20
   Gravity: {x: 0, y: -30, z: 0}
   MeshRoot: {fileID: 1328815747930529687}
 --- !u!114 &5560591548474967893

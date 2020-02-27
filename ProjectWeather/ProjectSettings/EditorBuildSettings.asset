@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 9cb369ea5c14e7a40b8b6133d03ea4f8
   - enabled: 1
-    path: Assets/Scenes/TechDemo.unity
-    guid: 8eecaedb35919474a9be3f7d43d2dad2
+    path: Assets/Scenes/ErmarAlphaTest.unity
+    guid: 55755bcca30cc2b4298d83244fa10915
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c682a24ceab04a74a8e4d6b00ace19b7,
       type: 2}
