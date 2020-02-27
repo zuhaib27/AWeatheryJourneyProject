@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
+
+    public UIOverlay uiOverlay;
     
     private Weather _currentAbility = Weather.None;
     private bool _isBeingPressed = false;
@@ -20,20 +22,20 @@ public class PlayerAbility : MonoBehaviour
     {
         if (Input.GetAxisRaw(_button3) > 0)
         {
-            _currentAbility = Weather.Wind;
+            ActivateAbility(Weather.Wind);
         }
         else if (Input.GetAxisRaw(_button3) < 0)
         {
-            _currentAbility = Weather.Rain;
+            ActivateAbility(Weather.Rain);
         }
         
         if (Input.GetAxisRaw(_button4) > 0)
         {
-            _currentAbility = Weather.Frost;
+            ActivateAbility(Weather.Frost);
         }
         else if (Input.GetAxisRaw(_button4) < 0)
         {
-            _currentAbility = Weather.Sun;
+            ActivateAbility(Weather.Sun);
         }
 
         bool isPressed = false;
@@ -68,6 +70,7 @@ public class PlayerAbility : MonoBehaviour
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
+        uiOverlay.SetUIIcon(ability);
     }
 
     // Create a player ability event for sending to interactable objects
