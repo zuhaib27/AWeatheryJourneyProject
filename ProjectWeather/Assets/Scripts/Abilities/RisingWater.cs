@@ -6,15 +6,14 @@ public class RisingWater : Rainable
 {
     public float floodSpeed = 1f;
 
-    float _maxWaterLevel;
+    public Transform maxWaterLevel;
+    
     Transform _iceLevel;
     IceGenerator _iceGenerator;
 
     // Start
     private void Start()
     {
-        _maxWaterLevel = transform.parent.GetChild(1).position.y;
-
         _iceLevel = transform.GetChild(0);
         _iceGenerator = _iceLevel.gameObject.GetComponent<IceGenerator>();
     }
@@ -23,8 +22,6 @@ public class RisingWater : Rainable
     public override void OnRainDown(AbilityEvent e)
     {
         base.OnRainDown(e);
-        
-        _iceGenerator.ResetGrid();
     }
 
     // Increase water level
@@ -32,13 +29,17 @@ public class RisingWater : Rainable
     {
         base.OnRain(e);
 
-        if (transform.position.y + transform.localScale.y / 2f < _maxWaterLevel)
+        float currentY = transform.TransformPoint(0, .5f, 0).y;
+
+        if (currentY < maxWaterLevel.position.y)
         {
+            _iceGenerator.ResetGrid();
             Vector3 newScale = transform.localScale;
             newScale.y += floodSpeed * Time.deltaTime;
             transform.localScale = newScale;
-
-            transform.Translate(transform.up * floodSpeed / 2f * Time.deltaTime);
+            
+            float yTranslate = Mathf.Min(floodSpeed / 2f * Time.deltaTime, maxWaterLevel.position.y - currentY);
+            transform.Translate(transform.up * yTranslate);
         }
     }
 
@@ -46,7 +47,10 @@ public class RisingWater : Rainable
     public override void OnRainUp(AbilityEvent e)
     {
         base.OnRainUp(e);
-        
-        _iceGenerator.ResetGrid();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.TransformPoint(0, .5f, 0), .1f);
     }
 }
