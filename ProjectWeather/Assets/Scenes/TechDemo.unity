@@ -1375,7 +1375,12 @@ PrefabInstance:
     - target: {fileID: 3207589909058246098, guid: 12db0c1fdb092aa4193e77618ed2c601,
         type: 3}
       propertyPath: TranslationAxis.y
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3207589909058246098, guid: 12db0c1fdb092aa4193e77618ed2c601,
+        type: 3}
+      propertyPath: TranslationPeriod
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12db0c1fdb092aa4193e77618ed2c601, type: 3}

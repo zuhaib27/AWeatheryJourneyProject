@@ -20,6 +20,7 @@ public class PlayerAbility : MonoBehaviour
     public ParticleSystem windParticle;
 
     public Light sunLight;
+    public float sunlightDuration = 1;
 
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
@@ -106,7 +107,7 @@ public class PlayerAbility : MonoBehaviour
     // Helper to time light effect
     private IEnumerator LightCall()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(sunlightDuration);
         sunLight.enabled = false;
 
     }
