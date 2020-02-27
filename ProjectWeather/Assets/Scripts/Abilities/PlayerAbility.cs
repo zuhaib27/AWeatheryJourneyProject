@@ -11,9 +11,30 @@ public class PlayerAbility : MonoBehaviour
     private const KeyCode _keyCode1 = KeyCode.F;
     private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
 
+    private string _button3 = "DPad Vertical";
+    private string _button4 = "DPad Horizontal";
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxisRaw(_button3) > 0)
+        {
+            _currentAbility = Weather.Wind;
+        }
+        else if (Input.GetAxisRaw(_button3) < 0)
+        {
+            _currentAbility = Weather.Rain;
+        }
+        
+        if (Input.GetAxisRaw(_button4) > 0)
+        {
+            _currentAbility = Weather.Frost;
+        }
+        else if (Input.GetAxisRaw(_button4) < 0)
+        {
+            _currentAbility = Weather.Sun;
+        }
+
         if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
         {
             OnAbilityDown(_currentAbility);
