@@ -13,6 +13,11 @@ public class PlayerAbility : MonoBehaviour
 
     private const KeyCode _keyCode1 = KeyCode.F;
     private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
+    
+    public ParticleSystem sunParticle;
+    public ParticleSystem rainParticle;
+    public ParticleSystem snowParticle;
+    public ParticleSystem windParticle;
 
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
@@ -110,14 +115,17 @@ public class PlayerAbility : MonoBehaviour
             switch(ability)
             {
                 case Weather.Sun:
+                    sunParticle.Play();
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
                         sunable.OnSunDown(e);
                     }
+                    
                     break;
 
                 case Weather.Frost:
+                    snowParticle.Play();
                     Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
                     if (freezeable != null)
                     {
@@ -126,6 +134,7 @@ public class PlayerAbility : MonoBehaviour
                     break;
 
                 case Weather.Wind:
+                    windParticle.Play();
                     Windable windable= affectedObjects[i].GetComponent<Windable>();
                     if (windable != null)
                     {
@@ -134,6 +143,7 @@ public class PlayerAbility : MonoBehaviour
                     break;
 
                 case Weather.Rain:
+                    rainParticle.Play();
                     Rainable rainable= affectedObjects[i].GetComponent<Rainable>();
                     if (rainable != null)
                     {
