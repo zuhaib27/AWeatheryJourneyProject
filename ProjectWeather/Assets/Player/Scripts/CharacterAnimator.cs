@@ -12,6 +12,7 @@ namespace Assets.Player.Scripts
         // Private variables
         private Animator _animator;
         private MyCharacterController _characterController;
+        private PlayerAbility _playerAbility;
         private float _forwardAxisSpeed = 0f;
         private float _horizontalAxisSpeed = 0f;
 
@@ -20,6 +21,7 @@ namespace Assets.Player.Scripts
         {
             _animator = GetComponent<Animator>();
             _characterController = GetComponent<MyCharacterController>();
+            _playerAbility = GetComponent<PlayerAbility>();
         }
 
         // Update is called once per frame
@@ -43,6 +45,9 @@ namespace Assets.Player.Scripts
             _animator.SetBool("Jump", _characterController.DidPlayerJump());
             _animator.SetBool("DoubleJump", _characterController.DidPlayerDoubleJump());
             _animator.SetBool("WindAbility", _characterController.DidPlayerActivateWind());
+            _animator.SetBool("FrostAbility", _playerAbility.IsAbilityBeingPressed(Weather.Frost));
+            _animator.SetBool("SunAbility", _playerAbility.IsAbilityBeingPressed(Weather.Sun));
+            _animator.SetBool("RainAbility", _playerAbility.IsAbilityBeingPressed(Weather.Rain));
         }
     }
 }

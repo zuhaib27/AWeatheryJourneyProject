@@ -14,10 +14,11 @@ public class MusicPlayer : MonoBehaviour
     public float fadeTimeOnSongEnd = 1f;
 
     public bool loopOverPlaylist = true;
+    public bool switchThemeOnAbilityChange = true;
 
     public Song[] playlist;
 
-    private int _currentTrack = -1;
+    private int _currentTrack = 0;
     private AudioSource _source;
 
     void Awake()
@@ -38,6 +39,7 @@ public class MusicPlayer : MonoBehaviour
     {
         _source = gameObject.AddComponent<AudioSource>();
         _source.outputAudioMixerGroup = mixerGroup;
+        PlaySong(_currentTrack);
     }
     
     void Update()
@@ -60,11 +62,13 @@ public class MusicPlayer : MonoBehaviour
 
     public IEnumerator FadeOutSong(float fadeTime)
     {
-        while (_source.isPlaying)
+        while (_source.volume > 0f)
         {
             _source.volume -= (.03f / fadeTime) * playlist[_currentTrack].volume;
             yield return new WaitForSecondsRealtime(.03f);
         }
+
+        _source.Stop();
     }
     #endregion
 
@@ -75,6 +79,7 @@ public class MusicPlayer : MonoBehaviour
         Song song = playlist[index];
         _source.clip = song.clip;
         _source.volume = song.volume;
+        _source.time = 0f;
         _source.PlayDelayed(delayBetweenSongs);
 
         StartCoroutine(WaitForFadeOut(_source.clip.length - fadeTimeOnSongEnd));
@@ -93,8 +98,15 @@ public class MusicPlayer : MonoBehaviour
 
     public void SwitchSong(int index)
     {
-        float currentTime = _source.time;
-        PlaySong(index);
-        _source.time = currentTime;
+        if (switchThemeOnAbilityChange)
+        {
+            _currentTrack = index;
+            float currentTime = _source.time;
+            Song song = playlist[_currentTrack];
+            _source.clip = song.clip;
+            _source.volume = song.volume;
+            _source.time = currentTime;
+            _source.Play();
+        }
     }
 }
