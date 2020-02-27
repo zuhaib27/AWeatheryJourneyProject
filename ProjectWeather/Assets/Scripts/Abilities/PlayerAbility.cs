@@ -5,40 +5,78 @@ using UnityEngine;
 public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
+
+    public UIOverlay uiOverlay;
     
     private Weather _currentAbility = Weather.None;
+    private bool _isBeingPressed = false;
 
     private const KeyCode _keyCode1 = KeyCode.F;
     private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
-
+    
     public ParticleSystem sunParticle;
     public ParticleSystem rainParticle;
     public ParticleSystem snowParticle;
     public ParticleSystem windParticle;
 
+    private string _button3 = "DPad Vertical";
+    private string _button4 = "DPad Horizontal";
+
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetAxisRaw(_button3) > 0)
+        {
+            ActivateAbility(Weather.Wind);
+        }
+        else if (Input.GetAxisRaw(_button3) < 0)
+        {
+            ActivateAbility(Weather.Rain);
+        }
+        
+        if (Input.GetAxisRaw(_button4) > 0)
+        {
+            ActivateAbility(Weather.Frost);
+        }
+        else if (Input.GetAxisRaw(_button4) < 0)
+        {
+            ActivateAbility(Weather.Sun);
+        }
+
+        bool isPressed = false;
+
         if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
         {
             OnAbilityDown(_currentAbility);
+            isPressed = true;
         }
 
         if (Input.GetKey(_keyCode1) || Input.GetKey(_keyCode2))
         {
             OnAbility(_currentAbility);
+            isPressed = true;
         }
 
         if (Input.GetKeyUp(_keyCode1) || Input.GetKeyUp(_keyCode2))
         {
             OnAbilityUp(_currentAbility);
+            isPressed = true;
         }
+
+        _isBeingPressed = isPressed;
+    }
+
+    public bool IsAbilityBeingPressed(Weather ability)
+    {
+        return _isBeingPressed && (_currentAbility == ability);
     }
 
     // Set the currently active ability
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
+        uiOverlay.SetUIIcon(ability);
+        MusicPlayer.Instance.SwitchSong((int)ability);
     }
 
     // Create a player ability event for sending to interactable objects

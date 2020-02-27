@@ -4,9 +4,13 @@ namespace Assets.Player.Scripts
 {
   public class MyPlayer : MonoBehaviour
   {
+    public PlayerSettings Settings { get; set; }
+
     public CharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
     public MyCharacterController Character;
+
+    public float LookSensitivity = 1.0f;
 
     private const string MouseXInput = "Mouse X";
     private const string MouseYInput = "Mouse Y";
@@ -25,6 +29,9 @@ namespace Assets.Player.Scripts
       // Ignore the character's collider(s) for camera obstruction checks
       OrbitCamera.IgnoredColliders.Clear();
       OrbitCamera.IgnoredColliders.AddRange(Character.GetComponentsInChildren<Collider>());
+
+      // Get settings for player
+      Settings = SettingsManager.Instance.Settings.playerSettings;
     }
 
     private void Update()
@@ -41,8 +48,8 @@ namespace Assets.Player.Scripts
     private void HandleCameraInput()
     {
       // Create the look input vector for the camera
-      float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput);
-      float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput);
+      float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput) * (Settings.invertCameraY ? -1 : 1) * LookSensitivity;
+      float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput) * LookSensitivity;
       Vector3 lookInputVector = new Vector3(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
       // Prevent moving the camera while the cursor isn't locked
