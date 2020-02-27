@@ -19,6 +19,8 @@ public class PlayerAbility : MonoBehaviour
     public ParticleSystem snowParticle;
     public ParticleSystem windParticle;
 
+    public Light sunLight;
+
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
 
@@ -36,20 +38,20 @@ public class PlayerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw(_button3) > 0)
+        if (Input.GetAxisRaw(_button3) > 0 || Input.GetKeyDown(KeyCode.Alpha1))
         {
             ActivateAbility(Weather.Wind);
         }
-        else if (Input.GetAxisRaw(_button3) < 0)
+        else if (Input.GetAxisRaw(_button3) < 0 || Input.GetKeyDown(KeyCode.Alpha2))
         {
             ActivateAbility(Weather.Rain);
         }
         
-        if (Input.GetAxisRaw(_button4) > 0)
+        if (Input.GetAxisRaw(_button4) > 0 || Input.GetKeyDown(KeyCode.Alpha3))
         {
             ActivateAbility(Weather.Frost);
         }
-        else if (Input.GetAxisRaw(_button4) < 0)
+        else if (Input.GetAxisRaw(_button4) < 0 || Input.GetKeyDown(KeyCode.Alpha4))
         {
             ActivateAbility(Weather.Sun);
         }
@@ -101,6 +103,14 @@ public class PlayerAbility : MonoBehaviour
         return e;
     }
 
+    // Helper to time light effect
+    private IEnumerator LightCall()
+    {
+        yield return new WaitForSeconds(5);
+        sunLight.enabled = false;
+
+    }
+
     // Called first frame that ability is used
     void OnAbilityDown(Weather ability)
     {
@@ -116,12 +126,16 @@ public class PlayerAbility : MonoBehaviour
             {
                 case Weather.Sun:
                     sunParticle.Play();
+                    
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
                         sunable.OnSunDown(e);
                     }
+                    sunLight.enabled = true;
+                    StartCoroutine(LightCall());
                     
+
                     break;
 
                 case Weather.Frost:
