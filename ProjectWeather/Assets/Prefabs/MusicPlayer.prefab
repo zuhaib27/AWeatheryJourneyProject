@@ -48,19 +48,20 @@ MonoBehaviour:
   delayBetweenSongs: 1
   fadeTimeOnSongEnd: 2
   loopOverPlaylist: 0
+  switchThemeOnAbilityChange: 1
   playlist:
   - name: Main Theme
-    clip: {fileID: 8300000, guid: 28b979a9792f5314bb0f8bc33767baf3, type: 3}
+    clip: {fileID: 8300000, guid: 4550b94691227604ab961be40c108a2c, type: 3}
     volume: 1
   - name: Sun Theme
-    clip: {fileID: 8300000, guid: 28b979a9792f5314bb0f8bc33767baf3, type: 3}
+    clip: {fileID: 8300000, guid: 4550b94691227604ab961be40c108a2c, type: 3}
     volume: 1
   - name: Frost Theme
-    clip: {fileID: 8300000, guid: e1310c69a9274774c8e71f5ced4cf6a0, type: 3}
+    clip: {fileID: 8300000, guid: a508d493c70d15745a6b27ca0f822050, type: 3}
     volume: 1
   - name: Wind Theme
-    clip: {fileID: 8300000, guid: cd440b05b3db58845b933e1e8c893cba, type: 3}
+    clip: {fileID: 8300000, guid: d6d40146743c85b4995a4848728b3042, type: 3}
     volume: 1
   - name: Rain Theme
-    clip: {fileID: 8300000, guid: 4b50dd377a9c91145a3e1fa766f1c1c5, type: 3}
+    clip: {fileID: 8300000, guid: b49759b56e6cd7145bfbce37aa40293c, type: 3}
     volume: 1

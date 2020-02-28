@@ -31,7 +31,14 @@ namespace Assets.Player.Scripts
       OrbitCamera.IgnoredColliders.AddRange(Character.GetComponentsInChildren<Collider>());
 
       // Get settings for player
-      Settings = SettingsManager.Instance.Settings.playerSettings;
+      if (SettingsManager.Instance)
+      {
+        Settings = SettingsManager.Instance.Settings.playerSettings;
+      }
+      else
+      {
+        Debug.LogWarning("No SettingsManager found in scene");
+      }
     }
 
     private void Update()

@@ -110,7 +110,7 @@ namespace Assets.Player.Scripts
     /// </summary>
     private void HandleImpulseAbility(ref PlayerCharacterInputs inputs)
     {
-      if (inputs.ImpulseDown && !_impulseConsumed)
+      if ((inputs.ImpulseDown || Input.GetKeyDown(KeyCode.Alpha1)) && !_impulseConsumed)
       {
         _impulseConsumed = true;
         Motor.ForceUnground(0.1f);

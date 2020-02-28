@@ -19,26 +19,40 @@ public class PlayerAbility : MonoBehaviour
     public ParticleSystem snowParticle;
     public ParticleSystem windParticle;
 
+    public Light sunLight;
+    public float sunlightDuration = 1;
+
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
+
+    private void Start()
+    {
+        #region dependency checks
+        if (!uiOverlay)
+            Debug.LogWarning("No UIOverlay found in scene.");
+
+        if (!MusicPlayer.Instance)
+            Debug.LogWarning("No MusicPlayer found in scene.");
+        #endregion
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw(_button3) > 0)
+        if (Input.GetAxisRaw(_button3) > 0 || Input.GetKeyDown(KeyCode.Alpha1))
         {
             ActivateAbility(Weather.Wind);
         }
-        else if (Input.GetAxisRaw(_button3) < 0)
+        else if (Input.GetAxisRaw(_button3) < 0 || Input.GetKeyDown(KeyCode.Alpha2))
         {
             ActivateAbility(Weather.Rain);
         }
         
-        if (Input.GetAxisRaw(_button4) > 0)
+        if (Input.GetAxisRaw(_button4) > 0 || Input.GetKeyDown(KeyCode.Alpha3))
         {
             ActivateAbility(Weather.Frost);
         }
-        else if (Input.GetAxisRaw(_button4) < 0)
+        else if (Input.GetAxisRaw(_button4) < 0 || Input.GetKeyDown(KeyCode.Alpha4))
         {
             ActivateAbility(Weather.Sun);
         }
@@ -75,8 +89,10 @@ public class PlayerAbility : MonoBehaviour
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
-        uiOverlay.SetUIIcon(ability);
-        MusicPlayer.Instance.SwitchSong((int)ability);
+        if (uiOverlay)
+            uiOverlay.SetUIIcon(ability);
+        if (MusicPlayer.Instance)
+            MusicPlayer.Instance.SwitchSong((int)ability);
     }
 
     // Create a player ability event for sending to interactable objects
@@ -86,6 +102,14 @@ public class PlayerAbility : MonoBehaviour
         e.playerPosition = transform.position;
 
         return e;
+    }
+
+    // Helper to time light effect
+    private IEnumerator LightCall()
+    {
+        yield return new WaitForSeconds(sunlightDuration);
+        sunLight.enabled = false;
+
     }
 
     // Called first frame that ability is used
@@ -103,12 +127,16 @@ public class PlayerAbility : MonoBehaviour
             {
                 case Weather.Sun:
                     sunParticle.Play();
+                    
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
                         sunable.OnSunDown(e);
                     }
+                    sunLight.enabled = true;
+                    StartCoroutine(LightCall());
                     
+
                     break;
 
                 case Weather.Frost:
