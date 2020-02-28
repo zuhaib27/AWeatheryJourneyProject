@@ -573,6 +573,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WizardAtlasPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5560591548474967893, guid: 9697dece102a91442a43b38181fc2ceb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5664556976491139496, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_IsActive

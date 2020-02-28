@@ -50,7 +50,7 @@ MonoBehaviour:
   OrbitCamera: {fileID: 7415623627017250646}
   CameraFollowPoint: {fileID: 1684937917014289795}
   Character: {fileID: 2489629547720461442}
-  LookSensitivity: 1
+  LookSensitivity: 5
 --- !u!114 &914967468498317499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +310,8 @@ MonoBehaviour:
     type: 3}
   windParticle: {fileID: 2845849004315266004, guid: 7329ad818ab1892419ac5857989ad568,
     type: 3}
+  sunLight: {fileID: 0}
+  sunlightDuration: 1
 --- !u!95 &1002664340
 Animator:
   serializedVersion: 3
