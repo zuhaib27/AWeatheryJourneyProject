@@ -50,6 +50,7 @@ MonoBehaviour:
   OrbitCamera: {fileID: 7415623627017250646}
   CameraFollowPoint: {fileID: 1684937917014289795}
   Character: {fileID: 2489629547720461442}
+  LookSensitivity: 1
 --- !u!114 &914967468498317499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerRadius: 3
+  uiOverlay: {fileID: 0}
 --- !u!95 &1002664340
 Animator:
   serializedVersion: 3
@@ -474,7 +476,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7256602532230131413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2835283020149968420}
