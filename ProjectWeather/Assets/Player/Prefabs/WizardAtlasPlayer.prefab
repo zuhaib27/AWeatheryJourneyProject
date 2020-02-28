@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 1328815747930529687}
   m_Layer: 0
   m_Name: Root
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 1002664339}
   m_Layer: 0
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerRadius: 3
+  uiOverlay: {fileID: 0}
 --- !u!95 &1002664340
 Animator:
   serializedVersion: 3
@@ -551,6 +552,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WizardAtlas
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d16c8f60add142c46ab4567828740e0f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7814502684447367421, guid: d16c8f60add142c46ab4567828740e0f,
         type: 3}
