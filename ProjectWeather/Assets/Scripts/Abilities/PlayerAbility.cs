@@ -12,16 +12,8 @@ public class PlayerAbility : MonoBehaviour
     public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
 
-    [Header("Particle Effects")]
-    public ParticleSystem sunParticle;
-    public ParticleSystem rainParticle;
-    public ParticleSystem snowParticle;
-    public ParticleSystem windParticle;
-
-    public Light sunLight;
-    public float sunlightDuration = 1;
-
     // Private variables
+    private SpellParticleEffects _spellEffects;
     private Weather _currentAbility = Weather.None;
     private bool _isBeingPressed = false;
 
@@ -32,6 +24,10 @@ public class PlayerAbility : MonoBehaviour
     private string _button4 = "DPad Horizontal";
 
 
+    private void Awake()
+    {
+        _spellEffects = GetComponent<SpellParticleEffects>();
+    }
 
     private void Start()
     {
@@ -104,6 +100,9 @@ public class PlayerAbility : MonoBehaviour
             uiOverlay.SetUIIcon(ability);
         if (MusicPlayer.Instance)
             MusicPlayer.Instance.SwitchSong((int)ability);
+
+        // Particle effects
+        _spellEffects.ActivateEffect(ability);
     }
 
     // Create a player ability event for sending to interactable objects
@@ -115,17 +114,13 @@ public class PlayerAbility : MonoBehaviour
         return e;
     }
 
-    // Helper to time light effect
-    private IEnumerator LightCall()
-    {
-        yield return new WaitForSeconds(sunlightDuration);
-        sunLight.enabled = false;
-
-    }
 
     // Called first frame that ability is used
     void OnAbilityDown(Weather ability)
     {
+        // Start particle effect
+        _spellEffects.UseEffect(ability);
+
         AbilityEvent e = CreateAbilityEvent();
 
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
@@ -137,21 +132,14 @@ public class PlayerAbility : MonoBehaviour
             switch(ability)
             {
                 case Weather.Sun:
-                    sunParticle.Play();
-                    
                     Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
                     if (sunable != null)
                     {
                         sunable.OnSunDown(e);
                     }
-                    sunLight.enabled = true;
-                    StartCoroutine(LightCall());
-                    
-
                     break;
 
                 case Weather.Frost:
-                    snowParticle.Play();
                     Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
                     if (freezeable != null)
                     {
@@ -160,7 +148,6 @@ public class PlayerAbility : MonoBehaviour
                     break;
 
                 case Weather.Wind:
-                    windParticle.Play();
                     Windable windable= affectedObjects[i].GetComponent<Windable>();
                     if (windable != null)
                     {
@@ -169,7 +156,6 @@ public class PlayerAbility : MonoBehaviour
                     break;
 
                 case Weather.Rain:
-                    rainParticle.Play();
                     Rainable rainable= affectedObjects[i].GetComponent<Rainable>();
                     if (rainable != null)
                     {
@@ -240,6 +226,12 @@ public class PlayerAbility : MonoBehaviour
     // Called last frame that ability is used
     void OnAbilityUp(Weather ability)
     {
+        // Only stop if the active ability is frost since it is set to loop
+        if (ability == Weather.Frost)
+        {
+            _spellEffects.StopParticleEffect();
+        }
+
         AbilityEvent e = CreateAbilityEvent();
 
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
@@ -298,3 +290,25 @@ public struct AbilityEvent
 {
     public Vector3 playerPosition;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Removed. Was part of particle effects
+// Helper to time light effect
+//private IEnumerator LightCall()
+//{
+    //yield return new WaitForSeconds(sunlightDuration);
+    //sunLight.enabled = false;
+//}
