@@ -19,6 +19,7 @@ namespace Assets.Player.Scripts
         private const string HorizontalInput = "Horizontal";
         private const string VerticalInput = "Vertical";
         private const string JumpInput = "Jump";
+        private const string SprintInput = "left shift";
 
         private void Start()
         {
@@ -92,6 +93,7 @@ namespace Assets.Player.Scripts
                 MoveAxisRight = Input.GetAxisRaw(HorizontalInput),
                 CameraRotation = OrbitCamera.Transform.rotation,
                 JumpDown = Input.GetButtonDown(JumpInput) || Input.GetKeyDown(KeyCode.JoystickButton0),
+                SprintHoldDown = Input.GetButton(SprintInput) || Input.GetKey(KeyCode.JoystickButton2),
             };
 
             // Apply inputs to character

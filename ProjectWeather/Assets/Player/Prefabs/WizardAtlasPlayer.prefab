@@ -380,6 +380,8 @@ MonoBehaviour:
   MaxAirMoveSpeed: 10
   AirAccelerationSpeed: 5
   Drag: 0.1
+  AllowSprint: 1
+  SprintSpeedBoost: 2
   AllowJumpingWhenSliding: 1
   AllowDoubleJump: 1
   JumpSpeed: 10

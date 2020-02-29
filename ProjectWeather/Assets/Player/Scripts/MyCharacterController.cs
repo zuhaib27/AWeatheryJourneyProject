@@ -10,6 +10,7 @@ namespace Assets.Player.Scripts
         public float MoveAxisRight;
         public Quaternion CameraRotation;
         public bool JumpDown;
+        public bool SprintHoldDown;
     }
 
     public class MyCharacterController : MonoBehaviour, ICharacterController
@@ -25,6 +26,10 @@ namespace Assets.Player.Scripts
         public float MaxAirMoveSpeed = 10f;
         public float AirAccelerationSpeed = 5f;
         public float Drag = 0.1f;
+
+        [Header("Sprinting")]
+        public bool AllowSprint = true;
+        public float SprintSpeedBoost = 1.5f;
 
         [Header("Jumping")]
         public bool AllowJumpingWhenSliding = false;
@@ -51,6 +56,8 @@ namespace Assets.Player.Scripts
         private bool _doubleJumpConsumed = false;
         private bool _impulseConsumed = false;
         private Vector3 _internalVelocityAdd = Vector3.zero;
+        private float _maxMoveSpeed = 10f;
+        private bool _sprintActivated = false;
 
 
         private void Awake()
@@ -60,6 +67,8 @@ namespace Assets.Player.Scripts
 
         private void Start()
         {
+            _maxMoveSpeed = MaxStableMoveSpeed;
+
             // Assign to motor
             Motor.CharacterController = this;
         }
@@ -100,6 +109,21 @@ namespace Assets.Player.Scripts
             if (_ability.AllowWindAbility)
             {
                 HandleWindAbility();
+            }
+
+            // Sprint input
+            if (AllowSprint)
+            {
+                if (!_sprintActivated && inputs.SprintHoldDown)
+                {
+                    _maxMoveSpeed += SprintSpeedBoost;
+                    _sprintActivated = true;
+
+                } else if (!inputs.SprintHoldDown)
+                {
+                    _maxMoveSpeed = MaxStableMoveSpeed;
+                    _sprintActivated = false;
+                }
             }
         }
 
@@ -149,7 +173,7 @@ namespace Assets.Player.Scripts
                 Vector3 inputRight = Vector3.Cross(_moveInputVector, Motor.CharacterUp);
                 Vector3 reorientedInput = Vector3.Cross(Motor.GroundingStatus.GroundNormal, inputRight).normalized *
                                           _moveInputVector.magnitude;
-                targetMovementVelocity = reorientedInput * MaxStableMoveSpeed;
+                targetMovementVelocity = reorientedInput * _maxMoveSpeed;
 
                 // Smooth movement Velocity
                 currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity,
@@ -184,7 +208,6 @@ namespace Assets.Player.Scripts
                 currentVelocity *= (1f / (1f + (Drag * deltaTime)));
             }
 
-
             HandleJumping(ref currentVelocity, deltaTime);
 
             // Take into account additive velocity
@@ -197,6 +220,7 @@ namespace Assets.Player.Scripts
             // Update internal private current velocity
             _currentVelocity = currentVelocity;
         }
+
 
         private void HandleJumping(ref Vector3 currentVelocity, float deltaTime)
         {
