@@ -11,7 +11,6 @@ namespace Assets.Player.Scripts
         public MyCharacterController Character;
 
         [Header("Camera Settings")] [Range(1.0f, 10.0f)]
-        public float CameraSensitivity = 1.0f;
 
         private const string MouseXInput = "Mouse X";
         private const string MouseYInput = "Mouse Y";
@@ -57,8 +56,8 @@ namespace Assets.Player.Scripts
         {
             // Create the look input vector for the camera
             float mouseLookAxisUp =
-                Input.GetAxisRaw(MouseYInput) * (Settings.invertCameraY ? -1 : 1) * CameraSensitivity;
-            float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput) * CameraSensitivity;
+                Input.GetAxisRaw(MouseYInput) * (Settings.invertCameraY ? -1 : 1) * Settings.cameraSensitivity;
+            float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput) * Settings.cameraSensitivity;
             Vector3 lookInputVector = new Vector3(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
             // Prevent moving the camera while the cursor isn't locked

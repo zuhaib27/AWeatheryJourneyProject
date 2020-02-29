@@ -7,6 +7,7 @@ using Assets.Player.Scripts;
 public struct PlayerSettings
 {
     public bool invertCameraY;
+    public float cameraSensitivity;
 }
 
 public struct GameSettings
@@ -45,6 +46,8 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         SetPlayerInvertCameraY(_settings.playerSettings.invertCameraY);
+        SetPlayerCameraSensitivty(_settings.playerSettings.cameraSensitivity);
+        
         SetMasterVolume(_settings.gameVolume);
         SetMusicVolume(_settings.musicVolume);
     }
@@ -63,12 +66,14 @@ public class SettingsManager : MonoBehaviour
         if (Instance == this)
         {
             SaveGameSettings();
+            Instance = null;
         }
     }
 
     private void LoadGameSettings()
     {
         _settings.playerSettings.invertCameraY = PlayerPrefs.GetInt("PlayerInvertCameraY", 0) > 0;
+        _settings.playerSettings.cameraSensitivity = PlayerPrefs.GetFloat("PlayerCameraSensitivity", .5f);
         _settings.gameVolume = PlayerPrefs.GetFloat("MasterVolume", 0f);
         _settings.musicVolume = PlayerPrefs.GetFloat("MusicVolume", -20f);
     }
@@ -76,6 +81,7 @@ public class SettingsManager : MonoBehaviour
     private void SaveGameSettings()
     {
         PlayerPrefs.SetInt("PlayerInvertCameraY", _settings.playerSettings.invertCameraY ? 1 : 0);
+        PlayerPrefs.SetFloat("PlayerCameraSensitivity", _settings.playerSettings.cameraSensitivity);
         PlayerPrefs.SetFloat("MasterVolume", _settings.gameVolume);
         PlayerPrefs.SetFloat("MusicVolume", _settings.musicVolume);
     }
@@ -84,6 +90,12 @@ public class SettingsManager : MonoBehaviour
     public void SetPlayerInvertCameraY(bool value)
     {
         _settings.playerSettings.invertCameraY = value;
+        FindObjectOfType<MyPlayer>().Settings = _settings.playerSettings;
+    }
+
+    public void SetPlayerCameraSensitivty(float value)
+    {
+        _settings.playerSettings.cameraSensitivity = value;
         FindObjectOfType<MyPlayer>().Settings = _settings.playerSettings;
     }
 
