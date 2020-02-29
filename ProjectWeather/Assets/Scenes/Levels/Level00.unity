@@ -294,6 +294,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6116013464656754319, guid: 6eeb84e8104c6384ebcea66453178ba3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6116013464686541386, guid: 6eeb84e8104c6384ebcea66453178ba3,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1997,6 +2002,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2530052544402244567, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 2837741990984415573, guid: bea33c4cbdc0f74448a63c8ee9003824,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2055,7 +2065,32 @@ PrefabInstance:
     - target: {fileID: 2837741990984415578, guid: bea33c4cbdc0f74448a63c8ee9003824,
         type: 3}
       propertyPath: m_Name
-      value: Management
+      value: GameManagement
+      objectReference: {fileID: 0}
+    - target: {fileID: 2837741991063976295, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244580317276742254, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244580318251888723, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244580318536296726, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 9132860583807593697, guid: bea33c4cbdc0f74448a63c8ee9003824,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bea33c4cbdc0f74448a63c8ee9003824, type: 3}

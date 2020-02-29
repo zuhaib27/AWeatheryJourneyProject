@@ -4,7 +4,7 @@ using UnityEngine;
 using Assets.Player.Scripts;
 using UnityEngine.UI;
 
-public class OptionsMenu : Menu
+public class Options: MonoBehaviour
 {
     public Toggle invertCameraY;
     public Slider cameraSensitivitySlider;
