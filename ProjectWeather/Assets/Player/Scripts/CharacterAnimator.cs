@@ -44,7 +44,7 @@ namespace Assets.Player.Scripts
             _animator.SetBool("OnGround", _characterController.IsPlayerOnGround());
             _animator.SetBool("Jump", _characterController.DidPlayerJump());
             _animator.SetBool("DoubleJump", _characterController.DidPlayerDoubleJump());
-            _animator.SetBool("WindAbility", _characterController.DidPlayerActivateWind());
+            _animator.SetBool("WindAbility", _playerAbility.IsAbilityBeingPressed(Weather.Wind));
             _animator.SetBool("FrostAbility", _playerAbility.IsAbilityBeingPressed(Weather.Frost));
             _animator.SetBool("SunAbility", _playerAbility.IsAbilityBeingPressed(Weather.Sun));
             _animator.SetBool("RainAbility", _playerAbility.IsAbilityBeingPressed(Weather.Rain));

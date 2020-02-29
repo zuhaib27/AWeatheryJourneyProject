@@ -10,7 +10,6 @@ namespace Assets.Player.Scripts
         public float MoveAxisRight;
         public Quaternion CameraRotation;
         public bool JumpDown;
-        public bool ImpulseDown;
     }
 
     public class MyCharacterController : MonoBehaviour, ICharacterController
@@ -34,15 +33,12 @@ namespace Assets.Player.Scripts
         public float JumpPreGroundingGraceTime = 0f;
         //public float JumpPostGroundingGraceTime = 0f;     // May be useful at some point
 
-        [Header("Impulse/Wind Ability")]
-        public bool AllowCharacterImpulse = true;
-        public float ImpulseMagnitude = 35f;
-
         [Header("Misc")]
         public Vector3 Gravity = new Vector3(0, -30f, 0);
         public Transform MeshRoot;
 
         // Private variables
+        private PlayerAbility _ability;
         private Vector3 _moveInputVector;
         private Vector3 _moveInputVectorPure;
         private Vector3 _lookInputVector;
@@ -55,6 +51,12 @@ namespace Assets.Player.Scripts
         private bool _doubleJumpConsumed = false;
         private bool _impulseConsumed = false;
         private Vector3 _internalVelocityAdd = Vector3.zero;
+
+
+        private void Awake()
+        {
+            _ability = GetComponent<PlayerAbility>();
+        }
 
         private void Start()
         {
@@ -95,26 +97,12 @@ namespace Assets.Player.Scripts
             }
 
             // Impulse/Wind Ability
-            if (AllowCharacterImpulse)
+            if (_ability.AllowWindAbility)
             {
-                HandleImpulseAbility(ref inputs);
+                HandleWindAbility();
             }
         }
 
-        /// <summary>
-        /// (Called by SetInputs every frame)
-        /// This is the Character's 'Wind' Ability. Only usable when the character
-        /// is on the ground. i.e. can't jump, then use it
-        /// </summary>
-        private void HandleImpulseAbility(ref PlayerCharacterInputs inputs)
-        {
-            if ((inputs.ImpulseDown || Input.GetKeyDown(KeyCode.Alpha1)) && !_impulseConsumed)
-            {
-                _impulseConsumed = true;
-                Motor.ForceUnground(0.1f);
-                AddVelocity((_moveInputVector.normalized + Motor.CharacterUp) * ImpulseMagnitude);
-            }
-        }
 
         /// <summary>
         /// (Called by KinematicCharacterMotor during its update cycle)
@@ -199,7 +187,6 @@ namespace Assets.Player.Scripts
 
             HandleJumping(ref currentVelocity, deltaTime);
 
-
             // Take into account additive velocity
             if (_internalVelocityAdd.sqrMagnitude > 0f)
             {
@@ -253,7 +240,6 @@ namespace Assets.Player.Scripts
             }
         }
 
-
         /// <summary>
         /// (Called by AfterCharacterUpdate)
         /// This is called after the character has finished its movement update
@@ -282,6 +268,22 @@ namespace Assets.Player.Scripts
             {
                 // Keep track of time since we were last able to jump (for grace period)
                 _timeSinceLastAbleToJump += deltaTime;
+            }
+        }
+
+
+        /// <summary>
+        /// (Called by SetInputs every frame)
+        /// This is the Character's 'Wind' Ability. Only usable when the character
+        /// is on the ground. i.e. can't jump, then use it
+        /// </summary>
+        private void HandleWindAbility()
+        {
+            if (_ability.IsAbilityBeingPressed(Weather.Wind) && !_impulseConsumed)
+            {
+                _impulseConsumed = true;
+                Motor.ForceUnground(0.1f);
+                AddVelocity((_moveInputVector.normalized + Motor.CharacterUp) * _ability.ImpulseMagnitude);
             }
         }
 
@@ -366,11 +368,6 @@ namespace Assets.Player.Scripts
         public bool DidPlayerDoubleJump()
         {
             return _doubleJumpConsumed;
-        }
-
-        public bool DidPlayerActivateWind()
-        {
-            return _impulseConsumed;
         }
     }
 }

@@ -91,7 +91,6 @@ namespace Assets.Player.Scripts
                 MoveAxisRight = Input.GetAxisRaw(HorizontalInput),
                 CameraRotation = OrbitCamera.Transform.rotation,
                 JumpDown = Input.GetButtonDown(JumpInput) || Input.GetKeyDown(KeyCode.JoystickButton0),
-                ImpulseDown = Input.GetKeyDown(KeyCode.JoystickButton3)
             };
 
             // Apply inputs to character
