@@ -7,13 +7,12 @@ public class PlayerAbility : MonoBehaviour
     public float powerRadius = 3f;
 
     public UIOverlay uiOverlay;
-    
-    private Weather _currentAbility = Weather.None;
-    private bool _isBeingPressed = false;
 
-    private const KeyCode _keyCode1 = KeyCode.F;
-    private const KeyCode _keyCode2 = KeyCode.JoystickButton1;
-    
+    [Header("Wind Ability")]
+    public bool AllowWindAbility = true;
+    public float ImpulseMagnitude = 20f;
+
+    [Header("Particle Effects")]
     public ParticleSystem sunParticle;
     public ParticleSystem rainParticle;
     public ParticleSystem snowParticle;
@@ -22,8 +21,17 @@ public class PlayerAbility : MonoBehaviour
     public Light sunLight;
     public float sunlightDuration = 1;
 
+    // Private variables
+    private Weather _currentAbility = Weather.None;
+    private bool _isBeingPressed = false;
+
+    private const KeyCode _keyCode1 = KeyCode.F;
+    private const KeyCode _keyCode2 = KeyCode.JoystickButton1;  // B on Xbox controller
+
     private string _button3 = "DPad Vertical";
     private string _button4 = "DPad Horizontal";
+
+
 
     private void Start()
     {
@@ -39,6 +47,7 @@ public class PlayerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Update D-pad active ability
         if (Input.GetAxisRaw(_button3) > 0 || Input.GetKeyDown(KeyCode.Alpha1))
         {
             ActivateAbility(Weather.Wind);
@@ -57,6 +66,8 @@ public class PlayerAbility : MonoBehaviour
             ActivateAbility(Weather.Sun);
         }
 
+
+        // Update when the player uses the ability
         bool isPressed = false;
 
         if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
