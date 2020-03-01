@@ -11,6 +11,8 @@ public class PlatformLauncher : MonoBehaviour
     [Range(0.0f, 2.5f)]
     public float SecondsDelayBeforeLaunch = 0.6f;
 
+    //public ParticleSystem ParticleSystem;  // TODO: could sync animations with launch
+
     // Private variables
     private bool _onTrigger = false;
 
