@@ -393,5 +393,11 @@ namespace Assets.Player.Scripts
         {
             return _doubleJumpConsumed;
         }
+
+        public void LaunchPlayer(Vector3 direction, float magnitude)
+        {
+            Motor.ForceUnground(0.1f);
+            AddVelocity(direction * magnitude);
+        }
     }
 }
