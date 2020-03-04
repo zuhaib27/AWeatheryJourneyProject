@@ -8,6 +8,9 @@ public class IceGenerator : MonoBehaviour
     public float radius;
     public int resolution;
 
+    public bool hasDuration;
+    public float iceDuration;
+
     Transform _waterTransform;
 
     Vector3[] _vertices;
@@ -21,6 +24,7 @@ public class IceGenerator : MonoBehaviour
     Vector3 _localRadius;
     int[] _gridSize;
     bool[,] _grid;
+    float[,] _timers;
 
     // Initialize
     void Start()
@@ -61,14 +65,21 @@ public class IceGenerator : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (hasDuration)
+            UpdateIce();
+        UpdateMesh();
+    }
+
     // Reset the grid
     public void ResetGrid()
     {
         _grid = new bool[_gridSize[0], _gridSize[1]];
+        _timers = new float[_gridSize[0], _gridSize[1]];
         CreateVertices();
 
         _refreshMesh = true;
-        UpdateMesh();
     }
 
     // Create a radius of ice around the given position (or remove it)
@@ -110,14 +121,12 @@ public class IceGenerator : MonoBehaviour
                             + pointFromCenter.z * pointFromCenter.z / (_localRadius.z * _localRadius.z) < 1f)
                         {
                             _grid[i, j] = isIce;
+                            _timers[i, j] = Time.time;
                             _refreshMesh = true;
                         }
                     }
                 }
             }
-
-            // Update mesh
-            UpdateMesh();
         }
     }
 
@@ -166,6 +175,22 @@ public class IceGenerator : MonoBehaviour
         _meshCollider.sharedMesh = _mesh;
 
         _refreshCollider = false;
+    }
+
+    // Update grid state by checking timers
+    private void UpdateIce()
+    {
+        for (int i = 0; i < _gridSize[0]; i++)
+        {
+            for (int j = 0; j < _gridSize[1]; j++)
+            {
+                if (_grid[i, j] && Time.time - _timers[i, j] > iceDuration)
+                {
+                    _grid[i, j] = false;
+                    _refreshMesh = true;
+                }
+            }
+        }
     }
 
     // Create vertices for grid
