@@ -1,9 +1,11 @@
+using Assets.Player.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class collectiblePickUp : MonoBehaviour
 {
+    public AudioSource collectSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,8 @@ public class collectiblePickUp : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("player collected");
+            ScoringSystem.theScore++;
+            //collectSound.Play(); //need to add soundfx 
             Destroy(gameObject);
         }
     }
