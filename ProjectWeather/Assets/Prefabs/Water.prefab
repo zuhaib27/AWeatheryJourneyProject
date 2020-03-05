@@ -140,6 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   resolution: 16
+  hasDuration: 1
+  iceDuration: 2
   _rateOfColliderUpdate: 0.1
 --- !u!1 &8960755111468774302
 GameObject:
