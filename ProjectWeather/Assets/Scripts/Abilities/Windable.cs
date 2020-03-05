@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Windable : MonoBehaviour
+public class Windable : Interactible
 {
   // Called when wind ability is activated on/near this object
   public virtual void OnWindDown(AbilityEvent e)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 316237234}
-  m_IndirectSpecularColor: {r: 0.44751334, g: 0.497472, b: 0.5753133, a: 1}
+  m_IndirectSpecularColor: {r: 0.44751316, g: 0.49747157, b: 0.57531285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1400,6 +1400,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b48d7dfcc49f58428bd4a4c65fe6b33, type: 3}
+--- !u!114 &1038528943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3780006612061572902, guid: 6eeb84e8104c6384ebcea66453178ba3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8121713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb77b285ab27c24a8e0243a85370d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1238429652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1609,6 +1621,11 @@ PrefabInstance:
       propertyPath: uiOverlay
       value: 
       objectReference: {fileID: 1420653708}
+    - target: {fileID: 5560591548474967893, guid: 9697dece102a91442a43b38181fc2ceb,
+        type: 3}
+      propertyPath: weatherUI
+      value: 
+      objectReference: {fileID: 1038528943}
     - target: {fileID: 7516131714584222267, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1647,7 +1664,7 @@ PrefabInstance:
     - target: {fileID: 7516131714584222267, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7516131714584222267, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}

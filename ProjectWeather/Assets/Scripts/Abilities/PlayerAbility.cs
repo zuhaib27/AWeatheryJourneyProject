@@ -6,7 +6,7 @@ public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
 
-    public UIOverlay uiOverlay;
+    public WeatherUI weatherUI;
 
     [Header("Wind Ability")]
     public bool AllowWindAbility = true;
@@ -32,8 +32,8 @@ public class PlayerAbility : MonoBehaviour
     private void Start()
     {
         #region dependency checks
-        if (!uiOverlay)
-            Debug.LogWarning("No UIOverlay found in scene.");
+        if (!weatherUI)
+            Debug.LogWarning("No WeatherUI found in scene.");
 
         if (!MusicPlayer.Instance)
             Debug.LogWarning("No MusicPlayer found in scene.");
@@ -52,7 +52,7 @@ public class PlayerAbility : MonoBehaviour
         {
             ActivateAbility(Weather.Rain);
         }
-        
+
         if (Input.GetAxisRaw(_button4) > 0 || Input.GetKeyDown(KeyCode.Alpha3))
         {
             ActivateAbility(Weather.Frost);
@@ -96,8 +96,8 @@ public class PlayerAbility : MonoBehaviour
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
-        if (uiOverlay)
-            uiOverlay.SetUIIcon(ability);
+        if (weatherUI)
+            weatherUI.SetUIIcon(ability);
         if (MusicPlayer.Instance)
             MusicPlayer.Instance.SwitchSong((int)ability);
 
@@ -114,7 +114,6 @@ public class PlayerAbility : MonoBehaviour
         return e;
     }
 
-
     // Called first frame that ability is used
     void OnAbilityDown(Weather ability)
     {
@@ -126,50 +125,15 @@ public class PlayerAbility : MonoBehaviour
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
-        #region Call Button Down Method
         for (int i = 0; i < affectedObjects.Length; i++)
         {
-            switch(ability)
+            Interactible interactible = affectedObjects[i].GetComponent<Interactible>();
+            if (interactible != null)
             {
-                case Weather.Sun:
-                    Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
-                    if (sunable != null)
-                    {
-                        sunable.OnSunDown(e);
-                    }
-                    break;
-
-                case Weather.Frost:
-                    Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
-                    if (freezeable != null)
-                    {
-                        freezeable.OnFreezeDown(e);
-                    }
-                    break;
-
-                case Weather.Wind:
-                    Windable windable= affectedObjects[i].GetComponent<Windable>();
-                    if (windable != null)
-                    {
-                        windable.OnWindDown(e);
-                    }
-                    break;
-
-                case Weather.Rain:
-                    Rainable rainable= affectedObjects[i].GetComponent<Rainable>();
-                    if (rainable != null)
-                    {
-                        rainable.OnRainDown(e);
-                    }
-                    break;
-
-                default:
-                    break;
+                interactible.OnAbilityDown(ability, e);
             }
         }
-        #endregion
     }
-
 
     // Called every frame (except first and last) that ability is used
     void OnAbility(Weather ability)
@@ -179,48 +143,14 @@ public class PlayerAbility : MonoBehaviour
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
-        #region Call Button Stay Method
         for (int i = 0; i < affectedObjects.Length; i++)
         {
-            switch (ability)
+            Interactible interactible = affectedObjects[i].GetComponent<Interactible>();
+            if (interactible != null)
             {
-                case Weather.Sun:
-                    Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
-                    if (sunable != null)
-                    {
-                        sunable.OnSun(e);
-                    }
-                    break;
-
-                case Weather.Frost:
-                    Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
-                    if (freezeable != null)
-                    {
-                        freezeable.OnFreeze(e);
-                    }
-                    break;
-
-                case Weather.Wind:
-                    Windable windable = affectedObjects[i].GetComponent<Windable>();
-                    if (windable != null)
-                    {
-                        windable.OnWind(e);
-                    }
-                    break;
-
-                case Weather.Rain:
-                    Rainable rainable = affectedObjects[i].GetComponent<Rainable>();
-                    if (rainable != null)
-                    {
-                        rainable.OnRain(e);
-                    }
-                    break;
-
-                default:
-                    break;
+                interactible.OnAbility(ability, e);
             }
         }
-        #endregion
     }
 
     // Called last frame that ability is used
@@ -237,48 +167,14 @@ public class PlayerAbility : MonoBehaviour
         Physics.SyncTransforms(); //not certain if need this, but was recomended to keep track of other objects...
         Collider[] affectedObjects = Physics.OverlapSphere(transform.position, powerRadius);
 
-        #region Call Button Up Method
         for (int i = 0; i < affectedObjects.Length; i++)
         {
-            switch (ability)
+            Interactible interactible = affectedObjects[i].GetComponent<Interactible>();
+            if (interactible != null)
             {
-                case Weather.Sun:
-                    Sunable sunable = affectedObjects[i].GetComponent<Sunable>();
-                    if (sunable != null)
-                    {
-                        sunable.OnSunUp(e);
-                    }
-                    break;
-
-                case Weather.Frost:
-                    Freezeable freezeable = affectedObjects[i].GetComponent<Freezeable>();
-                    if (freezeable != null)
-                    {
-                        freezeable.OnFreezeUp(e);
-                    }
-                    break;
-
-                case Weather.Wind:
-                    Windable windable = affectedObjects[i].GetComponent<Windable>();
-                    if (windable != null)
-                    {
-                        windable.OnWindUp(e);
-                    }
-                    break;
-
-                case Weather.Rain:
-                    Rainable rainable = affectedObjects[i].GetComponent<Rainable>();
-                    if (rainable != null)
-                    {
-                        rainable.OnRainUp(e);
-                    }
-                    break;
-
-                default:
-                    break;
+                interactible.OnAbilityUp(ability, e);
             }
         }
-        #endregion
     }
 }
 
