@@ -111,17 +111,18 @@ public class IceGenerator : MonoBehaviour
             {
                 for (int j = startX; j < endX; j++)
                 {
-                    if (_grid[i, j] != isIce)
-                    {
-                        Vector3 localPoint = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
-                        Vector3 pointFromCenter = localPoint - localCenter;
+                    Vector3 localPoint = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
+                    Vector3 pointFromCenter = localPoint - localCenter;
 
-                        if (pointFromCenter.x * pointFromCenter.x / (_localRadius.x * _localRadius.x)
-                            + pointFromCenter.y * pointFromCenter.y / (_localRadius.y * _localRadius.y)
-                            + pointFromCenter.z * pointFromCenter.z / (_localRadius.z * _localRadius.z) < 1f)
+                    if (pointFromCenter.x * pointFromCenter.x / (_localRadius.x * _localRadius.x)
+                        + pointFromCenter.y * pointFromCenter.y / (_localRadius.y * _localRadius.y)
+                        + pointFromCenter.z * pointFromCenter.z / (_localRadius.z * _localRadius.z) < 1f)
+                    {
+                        _timers[i, j] = Time.time;
+
+                        if (_grid[i, j] != isIce)
                         {
                             _grid[i, j] = isIce;
-                            _timers[i, j] = Time.time;
                             _refreshMesh = true;
                         }
                     }
