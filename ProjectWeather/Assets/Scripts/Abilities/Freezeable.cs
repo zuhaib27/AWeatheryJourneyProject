@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Freezeable : MonoBehaviour
+public class Freezeable : Interactible
 {
     // Called when frost ability is activated on this object
     public virtual void OnFreezeDown(AbilityEvent e)

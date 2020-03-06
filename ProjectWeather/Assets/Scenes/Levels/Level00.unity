@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 0a08e9071f9b47e4883a366f5e0cc289,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1527,6 +1527,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1018716390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3780006612061572902, guid: 6eeb84e8104c6384ebcea66453178ba3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8121713}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb77b285ab27c24a8e0243a85370d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1238429652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1726,6 +1738,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1370075187, guid: 9697dece102a91442a43b38181fc2ceb, type: 3}
+      propertyPath: rainParticleActivate
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370075187, guid: 9697dece102a91442a43b38181fc2ceb, type: 3}
+      propertyPath: sunParticleActivate
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2959962675287437458, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_Name
@@ -1736,6 +1756,11 @@ PrefabInstance:
       propertyPath: uiOverlay
       value: 
       objectReference: {fileID: 1420653708}
+    - target: {fileID: 5560591548474967893, guid: 9697dece102a91442a43b38181fc2ceb,
+        type: 3}
+      propertyPath: weatherUI
+      value: 
+      objectReference: {fileID: 1018716390}
     - target: {fileID: 7516131714584222267, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_LocalPosition.x

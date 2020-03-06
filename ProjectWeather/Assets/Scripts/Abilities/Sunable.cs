@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sunable : MonoBehaviour
+public class Sunable : Interactible
 {
     // Called when sun ability is activated on this object
     public virtual void OnSunDown(AbilityEvent e)
