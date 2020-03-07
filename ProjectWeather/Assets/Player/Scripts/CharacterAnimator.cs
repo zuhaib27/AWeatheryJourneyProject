@@ -15,6 +15,8 @@ namespace Assets.Player.Scripts
         private PlayerAbility _playerAbility;
         private float _forwardAxisSpeed = 0f;
         private float _horizontalAxisSpeed = 0f;
+        private float _moveSpeed = 0f;
+        private float _currentVelocity;
 
 
         private void Awake()
@@ -34,6 +36,9 @@ namespace Assets.Player.Scripts
             _forwardAxisSpeed = Mathf.Lerp(_forwardAxisSpeed, targetForwardAxis, 1f - Mathf.Exp(-ForwardAxisSharpness * Time.deltaTime));
             _horizontalAxisSpeed = Mathf.Lerp(_horizontalAxisSpeed, targetHorizontalAxis, 1f - Mathf.Exp(-TurnAxisSharpness * Time.deltaTime));
 
+            _moveSpeed = _characterController.GetMoveSpeed();
+            _moveSpeed = Mathf.SmoothDamp(_animator.GetFloat("MoveSpeed"), _moveSpeed, ref _currentVelocity, 0.1f);
+
             HandleAnimation();
         }
 
@@ -41,6 +46,7 @@ namespace Assets.Player.Scripts
         {
             _animator.SetFloat("ForwardSpeed", _forwardAxisSpeed);
             _animator.SetFloat("HorizontalSpeed", _horizontalAxisSpeed);
+            _animator.SetFloat("MoveSpeed", _moveSpeed);
             _animator.SetBool("OnGround", _characterController.IsPlayerOnGround());
             _animator.SetBool("Jump", _characterController.DidPlayerJump());
             _animator.SetBool("DoubleJump", _characterController.DidPlayerDoubleJump());
