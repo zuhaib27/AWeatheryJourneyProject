@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 316237234}
-  m_IndirectSpecularColor: {r: 0.44751316, g: 0.49747157, b: 0.57531285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44751334, g: 0.497472, b: 0.5753133, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1658,18 +1658,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b48d7dfcc49f58428bd4a4c65fe6b33, type: 3}
---- !u!114 &1420653708 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7580559182397681582, guid: 6eeb84e8104c6384ebcea66453178ba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8121713}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e054827c5dbeee419e23af25200650b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1470742191
 GameObject:
   m_ObjectHideFlags: 0
@@ -1738,24 +1726,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1370075187, guid: 9697dece102a91442a43b38181fc2ceb, type: 3}
-      propertyPath: rainParticleActivate
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1370075187, guid: 9697dece102a91442a43b38181fc2ceb, type: 3}
-      propertyPath: sunParticleActivate
-      value: 
+    - target: {fileID: 482352514, guid: 9697dece102a91442a43b38181fc2ceb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.00000010882658
       objectReference: {fileID: 0}
     - target: {fileID: 2959962675287437458, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: m_Name
       value: WizardAtlasPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 5560591548474967893, guid: 9697dece102a91442a43b38181fc2ceb,
-        type: 3}
-      propertyPath: uiOverlay
-      value: 
-      objectReference: {fileID: 1420653708}
     - target: {fileID: 5560591548474967893, guid: 9697dece102a91442a43b38181fc2ceb,
         type: 3}
       propertyPath: weatherUI
