@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     public void ResumeGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        player.GetComponent<Assets.Player.Scripts.PlayerInputs>().enabled = true;
+        player.GetComponentInChildren<Assets.Player.Scripts.PlayerInputs>().enabled = true;
         player.GetComponentInChildren<PlayerAbility>().enabled = true;
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
@@ -62,7 +62,7 @@ public class UIManager : MonoBehaviour
     {
         eventSystem.SetSelectedGameObject(selectedObjectOnPause);
         Cursor.lockState = CursorLockMode.None;
-        player.GetComponent<Assets.Player.Scripts.PlayerInputs>().enabled = false;
+        player.GetComponentInChildren<Assets.Player.Scripts.PlayerInputs>().enabled = false;
         player.GetComponentInChildren<PlayerAbility>().enabled = false;
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
