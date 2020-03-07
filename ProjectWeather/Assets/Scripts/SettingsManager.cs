@@ -90,13 +90,13 @@ public class SettingsManager : MonoBehaviour
     public void SetPlayerInvertCameraY(bool value)
     {
         _settings.playerSettings.invertCameraY = value;
-        FindObjectOfType<MyPlayer>().Settings = _settings.playerSettings;
+        FindObjectOfType<PlayerInputs>().Settings = _settings.playerSettings;
     }
 
     public void SetPlayerCameraSensitivty(float value)
     {
         _settings.playerSettings.cameraSensitivity = value;
-        FindObjectOfType<MyPlayer>().Settings = _settings.playerSettings;
+        FindObjectOfType<PlayerInputs>().Settings = _settings.playerSettings;
     }
 
     public void SetMasterVolume(float value)
