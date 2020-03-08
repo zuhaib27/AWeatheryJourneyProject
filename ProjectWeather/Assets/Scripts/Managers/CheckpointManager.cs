@@ -49,11 +49,11 @@ public class CheckpointManager : MonoBehaviour
         _animator.ResetTrigger("FadeIn");
         _animator.SetTrigger("FadeOut");
         StartCoroutine(FindObjectOfType<MusicPlayer>().FadeOutSong(1));
-        _cc.Motor.SetPosition(_currentCheckpoint);
     }
 
     public void OnFadeOutComplete()
     {
         _animator.SetTrigger("FadeIn");
+        _cc.Motor.SetPosition(_currentCheckpoint);
     }
 }
