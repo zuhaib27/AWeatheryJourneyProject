@@ -412,6 +412,11 @@ namespace Assets.Player.Scripts
             return _sprintActivated;
         }
 
+        public Vector3 GetCharacterPosition()
+        {
+            return transform.position;
+        }
+
         public void LaunchPlayer(Vector3 direction, float magnitude)
         {
             Motor.ForceUnground(0.1f);
