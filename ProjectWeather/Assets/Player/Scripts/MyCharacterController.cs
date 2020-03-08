@@ -124,14 +124,10 @@ namespace Assets.Player.Scripts
                 HandleWindAbility();
             }
 
-            // set sprinting
-            //isSprinting = ((Input.GetKey(sprintJoystick) || Input.GetKey(sprintKeyboard)) && input != Vector2.zero && direction >= 0f);
-            //anim.SetBool("isSprinting", isSprinting);
-
             // Sprint input
             if (AllowSprint)
             {
-                if (!_sprintActivated && inputs.SprintHoldDown)
+                if (!_sprintActivated && inputs.SprintHoldDown && _moveInputVector.magnitude > 0.1)
                 {
                     _maxMoveSpeed += SprintSpeedBoost;
                     _sprintActivated = true;
@@ -396,11 +392,6 @@ namespace Assets.Player.Scripts
             return _currentVelocity.magnitude;
         }
 
-        public Vector3 GetMovementInputVector()
-        {
-            return _moveInputVector;
-        }
-
         public float GetMoveSpeed()
         {
             return _moveSpeed;
@@ -414,6 +405,11 @@ namespace Assets.Player.Scripts
         public bool DidPlayerDoubleJump()
         {
             return _doubleJumpConsumed;
+        }
+
+        public bool IsPlayerSprinting()
+        {
+            return _sprintActivated;
         }
 
         public void LaunchPlayer(Vector3 direction, float magnitude)
