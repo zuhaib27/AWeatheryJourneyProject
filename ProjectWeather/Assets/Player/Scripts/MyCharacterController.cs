@@ -8,7 +8,6 @@ namespace Assets.Player.Scripts
     {
         public float MoveAxisForward;
         public float MoveAxisRight;
-        public Quaternion CameraRotation;
         public bool JumpDown;
         public bool SprintHoldDown;
     }
@@ -21,6 +20,7 @@ namespace Assets.Player.Scripts
         public float MaxStableMoveSpeed = 10f;
         public float StableMovementSharpness = 15;
         public float OrientationSharpness = 10;
+        public float TurnSpeed = 10f;
 
         [Header("Air Movement")]
         public float MaxAirMoveSpeed = 10f;
@@ -45,8 +45,6 @@ namespace Assets.Player.Scripts
         // Private variables
         private PlayerAbility _ability;
         private Vector3 _moveInputVector;
-        private Vector3 _moveInputVectorPure;
-        private Vector3 _lookInputVector;
         private Vector3 _currentVelocity = Vector3.zero; // used for getter function
         private bool _jumpRequested = false;
         private bool _jumpConsumed = false;
@@ -59,15 +57,24 @@ namespace Assets.Player.Scripts
         private float _maxMoveSpeed = 10f;
         private bool _sprintActivated = false;
 
+        // Animation and Cinemachine variables
+        private float _moveSpeed;
+        private float _turnSpeedMultiplier;
+        private Vector3 _lookDirection;           // Character look direction
+        private Camera _mainCamera;
+        private Quaternion _currentRotation;
+
 
         private void Awake()
         {
             _ability = GetComponent<PlayerAbility>();
+            _mainCamera = Camera.main;
         }
 
         private void Start()
         {
             _maxMoveSpeed = MaxStableMoveSpeed;
+            _turnSpeedMultiplier = 10f;
 
             // Assign to motor
             Motor.CharacterController = this;
@@ -82,21 +89,27 @@ namespace Assets.Player.Scripts
             Vector3 moveInputVector =
                 Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
 
-            // Calculate camera direction and rotation on the character plane
-            Vector3 cameraPlanarDirection =
-                Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.forward, Motor.CharacterUp).normalized;
-            if (cameraPlanarDirection.sqrMagnitude == 0f)
+            // Set the character movement speed. Used for the animations
+            _moveSpeed = Mathf.Abs(inputs.MoveAxisRight) + Mathf.Abs(inputs.MoveAxisForward);
+            _moveSpeed = Mathf.Clamp(_moveSpeed, 0f, 1f);
+
+
+            UpdateTargetDirection(ref inputs);
+
+            if (moveInputVector != Vector3.zero && _lookDirection.magnitude > 0.1f)
             {
-                cameraPlanarDirection =
-                    Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.up, Motor.CharacterUp).normalized;
+                var freeRotation = Quaternion.LookRotation(_lookDirection, transform.up);
+                var differenceRotation = freeRotation.eulerAngles.y - transform.eulerAngles.y;
+                var eulerY = transform.eulerAngles.y;
+
+                if (differenceRotation < 0 || differenceRotation > 0) eulerY = freeRotation.eulerAngles.y;
+                var euler = new Vector3(0, eulerY, 0);
+
+                _currentRotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(euler), TurnSpeed * _turnSpeedMultiplier * Time.deltaTime);
             }
 
-            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, Motor.CharacterUp);
-
             // Move and look inputs
-            _moveInputVectorPure = moveInputVector;
-            _moveInputVector = cameraPlanarRotation * moveInputVector;
-            _lookInputVector = cameraPlanarDirection;
+            _moveInputVector = _lookDirection; // cameraPlanarRotation * moveInputVector;
 
             // Jumping input
             if (inputs.JumpDown)
@@ -114,7 +127,7 @@ namespace Assets.Player.Scripts
             // Sprint input
             if (AllowSprint)
             {
-                if (!_sprintActivated && inputs.SprintHoldDown)
+                if (!_sprintActivated && inputs.SprintHoldDown && _moveInputVector.magnitude > 0.1)
                 {
                     _maxMoveSpeed += SprintSpeedBoost;
                     _sprintActivated = true;
@@ -125,6 +138,19 @@ namespace Assets.Player.Scripts
                     _sprintActivated = false;
                 }
             }
+        }
+
+
+        public virtual void UpdateTargetDirection(ref PlayerCharacterInputs inputs)
+        {
+            var forward = _mainCamera.transform.TransformDirection(Vector3.forward);
+            forward.y = 0;
+
+            // Get the right-facing direction of the referenceTransform
+            var right = _mainCamera.transform.TransformDirection(Vector3.right);
+
+            // Determine the direction the player will face based on input and the referenceTransform's right and forward directions
+            _lookDirection = (inputs.MoveAxisForward * forward + inputs.MoveAxisRight * right).normalized;
         }
 
 
@@ -143,15 +169,7 @@ namespace Assets.Player.Scripts
         /// </summary>
         public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
         {
-            if (_lookInputVector != Vector3.zero && OrientationSharpness > 0f)
-            {
-                // Smoothly interpolate from current to target look direction
-                Vector3 smoothedLookInputDirection = Vector3.Slerp(Motor.CharacterForward, _lookInputVector,
-                    1 - Mathf.Exp(-OrientationSharpness * deltaTime)).normalized;
-
-                // Set the current rotation (which will be used by the KinematicCharacterMotor)
-                currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, Motor.CharacterUp);
-            }
+            currentRotation = _currentRotation;
         }
 
         /// <summary>
@@ -374,14 +392,9 @@ namespace Assets.Player.Scripts
             return _currentVelocity.magnitude;
         }
 
-        public Vector3 GetMovementInputVector()
+        public float GetMoveSpeed()
         {
-            return _moveInputVectorPure;
-        }
-
-        public Vector3 GetCurrentVelocityVector()
-        {
-            return _currentVelocity;
+            return _moveSpeed;
         }
 
         public bool DidPlayerJump()
@@ -392,6 +405,16 @@ namespace Assets.Player.Scripts
         public bool DidPlayerDoubleJump()
         {
             return _doubleJumpConsumed;
+        }
+
+        public bool IsPlayerSprinting()
+        {
+            return _sprintActivated;
+        }
+
+        public Vector3 GetCharacterPosition()
+        {
+            return transform.position;
         }
 
         public void LaunchPlayer(Vector3 direction, float magnitude)
