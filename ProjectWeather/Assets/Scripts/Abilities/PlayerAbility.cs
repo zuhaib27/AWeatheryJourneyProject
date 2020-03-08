@@ -156,11 +156,7 @@ public class PlayerAbility : MonoBehaviour
     // Called last frame that ability is used
     void OnAbilityUp(Weather ability)
     {
-        // Only stop if the active ability is frost since it is set to loop
-        if (ability == Weather.Frost)
-        {
-            _spellEffects.StopParticleEffect();
-        }
+        _spellEffects.StopParticleEffect(ability);
 
         AbilityEvent e = CreateAbilityEvent();
 

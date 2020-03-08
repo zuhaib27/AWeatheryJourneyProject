@@ -33,11 +33,11 @@ public class SpellParticleEffects : MonoBehaviour
 
     private void Start()
     {
-        // Initialize _activeParticle
         _activeParticle = windParticleUse;
     }
 
 
+    // -------- Functions called from PlayerAbility.cs --------
     public void ActivateEffect(Weather ability)
     {
         // If this Weather Ability is already active, then return
@@ -48,72 +48,56 @@ public class SpellParticleEffects : MonoBehaviour
         // Otherwise clear the other particle effects
         else
         {
-            StopParticleEffect();
             ClearParticleEffects();
         }
 
-        switch (ability)
-        {
-            case Weather.Sun:
-                _activeParticle = sunParticleActivate;
-                break;
-            case Weather.Rain:
-                _activeParticle = rainParticleActivate;
-                break;
-            case Weather.Frost:
-                _activeParticle = frostParticleActivate;
-                break;
-            case Weather.Wind:
-                _activeParticle = windParticleActivate;
-                break;
-            default:
-                break;
-        }
-
-        _currentWeather = ability;
         _state = State.Activate;
+        _currentWeather = ability;
+        SetParticleEffect(ability);
+
         PlayParticleEffect();
     }
 
     public void UseEffect(Weather ability)
     {
         // Prevent spamming the same active spell effect
-        if (_state == State.Use && _activeParticle.isPlaying)
+        if (_state == State.None || (_state == State.Use && _activeParticle.isPlaying))
         {
             return;
         }
 
         _state = State.Use;
-
-        switch (ability)
-        {
-            case Weather.Sun:
-                _activeParticle = sunParticleUse;
-                break;
-            case Weather.Rain:
-                _activeParticle = rainParticleUse;
-                break;
-            case Weather.Frost:
-                _activeParticle = frostParticleUse;
-                break;
-            case Weather.Wind:
-                _activeParticle = windParticleUse;
-                break;
-            default:
-                break;
-        }
+        SetParticleEffect(ability);
 
         PlayParticleEffect();
     }
 
-    private void ClearParticleEffects()
+    public void StopParticleEffect(Weather ability)
     {
-        _activeParticle.Clear(true);
+        // Don't stop the activate effect
+        if (_state == State.Activate)
+        {
+            return;
+        }
+
+        // Cancel the weather effects when the player stops holding
+        // except for the Wind ability
+        if (ability != Weather.Wind)
+        {
+            ClearParticleEffects();
+        }
     }
 
-    public void StopParticleEffect()
+
+
+
+
+
+    // Helper functions
+    private void ClearParticleEffects()
     {
         _activeParticle.Stop(true);
+        _activeParticle.Clear(true);
     }
 
     private void PlayParticleEffect()
@@ -121,8 +105,48 @@ public class SpellParticleEffects : MonoBehaviour
         _activeParticle.Play(true);
     }
 
-    private void FindParticleSystem(Weather ability)
+
+    private void SetParticleEffect(Weather ability)
     {
-        
+        if (_state == State.Activate)
+        {
+            switch (ability)
+            {
+                case Weather.Sun:
+                    _activeParticle = sunParticleActivate;
+                    break;
+                case Weather.Rain:
+                    _activeParticle = rainParticleActivate;
+                    break;
+                case Weather.Frost:
+                    _activeParticle = frostParticleActivate;
+                    break;
+                case Weather.Wind:
+                    _activeParticle = windParticleActivate;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (_state == State.Use)
+        {
+            switch (ability)
+            {
+                case Weather.Sun:
+                    _activeParticle = sunParticleUse;
+                    break;
+                case Weather.Rain:
+                    _activeParticle = rainParticleUse;
+                    break;
+                case Weather.Frost:
+                    _activeParticle = frostParticleUse;
+                    break;
+                case Weather.Wind:
+                    _activeParticle = windParticleUse;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
