@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sunKeyOnSun4 : Sunable
+public class sunKeyOnSun4 : Interactible
 {
     public Light keyLight;
     // Start is called before the first frame update

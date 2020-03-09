@@ -4,42 +4,25 @@ using UnityEngine;
 
 public class Interactible : MonoBehaviour
 {
-    // Called first frame that ability is used
     public void OnAbilityDown(Weather ability, AbilityEvent e)
     {
         #region Call Button Down Method
         switch (ability)
         {
             case Weather.Sun:
-                Sunable sunable = this.GetComponent<Sunable>();
-                if (sunable != null)
-                {
-                    sunable.OnSunDown(e);
-                }
+                OnSunDown(e);
                 break;
 
             case Weather.Frost:
-                Freezeable freezeable = this.GetComponent<Freezeable>();
-                if (freezeable != null)
-                {
-                    freezeable.OnFreezeDown(e);
-                }
+                OnFreezeDown(e);
                 break;
 
             case Weather.Wind:
-                Windable windable = this.GetComponent<Windable>();
-                if (windable != null)
-                {
-                    windable.OnWindDown(e);
-                }
+                OnWindDown(e);
                 break;
 
             case Weather.Rain:
-                Rainable rainable = this.GetComponent<Rainable>();
-                if (rainable != null)
-                {
-                    rainable.OnRainDown(e);
-                }
+                OnRainDown(e);
                 break;
 
             default:
@@ -47,44 +30,27 @@ public class Interactible : MonoBehaviour
         }
         #endregion
     }
-
-
-    // Called every frame (except first and last) that ability is used
+    
     public void OnAbility(Weather ability, AbilityEvent e)
     {
+        Debug.Log("Interactible on ability");
         #region Call Button Stay Method
         switch (ability)
         {
             case Weather.Sun:
-                Sunable sunable = this.GetComponent<Sunable>();
-                if (sunable != null)
-                {
-                    sunable.OnSun(e);
-                }
+                OnSun(e);
                 break;
 
             case Weather.Frost:
-                Freezeable freezeable = this.GetComponent<Freezeable>();
-                if (freezeable != null)
-                {
-                    freezeable.OnFreeze(e);
-                }
+                OnFreeze(e);
                 break;
 
             case Weather.Wind:
-                Windable windable = this.GetComponent<Windable>();
-                if (windable != null)
-                {
-                    windable.OnWind(e);
-                }
+                OnWind(e);
                 break;
 
             case Weather.Rain:
-                Rainable rainable = this.GetComponent<Rainable>();
-                if (rainable != null)
-                {
-                    rainable.OnRain(e);
-                }
+                OnRain(e);
                 break;
 
             default:
@@ -92,43 +58,26 @@ public class Interactible : MonoBehaviour
         }
         #endregion
     }
-
-    // Called last frame that ability is used
+    
     public void OnAbilityUp(Weather ability, AbilityEvent e)
     {
         #region Call Button Up Method
         switch (ability)
         {
             case Weather.Sun:
-                Sunable sunable = this.GetComponent<Sunable>();
-                if (sunable != null)
-                {
-                    sunable.OnSunUp(e);
-                }
+                OnSunUp(e);
                 break;
 
             case Weather.Frost:
-                Freezeable freezeable = this.GetComponent<Freezeable>();
-                if (freezeable != null)
-                {
-                    freezeable.OnFreezeUp(e);
-                }
+                OnFreezeUp(e);
                 break;
 
             case Weather.Wind:
-                Windable windable = this.GetComponent<Windable>();
-                if (windable != null)
-                {
-                    windable.OnWindUp(e);
-                }
+                OnWindUp(e);
                 break;
 
             case Weather.Rain:
-                Rainable rainable = this.GetComponent<Rainable>();
-                if (rainable != null)
-                {
-                    rainable.OnRainUp(e);
-                }
+                OnRainUp(e);
                 break;
 
             default:
@@ -136,4 +85,24 @@ public class Interactible : MonoBehaviour
             }
         #endregion
     }
+    
+    // Sun shorthand
+    public virtual void OnSunDown(AbilityEvent e) { }
+    public virtual void OnSun(AbilityEvent e) { }
+    public virtual void OnSunUp(AbilityEvent e) { }
+
+    // Frost shorthand
+    public virtual void OnFreezeDown(AbilityEvent e) { }
+    public virtual void OnFreeze(AbilityEvent e) { }
+    public virtual void OnFreezeUp(AbilityEvent e) { }
+
+    // Wind shorthand
+    public virtual void OnWindDown(AbilityEvent e) { }
+    public virtual void OnWind(AbilityEvent e) { }
+    public virtual void OnWindUp(AbilityEvent e) { }
+
+    // Rain shorthand
+    public virtual void OnRainDown(AbilityEvent e) { }
+    public virtual void OnRain(AbilityEvent e) { }
+    public virtual void OnRainUp(AbilityEvent e) { }
 }

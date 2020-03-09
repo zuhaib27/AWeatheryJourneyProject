@@ -79,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5770316169509085280
+--- !u!114 &4311537826515544290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,6 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floodSpeed: 1
+  maxWaterLevel: {fileID: 2651840359806164881}
+  iceObject: {fileID: 933207248055058352}
 --- !u!1001 &3427167813554931583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -198,3 +200,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3427167813554931583}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &933207248055058352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557153965854439631, guid: 9b48d7dfcc49f58428bd4a4c65fe6b33,
+    type: 3}
+  m_PrefabInstance: {fileID: 3427167813554931583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e097aba8622cdbf47a02ff01f6b4fa2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

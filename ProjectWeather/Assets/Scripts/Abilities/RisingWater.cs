@@ -2,27 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RisingWater : Rainable
+public class RisingWater : Interactible
 {
     public float floodSpeed = 1f;
 
     public Transform maxWaterLevel;
-    
-    Transform _iceLevel;
-    IceGenerator _iceGenerator;
 
-    // Start
-    private void Start()
-    {
-        _iceLevel = transform.GetChild(0);
-        _iceGenerator = _iceLevel.gameObject.GetComponent<IceGenerator>();
-    }
-
-    // Remove ice
-    public override void OnRainDown(AbilityEvent e)
-    {
-        base.OnRainDown(e);
-    }
+    public Ice iceObject;
 
     // Increase water level
     public override void OnRain(AbilityEvent e)
@@ -33,7 +19,9 @@ public class RisingWater : Rainable
 
         if (currentY < maxWaterLevel.position.y)
         {
-            _iceGenerator.ResetGrid();
+            if (iceObject)
+                iceObject.ResetGrid();
+
             Vector3 newScale = transform.localScale;
             newScale.y += floodSpeed * Time.deltaTime;
             transform.localScale = newScale;
@@ -41,11 +29,5 @@ public class RisingWater : Rainable
             float yTranslate = Mathf.Min(floodSpeed / 2f * Time.deltaTime, maxWaterLevel.position.y - currentY);
             transform.Translate(transform.up * yTranslate);
         }
-    }
-
-    // Reset ice grid
-    public override void OnRainUp(AbilityEvent e)
-    {
-        base.OnRainUp(e);
     }
 }
