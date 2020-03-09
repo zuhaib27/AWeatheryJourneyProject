@@ -25,6 +25,7 @@ public class MoveablePlant : MonoBehaviour, IMoverController
     public bool enabledMovement = false;
 
     private float timer;
+    private int count = 0; //count to allow platform to move before its forced to freeze on og pos.
 
     private bool inProgress = false;
     private void Start()
@@ -51,20 +52,23 @@ public class MoveablePlant : MonoBehaviour, IMoverController
         {
             inProgress = true;
             timer += Time.deltaTime;
+            count++;
             goalPosition = (_originalPosition + (TranslationAxis.normalized * Mathf.Sin(timer * TranslationSpeed) * TranslationPeriod));
             //goalPosition.y = Mathf.Clamp(goalPosition.y, _originalPosition.y, Max.y);
             goalPosition.y = Mathf.Abs(goalPosition.y);
             Quaternion targetRotForOscillation = Quaternion.Euler(OscillationAxis.normalized * (Mathf.Sin(timer * OscillationSpeed) * OscillationPeriod)) * _originalRotation;
             goalRotation = Quaternion.Euler(RotationAxis * RotSpeed * Time.time) * targetRotForOscillation;
-            if(Mover.Rigidbody.position.y == _originalPosition.y)
+            if(Mover.Rigidbody.position.y <= _originalPosition.y && count > 5)
             {
+                count = 0;
                 enabledMovement = false;
+                inProgress = false;
             }
         }
         else
         {
-            goalPosition = Mover.Rigidbody.position;
-            goalRotation = Mover.Rigidbody.rotation;
+            goalPosition = _originalPosition;
+            goalRotation = _originalRotation;
         }
     }
 }
