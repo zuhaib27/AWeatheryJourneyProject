@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformOnSun : Sunable
+public class PlatformOnSun : Interactible
 {
 
     public MoveablePlant moveablePlant;

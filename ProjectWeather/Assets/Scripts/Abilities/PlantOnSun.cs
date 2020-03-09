@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshCollider))]
 [RequireComponent(typeof(MeshRenderer))]
-public class PlantOnSun : Sunable
+public class PlantOnSun : Interactible
 {
 
   new MeshCollider collider;
