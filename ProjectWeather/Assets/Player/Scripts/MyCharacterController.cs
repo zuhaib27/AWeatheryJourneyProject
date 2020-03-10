@@ -56,6 +56,7 @@ namespace Assets.Player.Scripts
         private Vector3 _internalVelocityAdd = Vector3.zero;
         private float _maxMoveSpeed = 10f;
         private bool _sprintActivated = false;
+        private float _timeSinceLastImpulse = 0f;
 
         // Animation and Cinemachine variables
         private float _moveSpeed;
@@ -324,14 +325,26 @@ namespace Assets.Player.Scripts
             if (_ability.IsAbilityBeingPressed(Weather.Wind) && !_impulseConsumed)
             {
                 _impulseConsumed = true;
+                _timeSinceLastImpulse = 0f;
                 Motor.ForceUnground(0.1f);
                 AddVelocity((_moveInputVector.normalized + Motor.CharacterUp) * _ability.ImpulseMagnitude);
             }
         }
 
-        private void HandleImpulseValues()
+        private void HandleImpulseValues(float deltaTime)
         {
+            // Start a timer when the player hits the ground
             if (Motor.GroundingStatus.IsStableOnGround)
+            {
+                _timeSinceLastImpulse += deltaTime;
+            }
+            else if (_timeSinceLastImpulse > 0)
+            {
+                _timeSinceLastImpulse += deltaTime;
+            }
+
+
+            if (_timeSinceLastImpulse > _ability.WindAbilitySecondsReset)
             {
                 _impulseConsumed = false;
             }
@@ -346,7 +359,7 @@ namespace Assets.Player.Scripts
             // Handle jump-related values
             HandleJumpValues(deltaTime);
 
-            HandleImpulseValues();
+            HandleImpulseValues(deltaTime);
         }
 
         public bool IsColliderValidForCollisions(Collider coll)
