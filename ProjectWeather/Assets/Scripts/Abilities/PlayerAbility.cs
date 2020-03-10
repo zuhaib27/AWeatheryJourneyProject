@@ -11,6 +11,7 @@ public class PlayerAbility : MonoBehaviour
     [Header("Wind Ability")]
     public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
+    public float WindAbilitySecondsReset = 0.5f;
 
     // Private variables
     private SpellParticleEffects _spellEffects;
