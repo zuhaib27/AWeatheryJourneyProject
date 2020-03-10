@@ -11,7 +11,7 @@ public class PlayerAbility : MonoBehaviour
     [Header("Wind Ability")]
     public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
-    public float WindAbilitySecondsReset = 0.5f;
+    public float WindPreGroundingGraceTime = 0f;
 
     // Private variables
     private SpellParticleEffects _spellEffects;
@@ -90,6 +90,11 @@ public class PlayerAbility : MonoBehaviour
 
     public bool IsAbilityBeingPressed(Weather ability)
     {
+        if (ability == Weather.Wind)
+        {
+            return _currentAbility == ability && (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2));
+        }
+
         return _isBeingPressed && (_currentAbility == ability);
     }
 

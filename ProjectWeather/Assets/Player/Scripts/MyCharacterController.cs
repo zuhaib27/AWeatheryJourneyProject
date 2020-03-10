@@ -1,5 +1,6 @@
 using UnityEngine;
 using KinematicCharacterController;
+using UnityEditor.Timeline;
 
 
 namespace Assets.Player.Scripts
@@ -52,11 +53,16 @@ namespace Assets.Player.Scripts
         private float _timeSinceJumpRequested = Mathf.Infinity;
         private float _timeSinceLastAbleToJump = 0f;
         private bool _doubleJumpConsumed = false;
-        private bool _impulseConsumed = false;
+        
         private Vector3 _internalVelocityAdd = Vector3.zero;
         private float _maxMoveSpeed = 10f;
         private bool _sprintActivated = false;
-        private float _timeSinceLastImpulse = 0f;
+
+        // Wind ability variables
+        private bool _windAbilityRequested = false;
+        private bool _windAbilityConsumed = false;
+        private bool _windAbilityUsedThisFrame = false;
+        private float _timeSinceWindAbilityRequested = Mathf.Infinity;
 
         // Animation and Cinemachine variables
         private float _moveSpeed;
@@ -119,10 +125,11 @@ namespace Assets.Player.Scripts
                 _jumpRequested = true;
             }
 
-            // Impulse/Wind Ability
-            if (_ability.AllowWindAbility)
+            // Impulse/Wind Ability input
+            if (_ability.AllowWindAbility && _ability.IsAbilityBeingPressed(Weather.Wind))
             {
-                HandleWindAbility();
+                _timeSinceWindAbilityRequested = 0f;
+                _windAbilityRequested = true;
             }
 
             // Sprint input
@@ -228,6 +235,7 @@ namespace Assets.Player.Scripts
             }
 
             HandleJumping(ref currentVelocity, deltaTime);
+            HandleWindAbility(ref currentVelocity, deltaTime);
 
             // Take into account additive velocity
             if (_internalVelocityAdd.sqrMagnitude > 0f)
@@ -320,33 +328,41 @@ namespace Assets.Player.Scripts
         /// This is the Character's 'Wind' Ability. Only usable when the character
         /// is on the ground. i.e. can't jump, then use it
         /// </summary>
-        private void HandleWindAbility()
+        private void HandleWindAbility(ref Vector3 currentVelocity, float deltaTime)
         {
-            if (_ability.IsAbilityBeingPressed(Weather.Wind) && !_impulseConsumed)
+            _windAbilityUsedThisFrame = false;
+            _timeSinceWindAbilityRequested += deltaTime;
+            if (_windAbilityRequested)
             {
-                _impulseConsumed = true;
-                _timeSinceLastImpulse = 0f;
-                Motor.ForceUnground(0.1f);
-                AddVelocity((_moveInputVector.normalized + Motor.CharacterUp) * _ability.ImpulseMagnitude);
+                if (!_windAbilityConsumed)
+                {
+                    Vector3 jumpDirection = Motor.GroundingStatus.GroundNormal;
+
+                    Motor.ForceUnground(0.1f);
+
+                    // Add to the return velocity and reset jump state
+                    currentVelocity += (jumpDirection * _ability.ImpulseMagnitude) -
+                                       Vector3.Project(currentVelocity, Motor.CharacterUp);
+                    _windAbilityRequested = false;
+                    _windAbilityConsumed = true;
+                    _windAbilityUsedThisFrame = true;
+                }
             }
         }
 
         private void HandleImpulseValues(float deltaTime)
         {
-            // Start a timer when the player hits the ground
+            if (_windAbilityRequested && _timeSinceWindAbilityRequested > _ability.WindPreGroundingGraceTime)
+            {
+                _windAbilityRequested = false;
+            }
+
             if (Motor.GroundingStatus.IsStableOnGround)
             {
-                _timeSinceLastImpulse += deltaTime;
-            }
-            else if (_timeSinceLastImpulse > 0)
-            {
-                _timeSinceLastImpulse += deltaTime;
-            }
-
-
-            if (_timeSinceLastImpulse > _ability.WindAbilitySecondsReset)
-            {
-                _impulseConsumed = false;
+                if (!_windAbilityUsedThisFrame)
+                {
+                    _windAbilityConsumed = false;
+                }
             }
         }
 
