@@ -7,12 +7,18 @@ public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
 
-    public WeatherUI weatherUI;
+    public WeatherHUD weatherUI;
 
     [Header("Wind Ability")]
     public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
     public float WindPreGroundingGraceTime = 0f;
+
+    [Header("Enabled Abilities")]
+    public bool isWindEnabled = true;
+    public bool isRainEnabled = true;
+    public bool isSunEnabled = true;
+    public bool isFrostEnabled = true;
 
     // Private variables
     private SpellParticleEffects _spellEffects;
@@ -39,16 +45,16 @@ public class PlayerAbility : MonoBehaviour
     void Update()
     {
         // Update active ability
-        if (ButtonMappings.GetButtonDown(Button.WindActivate))
+        if (isWindEnabled && ButtonMappings.GetButtonDown(Button.WindActivate))
             ActivateAbility(Weather.Wind);
 
-        if (ButtonMappings.GetButtonDown(Button.RainActivate))
+        if (isRainEnabled && ButtonMappings.GetButtonDown(Button.RainActivate))
             ActivateAbility(Weather.Rain);
 
-        if (ButtonMappings.GetButtonDown(Button.FrostActivate))
+        if (isFrostEnabled && ButtonMappings.GetButtonDown(Button.FrostActivate))
             ActivateAbility(Weather.Frost);
 
-        if (ButtonMappings.GetButtonDown(Button.SunActivate))
+        if (isSunEnabled && ButtonMappings.GetButtonDown(Button.SunActivate))
             ActivateAbility(Weather.Sun);
 
 
@@ -84,6 +90,26 @@ public class PlayerAbility : MonoBehaviour
         }
 
         return _isBeingPressed && (_currentAbility == ability);
+    }
+
+    // Enable an ability (disabled abilties cannot be made active)
+    public void EnableAbility(Weather ability)
+    {
+        switch (ability)
+        {
+            case Weather.Wind:
+                isWindEnabled = true;
+                break;
+            case Weather.Rain:
+                isRainEnabled = true;
+                break;
+            case Weather.Sun:
+                isSunEnabled = true;
+                break;
+            case Weather.Frost:
+                isFrostEnabled = true;
+                break;
+        }
     }
 
     // Set the currently active ability

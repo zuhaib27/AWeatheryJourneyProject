@@ -765,7 +765,7 @@ PrefabInstance:
     - target: {fileID: 1414842299767179564, guid: a463a3088c4185f4a94981f26877b50e,
         type: 3}
       propertyPath: m_Name
-      value: WeatherUI
+      value: WeatherHUD
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a463a3088c4185f4a94981f26877b50e, type: 3}
