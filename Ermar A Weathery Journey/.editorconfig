@@ -1,0 +1,44 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# -----------------------------------------------------------------------------------------------
+# To use this file with your text editor/IDE, you may need to add the editorconfig plugin.
+# Add this file to the root directory of the project.
+
+
+# Top-most EditorConfig file
+root = true
+
+# Baseline settings
+[*]
+charset = utf-8
+end_of_line = lf                                                # Unix-style EOL format
+indent_style = space
+tab_width = 4
+indent_size = 4
+max_line_length = 120
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# MSBuild
+[*.{csproj,proj,projitems,shproj,fsproj,target,props}]
+indent_style = space
+indent_size = 2
+
+# XML config files
+[*.{config,nuspec,resx,natvis}]
+indent_style = space
+tab_width = 2
+indent_size = 2
+
+# Python files
+[*.py]
+indent_style = space
+tab_width = 2
+indent_size = 2
+max_line_length = 80
+
+# Makefiles
+[Makefile]
+indent_style = tab
+tab_width = 4
+indent_size = 4

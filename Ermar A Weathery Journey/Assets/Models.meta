@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:ProjectWeather/Assets/Platforms/Animations.meta
+guid: 55a7604af7b1a49bdba334e6a4f19ec3
+=======
 guid: 073aa3ad979506644a32bcbdf1c33f19
+>>>>>>> origin/develop:ProjectWeather/Assets/Models.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
