@@ -92,7 +92,7 @@ public class PlayerAbility : MonoBehaviour
     {
         if (ability == Weather.Wind)
         {
-            return Input.GetKeyDown(_keyCode2) && _currentAbility == ability;
+            return _currentAbility == ability && (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2));
         }
 
         return _isBeingPressed && (_currentAbility == ability);
