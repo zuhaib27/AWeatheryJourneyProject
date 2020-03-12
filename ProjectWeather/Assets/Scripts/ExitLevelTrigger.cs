@@ -8,7 +8,7 @@ public class ExitLevelTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            LevelManager.Instance.LoadLevel(LevelIndex.MainMenu);
+            LevelManager.Instance.LoadNextLevel();
         }
     }
 }

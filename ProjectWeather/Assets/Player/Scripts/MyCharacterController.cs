@@ -1,6 +1,5 @@
 using UnityEngine;
 using KinematicCharacterController;
-using UnityEditor.Timeline;
 
 
 namespace Assets.Player.Scripts
