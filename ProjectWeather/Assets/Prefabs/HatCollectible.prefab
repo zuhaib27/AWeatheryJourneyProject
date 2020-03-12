@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 511890505482610963}
   - component: {fileID: 511890505482610962}
   m_Layer: 0
-  m_Name: CoinCollectible
+  m_Name: HatCollectible
   m_TagString: Collectible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,8 +185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3bda6727bb4b549b78524381ca7f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notCollectedHat: {fileID: 0}
-  collectedHat: {fileID: 0}
 --- !u!54 &511890505482610962
 Rigidbody:
   m_ObjectHideFlags: 0
