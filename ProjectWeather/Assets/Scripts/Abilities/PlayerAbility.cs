@@ -1,28 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AWeatheryJourney;
 
 public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
 
-    public WeatherUI weatherUI;
+    public WeatherHUD weatherUI;
 
     [Header("Wind Ability")]
     public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
     public float WindPreGroundingGraceTime = 0f;
 
+    [Header("Enabled Abilities")]
+    public bool isWindEnabled = true;
+    public bool isRainEnabled = true;
+    public bool isSunEnabled = true;
+    public bool isFrostEnabled = true;
+
     // Private variables
     private SpellParticleEffects _spellEffects;
     private Weather _currentAbility = Weather.None;
     private bool _isBeingPressed = false;
-
-    private const KeyCode _keyCode1 = KeyCode.F;
-    private const KeyCode _keyCode2 = KeyCode.JoystickButton1;  // B on Xbox controller
-
-    private string _button3 = "DPad Vertical";
-    private string _button4 = "DPad Horizontal";
 
 
     private void Awake()
@@ -40,46 +41,39 @@ public class PlayerAbility : MonoBehaviour
             Debug.LogWarning("No MusicPlayer found in scene.");
         #endregion
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        // Update D-pad active ability
-        if (Input.GetAxisRaw(_button3) > 0 || Input.GetKeyDown(KeyCode.Alpha1))
-        {
+        // Update active ability
+        if (isWindEnabled && ButtonMappings.GetButtonDown(Button.WindActivate))
             ActivateAbility(Weather.Wind);
-        }
-        else if (Input.GetAxisRaw(_button3) < 0 || Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            ActivateAbility(Weather.Rain);
-        }
 
-        if (Input.GetAxisRaw(_button4) > 0 || Input.GetKeyDown(KeyCode.Alpha3))
-        {
+        if (isRainEnabled && ButtonMappings.GetButtonDown(Button.RainActivate))
+            ActivateAbility(Weather.Rain);
+
+        if (isFrostEnabled && ButtonMappings.GetButtonDown(Button.FrostActivate))
             ActivateAbility(Weather.Frost);
-        }
-        else if (Input.GetAxisRaw(_button4) < 0 || Input.GetKeyDown(KeyCode.Alpha4))
-        {
+
+        if (isSunEnabled && ButtonMappings.GetButtonDown(Button.SunActivate))
             ActivateAbility(Weather.Sun);
-        }
 
 
         // Update when the player uses the ability
         bool isPressed = false;
 
-        if (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2))
+        if (ButtonMappings.GetButtonDown(Button.AbilityUse))
         {
             OnAbilityDown(_currentAbility);
             isPressed = true;
         }
 
-        if (Input.GetKey(_keyCode1) || Input.GetKey(_keyCode2))
+        if (ButtonMappings.GetButton(Button.AbilityUse))
         {
             OnAbility(_currentAbility);
             isPressed = true;
         }
 
-        if (Input.GetKeyUp(_keyCode1) || Input.GetKeyUp(_keyCode2))
+        if (ButtonMappings.GetButtonUp(Button.AbilityUse))
         {
             OnAbilityUp(_currentAbility);
             isPressed = true;
@@ -92,10 +86,30 @@ public class PlayerAbility : MonoBehaviour
     {
         if (ability == Weather.Wind)
         {
-            return _currentAbility == ability && (Input.GetKeyDown(_keyCode1) || Input.GetKeyDown(_keyCode2));
+            return _currentAbility == ability && ButtonMappings.GetButtonDown(Button.AbilityUse);
         }
 
         return _isBeingPressed && (_currentAbility == ability);
+    }
+
+    // Enable an ability (disabled abilties cannot be made active)
+    public void EnableAbility(Weather ability)
+    {
+        switch (ability)
+        {
+            case Weather.Wind:
+                isWindEnabled = true;
+                break;
+            case Weather.Rain:
+                isRainEnabled = true;
+                break;
+            case Weather.Sun:
+                isSunEnabled = true;
+                break;
+            case Weather.Frost:
+                isFrostEnabled = true;
+                break;
+        }
     }
 
     // Set the currently active ability
