@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: abd4c67d1f4ca4260ae10e27fcf46904
+guid: 533dfdea66e054d9f98ab997e696deb7
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: None.001
-    second: {fileID: 2100000, guid: 6a90f12a29cc645eca9cea1055388ba6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: roughdirt
-    second: {fileID: 2100000, guid: de8874013a7f74670883e57574d23339, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -49,10 +39,10 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
