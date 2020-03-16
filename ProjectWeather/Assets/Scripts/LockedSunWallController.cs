@@ -5,20 +5,28 @@ using UnityEngine;
 public class LockedSunWallController : MonoBehaviour
 {
     public GameObject Door;
+
+    public GameObject CameraDoor;
+    public GameObject MainCamera;
+
     public static LockedSunWallController instance;
     public bool sunKey1 = false;
     public bool sunKey2 = false;
     public bool sunKey3 = false;
     public bool sunKey4 = false;
+
     private bool doorOpened = false;
     private float originalypos;
     private bool startAnimation = true;
+
+    private AudioSource audioDoor;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         originalypos = Door.transform.position.y;
+        audioDoor = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,14 +39,26 @@ public class LockedSunWallController : MonoBehaviour
             if (startAnimation)
             {
                 Debug.Log("shake");
+                StartCoroutine(OpenDoorSequence());
                 startAnimation = false; 
             }
-            Door.transform.Translate(Vector3.up * Time.deltaTime * 10);
+            Door.transform.Translate(Vector3.up * Time.deltaTime * 10 * .5f);
         }
         if (Door.transform.position.y > (originalypos + 10))
         {
             doorOpened = true;
         }
+        
+    }
+
+    IEnumerator OpenDoorSequence()
+    {
+        CameraDoor.SetActive(true);
+        MainCamera.SetActive(false);
+        audioDoor.Play(0);
+        yield return new WaitForSeconds(2.5f);
+        MainCamera.SetActive(true);
+        CameraDoor.SetActive(false);
         
     }
 }

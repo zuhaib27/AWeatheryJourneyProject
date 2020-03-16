@@ -29,7 +29,7 @@ public class collectiblePickUp : MonoBehaviour
             //notCollectedHat.enabled = false;
             //collectedHat.enabled = true;
             ScoringSystem.hatCollected = true;
-            collectSound.Play(); //need to add soundfx 
+            collectSound.Play(0); //need to add soundfx 
             Destroy(gameObject);
         }
     }
