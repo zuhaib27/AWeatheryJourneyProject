@@ -20,7 +20,7 @@ public class SceneSequenceL01 : MonoBehaviour
         PlayerControls.SetActive(false);
         CameraWaterfall.SetActive(true);
         MainCamera.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.9f);
         CameraSunPuzzle.SetActive(true);
         CameraWaterfall.SetActive(false);
         yield return new WaitForSeconds(1.9f);
