@@ -15,38 +15,38 @@ public class LockedSunWallController : MonoBehaviour
     public bool sunKey3 = false;
     public bool sunKey4 = false;
 
-    private bool doorOpened = false;
-    private float originalypos;
-    private bool startAnimation = true;
+    private bool _doorOpened = false;
+    private float _originalypos;
+    private bool _startAnimation = true;
 
-    private AudioSource audioDoor;
+    private AudioSource _audioDoor;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        originalypos = Door.transform.position.y;
-        audioDoor = GetComponentInChildren<AudioSource>();
+        _originalypos = Door.transform.position.y;
+        _audioDoor = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //play with different bools to set combinations.
-        if(sunKey1 && sunKey2 && sunKey3 && sunKey4 && !doorOpened)
+        if(sunKey1 && sunKey2 && sunKey3 && sunKey4 && !_doorOpened)
         {
             //shake camera, maybe play sound effect?
-            if (startAnimation)
+            if (_startAnimation)
             {
                 Debug.Log("shake");
                 StartCoroutine(OpenDoorSequence());
-                startAnimation = false; 
+                _startAnimation = false; 
             }
             Door.transform.Translate(Vector3.up * Time.deltaTime * 10 * .5f);
         }
-        if (Door.transform.position.y > (originalypos + 10))
+        if (Door.transform.position.y > (_originalypos + 10))
         {
-            doorOpened = true;
+            _doorOpened = true;
         }
         
     }
@@ -55,7 +55,7 @@ public class LockedSunWallController : MonoBehaviour
     {
         CameraDoor.SetActive(true);
         MainCamera.SetActive(false);
-        audioDoor.Play(0);
+        _audioDoor.Play(0);
         yield return new WaitForSeconds(2.5f);
         MainCamera.SetActive(true);
         CameraDoor.SetActive(false);
