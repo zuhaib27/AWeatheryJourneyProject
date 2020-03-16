@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class collectiblePickUp : MonoBehaviour
 {
-    private AudioSource collectSound;
+    public AudioSource collectSound;
     //public SpriteRenderer notCollectedHat;
     //public SpriteRenderer collectedHat;
     // Start is called before the first frame update
     void Start()
     {
-        collectSound = GetComponentInChildren<AudioSource>();
+       // collectSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,8 +29,9 @@ public class collectiblePickUp : MonoBehaviour
             //notCollectedHat.enabled = false;
             //collectedHat.enabled = true;
             ScoringSystem.hatCollected = true;
-            collectSound.Play(); //need to add soundfx 
-            Destroy(gameObject);
+            
+            collectSound.Play(0); //need to add soundfx 
+            this.gameObject.SetActive(false);
         }
     }
 }
