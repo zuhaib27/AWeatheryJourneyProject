@@ -5,40 +5,60 @@ using UnityEngine;
 public class LockedSunWallController : MonoBehaviour
 {
     public GameObject Door;
+
+    public GameObject CameraDoor;
+    public GameObject MainCamera;
+
     public static LockedSunWallController instance;
     public bool sunKey1 = false;
     public bool sunKey2 = false;
     public bool sunKey3 = false;
     public bool sunKey4 = false;
-    private bool doorOpened = false;
-    private float originalypos;
-    private bool startAnimation = true;
+
+    private bool _doorOpened = false;
+    private float _originalypos;
+    private bool _startAnimation = true;
+
+    private AudioSource _audioDoor;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
-        originalypos = Door.transform.position.y;
+        _originalypos = Door.transform.position.y;
+        _audioDoor = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //play with different bools to set combinations.
-        if(sunKey1 && sunKey2 && sunKey3 && sunKey4 && !doorOpened)
+        if(sunKey1 && sunKey2 && sunKey3 && sunKey4 && !_doorOpened)
         {
             //shake camera, maybe play sound effect?
-            if (startAnimation)
+            if (_startAnimation)
             {
                 Debug.Log("shake");
-                startAnimation = false; 
+                StartCoroutine(OpenDoorSequence());
+                _startAnimation = false; 
             }
-            Door.transform.Translate(Vector3.up * Time.deltaTime * 10);
+            Door.transform.Translate(Vector3.up * Time.deltaTime * 10 * .5f);
         }
-        if (Door.transform.position.y > (originalypos + 10))
+        if (Door.transform.position.y > (_originalypos + 10))
         {
-            doorOpened = true;
+            _doorOpened = true;
         }
+        
+    }
+
+    IEnumerator OpenDoorSequence()
+    {
+        CameraDoor.SetActive(true);
+        MainCamera.SetActive(false);
+        _audioDoor.Play(0);
+        yield return new WaitForSeconds(2.5f);
+        MainCamera.SetActive(true);
+        CameraDoor.SetActive(false);
         
     }
 }
