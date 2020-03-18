@@ -4,31 +4,35 @@ using UnityEngine;
 
 public class BucketAndRope : Interactible
 {
+    public AudioSource fillSound;
+
     Animator _animator;
     RisingWater _risingWater;
-
-    public AudioSource fillSound;
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
         _risingWater = GetComponentInChildren<RisingWater>();
+
+        _animator.speed = .2f;
     }
 
     private void Update()
     {
         //_animator.SetVector("", )
-        _animator.enabled = _risingWater.DidWaterLevelChange();
-        Debug.Log("Did water level change: " + _risingWater.DidWaterLevelChange());
-    }
+        if (_risingWater.DidWaterLevelChange())
+        {
+            _animator.enabled = true;
 
-    public override void OnRainDown(AbilityEvent e)
-    {
-        fillSound.Play();
-    }
+            if (fillSound && !fillSound.isPlaying)
+                fillSound.Play();
 
-    public override void OnRainUp(AbilityEvent e)
-    {
-        fillSound.Stop();
+            fillSound.pitch += 1f / _animator.GetCurrentAnimatorStateInfo(0).length * _animator.speed * Time.deltaTime;
+        }
+        else
+        {
+            _animator.enabled = false;
+            fillSound.Stop();
+        }
     }
 }
