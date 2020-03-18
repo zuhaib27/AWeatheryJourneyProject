@@ -21,14 +21,16 @@ public class PlayerAbility : MonoBehaviour
     public bool isFrostEnabled = true;
 
     // Private variables
-    private SpellParticleEffects _spellEffects;
     private Weather _currentAbility = Weather.None;
     private bool _isBeingPressed = false;
 
+    private SpellParticleEffects _spellEffects;
+    private PlayerSounds _playerSounds;
 
     private void Awake()
     {
         _spellEffects = GetComponent<SpellParticleEffects>();
+        _playerSounds = GetComponent<PlayerSounds>();
     }
 
     private void Start()
@@ -137,8 +139,9 @@ public class PlayerAbility : MonoBehaviour
     // Called first frame that ability is used
     void OnAbilityDown(Weather ability)
     {
-        // Start particle effect
+        // Particles and sounds
         _spellEffects.UseEffect(ability);
+        _playerSounds.PlaySpell(ability);
 
         AbilityEvent e = CreateAbilityEvent();
 
@@ -176,7 +179,9 @@ public class PlayerAbility : MonoBehaviour
     // Called last frame that ability is used
     void OnAbilityUp(Weather ability)
     {
+        // Particles and sounds
         _spellEffects.StopParticleEffect(ability);
+        _playerSounds.StopSpell(ability);
 
         AbilityEvent e = CreateAbilityEvent();
 
