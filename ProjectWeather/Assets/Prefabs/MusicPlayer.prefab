@@ -43,25 +43,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367ed1e9ebc0bb94b817eb792a681c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixerGroup: {fileID: 3496773201011938004, guid: 3d3db332159127c4f9b901d4c920a3e2,
-    type: 2}
-  delayBetweenSongs: 1
-  fadeTimeOnSongEnd: 2
+  fadeTimeBetweenSongs: 0.3
   loopOverPlaylist: 0
   switchThemeOnAbilityChange: 1
   playlist:
   - name: Main Theme
     clip: {fileID: 8300000, guid: 4550b94691227604ab961be40c108a2c, type: 3}
     volume: 1
+    mixerGroup: {fileID: -2627158381182306092, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    mixerSnapshot: {fileID: 4865192477989036646, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    source: {fileID: 0}
   - name: Sun Theme
     clip: {fileID: 8300000, guid: 4550b94691227604ab961be40c108a2c, type: 3}
     volume: 1
+    mixerGroup: {fileID: -2627158381182306092, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    mixerSnapshot: {fileID: 4865192477989036646, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    source: {fileID: 0}
   - name: Frost Theme
     clip: {fileID: 8300000, guid: a508d493c70d15745a6b27ca0f822050, type: 3}
     volume: 1
+    mixerGroup: {fileID: 8470499744971835449, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    mixerSnapshot: {fileID: -3830664780239540301, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    source: {fileID: 0}
   - name: Wind Theme
     clip: {fileID: 8300000, guid: d6d40146743c85b4995a4848728b3042, type: 3}
     volume: 1
+    mixerGroup: {fileID: 289930307695855051, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    mixerSnapshot: {fileID: -1718029506161206894, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    source: {fileID: 0}
   - name: Rain Theme
     clip: {fileID: 8300000, guid: b49759b56e6cd7145bfbce37aa40293c, type: 3}
     volume: 1
+    mixerGroup: {fileID: 1609256947255556052, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    mixerSnapshot: {fileID: -3375019315967500393, guid: cf8f220f09ee97144b332af8239861f3,
+      type: 2}
+    source: {fileID: 0}
