@@ -21,6 +21,11 @@ public class Sound
 
     private void Init()
     {
+        if (source == null)
+        {
+            Debug.LogWarning("Sound is missing a source!");
+        }
+
         _volume = source.volume;
         _pitch = source.pitch;
         _initialized = true;

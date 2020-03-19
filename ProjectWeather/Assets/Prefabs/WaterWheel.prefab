@@ -389,8 +389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a568fc4194d0af43b36c0dd06911939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.02
-  maxSpeed: 0.2
+  acceleration: 0.04
+  maxWheelSpeed: 0.4
+  soundSpeed: 4
   drawBridge: {fileID: 0}
 --- !u!95 &7599636481829936564
 Animator:
