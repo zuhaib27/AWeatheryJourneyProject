@@ -45,7 +45,7 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 5a855d4bf8d36cc4486f080bdeaa8678
-    name: GameSoundVolume
+    name: SFXVolume
   - guid: 57c1ccf554c96e64e8b6e8e8936d69a2
     name: MasterVolume
   - guid: b3be831afccfd4b4383e817557eef244

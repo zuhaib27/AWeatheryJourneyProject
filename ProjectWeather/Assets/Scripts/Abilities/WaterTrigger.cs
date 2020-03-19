@@ -10,6 +10,7 @@ public class WaterTrigger : MonoBehaviour
         {
             PlayerSounds playerSounds = other.GetComponent<PlayerSounds>();
             playerSounds.PlaySplash();
+            Debug.Log("Splash");
         }
     }
 }

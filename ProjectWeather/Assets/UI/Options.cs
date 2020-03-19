@@ -24,7 +24,7 @@ public class Options: MonoBehaviour
         invertCameraY.isOn = SettingsManager.Instance.Settings.playerSettings.invertCameraY;
         cameraSensitivitySlider.value = SettingsManager.Instance.Settings.playerSettings.cameraSensitivity;
 
-        gameVolumeSlider.value = SettingsManager.Instance.Settings.gameVolume;
+        gameVolumeSlider.value = SettingsManager.Instance.Settings.sfxVolume;
         musicVolumeSlider.value = SettingsManager.Instance.Settings.musicVolume;
     }
 
@@ -38,9 +38,9 @@ public class Options: MonoBehaviour
         SettingsManager.Instance.SetPlayerCameraSensitivty(value);
     }
 
-    public void SetGameVolume(float value)
+    public void SetSFXVolume(float value)
     {
-        SettingsManager.Instance.SetMasterVolume(value);
+        SettingsManager.Instance.SetSFXVolume(value);
     }
 
     public void SetMusicVolume(float value)

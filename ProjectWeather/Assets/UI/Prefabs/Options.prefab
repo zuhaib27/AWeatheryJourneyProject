@@ -1340,7 +1340,7 @@ GameObject:
   - component: {fileID: 4939145755323594325}
   - component: {fileID: 4939145755323594324}
   m_Layer: 5
-  m_Name: GameVolumeSlider
+  m_Name: SFXVolumeSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1419,7 +1419,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6600204569256728743}
-        m_MethodName: SetGameVolume
+        m_MethodName: SetSFXVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
