@@ -54,11 +54,11 @@ public class MoveablePlant : MonoBehaviour, IMoverController
             timer += Time.deltaTime;
             count++;
             goalPosition = (_originalPosition + (TranslationAxis.normalized * Mathf.Sin(timer * TranslationSpeed) * TranslationPeriod));
-            //goalPosition.y = Mathf.Clamp(goalPosition.y, _originalPosition.y, Max.y);
+            //goalPosition.y = Mathf.Clamp(goalPosition.y, Min.y, Max.y);
             goalPosition.y = Mathf.Abs(goalPosition.y);
             Quaternion targetRotForOscillation = Quaternion.Euler(OscillationAxis.normalized * (Mathf.Sin(timer * OscillationSpeed) * OscillationPeriod)) * _originalRotation;
             goalRotation = Quaternion.Euler(RotationAxis * RotSpeed * Time.time) * targetRotForOscillation;
-            if(Mover.Rigidbody.position.y <= _originalPosition.y && count > 5)
+            if(Mover.Rigidbody.position.y <= Min.y && count > 3)
             {
                 count = 0;
                 enabledMovement = false;
