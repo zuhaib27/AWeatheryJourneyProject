@@ -14,7 +14,7 @@ public struct GameSettings
 {
     public PlayerSettings playerSettings;
 
-    public float gameVolume;
+    public float sfxVolume;
     public float musicVolume;
 }
 
@@ -26,7 +26,8 @@ public class SettingsManager : MonoBehaviour
     public GameSettings Settings { get { return _settings; } }
 
     public AudioMixer masterAudio;
-    
+    public AudioMixer musicAudio;
+
     void Awake()
     {
         #region singleton
@@ -48,7 +49,7 @@ public class SettingsManager : MonoBehaviour
         SetPlayerInvertCameraY(_settings.playerSettings.invertCameraY);
         SetPlayerCameraSensitivty(_settings.playerSettings.cameraSensitivity);
         
-        SetMasterVolume(_settings.gameVolume);
+        SetSFXVolume(_settings.sfxVolume);
         SetMusicVolume(_settings.musicVolume);
     }
 
@@ -74,7 +75,7 @@ public class SettingsManager : MonoBehaviour
     {
         _settings.playerSettings.invertCameraY = PlayerPrefs.GetInt("PlayerInvertCameraY", 0) > 0;
         _settings.playerSettings.cameraSensitivity = PlayerPrefs.GetFloat("PlayerCameraSensitivity", .5f);
-        _settings.gameVolume = PlayerPrefs.GetFloat("MasterVolume", 0f);
+        _settings.sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0f);
         _settings.musicVolume = PlayerPrefs.GetFloat("MusicVolume", -20f);
     }
 
@@ -82,7 +83,7 @@ public class SettingsManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("PlayerInvertCameraY", _settings.playerSettings.invertCameraY ? 1 : 0);
         PlayerPrefs.SetFloat("PlayerCameraSensitivity", _settings.playerSettings.cameraSensitivity);
-        PlayerPrefs.SetFloat("MasterVolume", _settings.gameVolume);
+        PlayerPrefs.SetFloat("SFXVolume", _settings.sfxVolume);
         PlayerPrefs.SetFloat("MusicVolume", _settings.musicVolume);
     }
     #endregion
@@ -105,15 +106,15 @@ public class SettingsManager : MonoBehaviour
             playerInputs.Settings = _settings.playerSettings;
     }
 
-    public void SetMasterVolume(float value)
+    public void SetSFXVolume(float value)
     {
-        Instance._settings.gameVolume = value;
-        masterAudio.SetFloat("MasterVolume", value);
+        Instance._settings.sfxVolume = value;
+        masterAudio.SetFloat("SFXVolume", value);
     }
 
     public void SetMusicVolume(float value)
     {
         _settings.musicVolume = value;
-        masterAudio.SetFloat("MusicVolume", value);
+        musicAudio.SetFloat("MasterVolume", value);
     }
 }

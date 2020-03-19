@@ -1,28 +1,74 @@
-﻿using UnityEngine.Audio;
+using UnityEngine.Audio;
 using UnityEngine;
 
 [System.Serializable]
-public class Sound {
+public class Sound
+{
+	public AudioClip[] clips = new AudioClip[1];
+    public AudioSource source;
 
-	public string name;
+    public float Volume { get { return source.volume; }}
 
-	public AudioClip clip;
-
+    [Header("Sound Modifiers")]
+    [Range(0f, 1f)]
+	public float volumeVariance = 0f;
 	[Range(0f, 1f)]
-	public float volume = .75f;
-	[Range(0f, 1f)]
-	public float volumeVariance = .1f;
+	public float pitchVariance = 0f;
 
-	[Range(.1f, 3f)]
-	public float pitch = 1f;
-	[Range(0f, 1f)]
-	public float pitchVariance = .1f;
+    private bool _initialized;
+    private float _volume;
+    private float _pitch;
 
-	public bool loop = false;
+    private void Init()
+    {
+        if (source == null)
+        {
+            Debug.LogWarning("Sound is missing a source!");
+        }
 
-	public AudioMixerGroup mixerGroup;
+        _volume = source.volume;
+        _pitch = source.pitch;
+        _initialized = true;
 
-	[HideInInspector]
-	public AudioSource source;
+        if (source == null)
+        {
+            source = new AudioSource();
+        }
+    }
 
+    public void Play()
+    {
+        if (!_initialized)
+        {
+            Init();
+        }
+
+
+        source.Stop();
+        source.clip = GetRandomClip();
+        source.volume = _volume * (1f + UnityEngine.Random.Range(-volumeVariance, volumeVariance));
+        source.pitch = _pitch * (1f + UnityEngine.Random.Range(-pitchVariance, pitchVariance));
+        source.Play();
+    }
+
+    public void PlayOneShot(float volumeScale = -1)
+    {
+        if (!_initialized)
+        {
+            Init();
+        }
+
+        if (volumeScale < 0)
+            volumeScale = _volume;
+
+        source.Stop();
+        volumeScale *= (1f + UnityEngine.Random.Range(-volumeVariance, volumeVariance));
+        source.pitch = _pitch * (1f + UnityEngine.Random.Range(-pitchVariance, pitchVariance));
+        source.PlayOneShot(GetRandomClip(), volumeScale);
+    }
+
+    private AudioClip GetRandomClip()
+    {
+        return clips[UnityEngine.Random.Range(0, clips.Length)];
+    }
 }
