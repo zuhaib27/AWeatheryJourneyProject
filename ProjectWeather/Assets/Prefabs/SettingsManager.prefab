@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterAudio: {fileID: 24100000, guid: 3d3db332159127c4f9b901d4c920a3e2, type: 2}
+  musicAudio: {fileID: 24100000, guid: cf8f220f09ee97144b332af8239861f3, type: 2}

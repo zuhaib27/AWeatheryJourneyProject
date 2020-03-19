@@ -12,6 +12,8 @@ public class CheckpointManager : MonoBehaviour
     private Vector3 _currentCheckpoint;
     private Animator _animator;
     private MyCharacterController _cc;
+    private PlayerInputs _playerInputs;
+    private PlayerAbility _playerAbility;
 
     private void Awake()
     {
@@ -28,6 +30,8 @@ public class CheckpointManager : MonoBehaviour
 
         _animator = GetComponent<Animator>();
         _cc = FindObjectOfType<MyCharacterController>();
+        _playerInputs = FindObjectOfType<PlayerInputs>();
+        _playerAbility = FindObjectOfType<PlayerAbility>();
     }
 
     private void Start()
@@ -54,6 +58,8 @@ public class CheckpointManager : MonoBehaviour
     public void OnFadeOutComplete()
     {
         _animator.SetTrigger("FadeIn");
+        _playerInputs.enabled = true;
+        _playerAbility.enabled = true;
         _cc.Motor.SetPosition(_currentCheckpoint);
     }
 }

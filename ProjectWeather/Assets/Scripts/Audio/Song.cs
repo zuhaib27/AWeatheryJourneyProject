@@ -10,4 +10,10 @@ public class Song
 
     [Range(0f, 1f)]
     public float volume = .75f;
+
+    public AudioMixerGroup mixerGroup;
+    public AudioMixerSnapshot mixerSnapshot;
+
+    [HideInInspector]
+    public AudioSource source;
 }

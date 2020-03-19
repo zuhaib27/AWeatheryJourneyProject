@@ -15,15 +15,29 @@ public class RisingWater : Interactible
 
     private bool _alreadyCalled = false;
     private bool _waterLevelChanged = false;
+    private bool _isRaining = false;
+
+    public AudioSource fillSound;
 
     public void LateUpdate()
     {
+        if (!_isRaining)
+        {
+            if (fillSound)
+                fillSound.Stop();
+        }
+
+        _isRaining = false;
     }
 
     // Increase water level
     public override void OnRain(AbilityEvent e)
     {
         base.OnRain(e);
+        _isRaining = true;
+
+        if (fillSound && !fillSound.isPlaying)
+            fillSound.Play();
 
         float currentY = transform.TransformPoint(0, 0, 0).y;
 

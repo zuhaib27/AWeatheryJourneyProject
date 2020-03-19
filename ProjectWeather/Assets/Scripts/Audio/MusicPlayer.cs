@@ -5,13 +5,8 @@ using UnityEngine.Audio;
 public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer Instance { get; private set; }
-
-    public AudioMixerGroup mixerGroup;
-
-    [Range(0f, 5f)]
-    public float delayBetweenSongs = 1;
-    [Range(0f, 5f)]
-    public float fadeTimeOnSongEnd = 1f;
+    
+    public float fadeTimeBetweenSongs = 1f;
 
     public bool loopOverPlaylist = true;
     public bool switchThemeOnAbilityChange = true;
@@ -19,7 +14,6 @@ public class MusicPlayer : MonoBehaviour
     public Song[] playlist;
 
     private int _currentTrack = 0;
-    private AudioSource _source;
 
     void Awake()
     {
@@ -37,14 +31,22 @@ public class MusicPlayer : MonoBehaviour
     
     void Start()
     {
-        _source = gameObject.AddComponent<AudioSource>();
-        _source.outputAudioMixerGroup = mixerGroup;
+        foreach (Song s in playlist)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+            s.source.volume = s.volume;
+            s.source.loop = true;
+            s.source.outputAudioMixerGroup = s.mixerGroup;
+            s.source.Play();
+        }
+
         PlaySong(_currentTrack);
     }
     
     void Update()
     {
-        if (!_source.isPlaying)
+        if (!playlist[_currentTrack].source.isPlaying)
         {
             if (loopOverPlaylist)
                 _currentTrack = (_currentTrack + 1) % playlist.Length;
@@ -54,21 +56,23 @@ public class MusicPlayer : MonoBehaviour
     }
 
     #region fading songs
-    IEnumerator WaitForFadeOut(float waitSeconds)
-    {
-        yield return new WaitForSecondsRealtime(waitSeconds);
-        StartCoroutine(FadeOutSong(fadeTimeOnSongEnd));
-    }
+    //IEnumerator WaitForFadeOut(float waitSeconds)
+    //{
+    //    yield return new WaitForSecondsRealtime(waitSeconds);
+    //    StartCoroutine(FadeOutSong(fadeTimeOnSongEnd));
+    //}
 
     public IEnumerator FadeOutSong(float fadeTime)
     {
-        while (_source.volume > 0f)
+        Song currentSong = playlist[_currentTrack];
+
+        while (currentSong.source.volume > 0f)
         {
-            _source.volume -= (.03f / fadeTime) * playlist[_currentTrack].volume;
+            currentSong.source.volume -= (.03f / fadeTime) * playlist[_currentTrack].volume;
             yield return new WaitForSecondsRealtime(.03f);
         }
 
-        _source.Stop();
+        currentSong.source.Stop();
     }
     #endregion
 
@@ -76,13 +80,12 @@ public class MusicPlayer : MonoBehaviour
     {
         StopAllCoroutines();
 
-        Song song = playlist[index];
-        _source.clip = song.clip;
-        _source.volume = song.volume;
-        _source.time = 0f;
-        _source.PlayDelayed(delayBetweenSongs);
+        _currentTrack = index;
+        Song song = playlist[_currentTrack];
 
-        StartCoroutine(WaitForFadeOut(_source.clip.length - fadeTimeOnSongEnd));
+        song.mixerSnapshot.TransitionTo(fadeTimeBetweenSongs);
+
+        //StartCoroutine(WaitForFadeOut(song.source.clip.length - fadeTimeOnSongEnd));
     }
 
     public void SkipSong()
@@ -101,12 +104,7 @@ public class MusicPlayer : MonoBehaviour
         if (switchThemeOnAbilityChange)
         {
             _currentTrack = index;
-            float currentTime = _source.time;
-            Song song = playlist[_currentTrack];
-            _source.clip = song.clip;
-            _source.volume = song.volume;
-            _source.time = currentTime;
-            _source.Play();
+            PlaySong(_currentTrack);
         }
     }
 }
