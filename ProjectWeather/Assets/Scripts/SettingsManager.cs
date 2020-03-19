@@ -26,7 +26,8 @@ public class SettingsManager : MonoBehaviour
     public GameSettings Settings { get { return _settings; } }
 
     public AudioMixer masterAudio;
-    
+    public AudioMixer musicAudio;
+
     void Awake()
     {
         #region singleton
@@ -114,6 +115,6 @@ public class SettingsManager : MonoBehaviour
     public void SetMusicVolume(float value)
     {
         _settings.musicVolume = value;
-        masterAudio.SetFloat("MusicVolume", value);
+        musicAudio.SetFloat("MasterVolume", value);
     }
 }
