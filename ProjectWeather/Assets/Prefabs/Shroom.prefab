@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3411151291840339010}
   - component: {fileID: 1714023635252557633}
   - component: {fileID: 1714023635252557638}
+  - component: {fileID: 1000998750694015592}
   m_Layer: 0
   m_Name: ShroomObject
   m_TagString: Untagged
@@ -93,10 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b449a83c6c930864d955a9100c3f00e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightIntensity: 0.5
+  lightIntensity: 3
   idleGlow: 0.25
-  sunMultiplier: 2
-  maxPlayerDistance: 10
+  sunMultiplier: 1.5
+  maxPlayerDistance: 20
   mainParticles: {fileID: 8083155311769116195}
   glowParticles: {fileID: 7250297703517733704}
   cloudParticles: {fileID: 4190055676862210021}
@@ -109,11 +110,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714023635252557632}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.015243023, y: 0.015243023, z: 0.03736137}
   m_Center: {x: 9.313226e-10, y: 2.328306e-10, z: 0.01868068}
+--- !u!64 &1000998750694015592
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714023635252557632}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8999911773206952699, guid: 4aeb7b3f12092ae4596af6cd731e1494, type: 3}
 --- !u!1 &3155543778117946978
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3155543778237294543}
   m_Layer: 0
-  m_Name: Shroom0
+  m_Name: Shroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
