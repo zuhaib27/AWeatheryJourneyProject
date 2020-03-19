@@ -8,6 +8,7 @@ public class PlantPlatformAttach : MonoBehaviour
 
   private void OnTriggerEnter(Collider other)
   {
+        Debug.Log("ontop of bucket of water");
     if(other.gameObject == Player)
     {
       Player.transform.parent = transform;
@@ -21,5 +22,6 @@ public class PlantPlatformAttach : MonoBehaviour
       Player.transform.parent = null;
     }
   }
+ 
 }
 
