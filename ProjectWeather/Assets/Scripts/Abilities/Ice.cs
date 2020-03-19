@@ -25,6 +25,14 @@ public class Ice : Interactible
     bool[,] _grid;
     float[,] _timers;
 
+    [SerializeField]
+    private GameObject _visualPlane;
+
+    private void Awake()
+    {
+        _visualPlane.SetActive(false);
+    }
+
     // Initialize
     void Start()
     {

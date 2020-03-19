@@ -299,6 +299,7 @@ MonoBehaviour:
   hasDuration: 1
   iceDuration: 2
   _rateOfColliderUpdate: 0.1
+  _visualPlane: {fileID: 3218927260572062487}
 --- !u!65 &4731553556336480925
 BoxCollider:
   m_ObjectHideFlags: 0
