@@ -18,6 +18,7 @@ namespace Assets.Platforms.Scripts
 
     private Transform _transform;
 
+
     private void Start()
     {
       _transform = this.transform;
@@ -34,6 +35,7 @@ namespace Assets.Platforms.Scripts
 
       // Update animation
       EvaluateAtTime(Time.time);
+    
 
       // Set our platform's goal pose to the animation's
       goalPosition = _transform.position;
