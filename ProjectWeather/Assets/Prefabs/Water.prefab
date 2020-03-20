@@ -272,6 +272,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ice
       objectReference: {fileID: 0}
+    - target: {fileID: 8728171640484100912, guid: c4a23f3720d1fc14696a2d504b365153,
+        type: 3}
+      propertyPath: resolution
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8996219267561198154, guid: c4a23f3720d1fc14696a2d504b365153,
         type: 3}
       propertyPath: m_LocalPosition.x
