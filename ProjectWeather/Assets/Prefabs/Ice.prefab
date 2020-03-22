@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1959892244102266982}
   - component: {fileID: 1959892244102266983}
   - component: {fileID: 329149933797798611}
+  - component: {fileID: 3212193617939779269}
   m_Layer: 0
-  m_Name: PlayerTrigger
+  m_Name: IceTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,11 +26,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959892244102266977}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.03, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1959892245005457834}
+  m_Children: []
   m_Father: {fileID: 8996219267561198154}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,44 +61,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795d289fb0fb7354dbf83fc841cf3c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1959892245005457835
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1959892245005457834}
-  - component: {fileID: 1959892245005457832}
-  m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1959892245005457834
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959892245005457835}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1959892244102266982}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1959892245005457832
+  _iceGrid: {fileID: 2823143111135410692}
+  _icePlane: {fileID: 6639444131434319994}
+--- !u!65 &3212193617939779269
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959892245005457835}
+  m_GameObject: {fileID: 1959892244102266977}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
@@ -116,8 +87,9 @@ GameObject:
   - component: {fileID: 7823607558212697583}
   - component: {fileID: 749381125300964569}
   - component: {fileID: 5357442325871760008}
+  - component: {fileID: 6639444131434319994}
   m_Layer: 0
-  m_Name: VisualPlane
+  m_Name: IcePlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +124,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3218927260572062487}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -184,6 +156,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &6639444131434319994
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218927260572062487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7488014259235895001
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,11 +179,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8996219267561198154}
-  - component: {fileID: 6197308251309362164}
-  - component: {fileID: 5168522652661374430}
-  - component: {fileID: 7961697248632688104}
-  - component: {fileID: 8728171640484100912}
-  - component: {fileID: 4731553556336480925}
   m_Layer: 0
   m_Name: Ice
   m_TagString: Static Environment
@@ -218,24 +199,59 @@ Transform:
   m_Children:
   - {fileID: 7823607558212697583}
   - {fileID: 1959892244102266982}
+  - {fileID: 5569618299479702871}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6197308251309362164
+--- !u!1 &7726818406741248866
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5569618299479702871}
+  - component: {fileID: 2407986834947929104}
+  - component: {fileID: 4524069378257913693}
+  - component: {fileID: 5176781848847524023}
+  - component: {fileID: 2823143111135410692}
+  m_Layer: 0
+  m_Name: IceGridMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5569618299479702871
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726818406741248866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8996219267561198154}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2407986834947929104
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488014259235895001}
+  m_GameObject: {fileID: 7726818406741248866}
   m_Mesh: {fileID: 0}
---- !u!23 &5168522652661374430
+--- !u!23 &4524069378257913693
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488014259235895001}
+  m_GameObject: {fileID: 7726818406741248866}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -268,27 +284,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &7961697248632688104
-MeshCollider:
+--- !u!65 &5176781848847524023
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488014259235895001}
+  m_GameObject: {fileID: 7726818406741248866}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 0
-  m_Mesh: {fileID: 0}
---- !u!114 &8728171640484100912
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.05, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2823143111135410692
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488014259235895001}
+  m_GameObject: {fileID: 7726818406741248866}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e097aba8622cdbf47a02ff01f6b4fa2b, type: 3}
@@ -298,18 +313,4 @@ MonoBehaviour:
   resolution: 16
   hasDuration: 1
   iceDuration: 2
-  _rateOfColliderUpdate: 0.1
-  _visualPlane: {fileID: 3218927260572062487}
---- !u!65 &4731553556336480925
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7488014259235895001}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.05, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  playerWidth: 0.4
