@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class IceTrigger : MonoBehaviour
 {
-    private Ice _ice;
+    [SerializeField]
+    private IceGridMesh _iceGrid;
+    [SerializeField]
+    private MeshCollider _icePlane;
 
-    private void Awake()
+    private void OnCollisionStay(Collision collision)
     {
-        _ice = GetComponentInParent<Ice>();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Water - Collision");
+
+            bool isOnIce = _iceGrid.Intersects(collision.GetContact(0).point);
+            _icePlane.enabled = isOnIce;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        _ice.UpdateCollider();
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Water - Trigger");
+
+            bool isOnIce = _iceGrid.Intersects(other.gameObject.transform.position);
+            _icePlane.enabled = isOnIce;
+        }
     }
 }

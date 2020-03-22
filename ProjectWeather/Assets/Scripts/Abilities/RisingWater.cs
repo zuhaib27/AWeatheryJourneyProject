@@ -9,8 +9,6 @@ public class RisingWater : Interactible
 
     public Transform maxWaterLevel;
 
-    public Ice iceObject;
-
     public event Action OnReachMaxLevel;
 
     private bool _alreadyCalled = false;
@@ -43,9 +41,6 @@ public class RisingWater : Interactible
 
         if (currentY < maxWaterLevel.position.y)
         {
-            if (iceObject)
-                iceObject.ResetGrid();
-
             //Vector3 newScale = transform.localScale;
             //newScale.y += floodSpeed * Time.deltaTime;
             //transform.localScale = newScale;

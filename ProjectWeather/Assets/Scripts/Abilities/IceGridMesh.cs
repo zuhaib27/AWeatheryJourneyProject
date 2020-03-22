@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
-[RequireComponent(typeof(MeshCollider))]
-public class Ice : Interactible
+public class IceGridMesh : Interactible
 {
     public float radius;
     public int resolution;
@@ -12,33 +11,25 @@ public class Ice : Interactible
     public bool hasDuration;
     public float iceDuration;
 
+    public float playerWidth = 1f;
+
     Vector3[] _vertices;
     Mesh _mesh;
-    MeshCollider _meshCollider;
-
-    public float _rateOfColliderUpdate = .1f;
+    
     bool _refreshMesh = false;
-    bool _refreshCollider = false;
 
     Vector3 _localRadius;
     int[] _gridSize;
     bool[,] _grid;
     float[,] _timers;
 
-    [SerializeField]
-    private GameObject _visualPlane;
-
-    private void Awake()
-    {
-        _visualPlane.SetActive(false);
-    }
+    Vector3 _localPlayerWidth;
 
     // Initialize
     void Start()
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-        _meshCollider = GetComponent<MeshCollider>();
 
         _localRadius = new Vector3
         {
@@ -54,21 +45,17 @@ public class Ice : Interactible
         };
         
         ResetGrid();
-        
+
+        _localPlayerWidth = new Vector3
+        {
+            x = playerWidth / transform.lossyScale.x,
+            y = playerWidth / transform.lossyScale.y,
+            z = playerWidth / transform.lossyScale.z
+        };
+
         StartCoroutine("DoColliderUpdate");
 
         //FillGrid();
-    }
-
-    // Update the collider on intervals
-    IEnumerator DoColliderUpdate()
-    {
-        for (;;)
-        {
-            UpdateCollider();
-
-            yield return new WaitForSeconds(_rateOfColliderUpdate);
-        }
     }
 
     private void LateUpdate()
@@ -100,6 +87,43 @@ public class Ice : Interactible
         CreateVertices();
 
         _refreshMesh = true;
+    }
+
+    public bool Intersects(Vector3 p)
+    {
+        int m = _gridSize[0];
+        int n = _gridSize[1];
+
+        Vector3 localCenter = transform.InverseTransformPoint(p);
+        int startX = (int)(n / 2f + (localCenter.x - _localPlayerWidth.x) * n);
+        int endX = (int)(n / 2f + (localCenter.x + _localPlayerWidth.x) * n);
+        int startY = (int)(m / 2f + (localCenter.z - _localPlayerWidth.z) * m);
+        int endY = (int)(m / 2f + (localCenter.z + _localPlayerWidth.z) * m);
+
+        startX = (startX < 0) ? 0 : startX;
+        endX = (endX > n) ? n : endX;
+        startY = (startY < 0) ? 0 : startY;
+        endY = (endY > m) ? m : endY;
+
+        for (int i = startY; i < endY; i++)
+        {
+            for (int j = startX; j < endX; j++)
+            {
+                Vector3 localPoint = new Vector3(-.5f + (float)j / n, 0f, -.5f + (float)i / m);
+                Vector3 pointFromCenter = localPoint - localCenter;
+
+                if (pointFromCenter.x * pointFromCenter.x / (_localPlayerWidth.x * _localPlayerWidth.x)
+                    + pointFromCenter.z * pointFromCenter.z / (_localPlayerWidth.z * _localPlayerWidth.z) < 1f)
+                {
+                    if (_grid[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     // Create a radius of ice around the given position (or remove it)
@@ -184,18 +208,6 @@ public class Ice : Interactible
         _mesh.RecalculateBounds();
 
         _refreshMesh = false;
-        _refreshCollider = true;
-    }
-
-    // Update mesh collider
-    public void UpdateCollider()
-    {
-        if (!_refreshCollider)
-            return;
-        
-        _meshCollider.sharedMesh = _mesh;
-
-        _refreshCollider = false;
     }
 
     // Update grid state by checking timers
@@ -259,8 +271,16 @@ public class Ice : Interactible
     // Gizmos
     private void OnDrawGizmos()
     {
-        DrawIceGrid();
+        //DrawIceGrid();
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(transform.TransformPoint(0, 0, 0), transform.TransformVector(1, 0f, 1));
+    }
+
+    
 
     // Draw the grid (remember the grid is only initialized on start up)
     void DrawIceGrid()
