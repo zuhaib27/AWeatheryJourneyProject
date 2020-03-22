@@ -17,6 +17,10 @@ namespace AWeatheryJourney
 
     public static class ButtonMappings
     {
+        // Regular movement inputs
+        private const string _vertical = "Vertical";
+        private const string _horizontal = "Horizontal";
+
         private const string _windActivate0 = "DPad Vertical";
         private const string _rainActivate0 = "DPad Vertical";
         private const string _sunActivate0 = "DPad Horizontal";
@@ -31,6 +35,28 @@ namespace AWeatheryJourney
 
         private const KeyCode _jump0 = KeyCode.JoystickButton0;
         private const KeyCode _jump1 = KeyCode.Space;
+
+
+        public static float GetAxisInput(string axis)
+        {
+            float axisInput = 0f;
+
+            if (axis == _vertical)
+            {
+                axisInput = Input.GetAxisRaw(_vertical);
+            }
+            else if (axis == _horizontal)
+            {
+                axisInput = Input.GetAxisRaw(_horizontal);
+            }
+            else
+            {
+                // TODO: Add proper error?
+                Debug.LogError("Must provide proper input axis string: 'Horizontal' or 'Vertical'");
+            }
+
+            return axisInput;
+        }
 
 
         public static bool GetButtonDown(Button button)

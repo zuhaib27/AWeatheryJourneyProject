@@ -20,7 +20,6 @@ public class DieTrigger : MonoBehaviour
                 MoveAxisForward = 0f,
                 MoveAxisRight = 0f,
                 JumpDown = false,
-                SprintHoldDown = false,
             };
 
             // Apply inputs to character
