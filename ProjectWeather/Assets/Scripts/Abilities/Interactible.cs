@@ -33,7 +33,6 @@ public class Interactible : MonoBehaviour
     
     public void OnAbility(Weather ability, AbilityEvent e)
     {
-        Debug.Log("Interactible on ability");
         #region Call Button Stay Method
         switch (ability)
         {

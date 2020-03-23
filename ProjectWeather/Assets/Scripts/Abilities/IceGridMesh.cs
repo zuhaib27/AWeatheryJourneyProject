@@ -53,8 +53,6 @@ public class IceGridMesh : Interactible
             z = playerWidth / transform.lossyScale.z
         };
 
-        StartCoroutine("DoColliderUpdate");
-
         //FillGrid();
     }
 
