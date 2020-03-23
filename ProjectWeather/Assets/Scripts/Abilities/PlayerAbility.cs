@@ -10,7 +10,6 @@ public class PlayerAbility : MonoBehaviour
     public WeatherHUD weatherUI;
 
     [Header("Wind Ability")]
-    public bool AllowWindAbility = true;
     public float ImpulseMagnitude = 20f;
     public float WindPreGroundingGraceTime = 0f;
 

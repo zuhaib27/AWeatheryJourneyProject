@@ -1,5 +1,6 @@
 using UnityEngine;
 using KinematicCharacterController;
+using AWeatheryJourney;
 
 
 namespace Assets.Player.Scripts
@@ -9,7 +10,6 @@ namespace Assets.Player.Scripts
         public float MoveAxisForward;
         public float MoveAxisRight;
         public bool JumpDown;
-        public bool SprintHoldDown;
     }
 
     public class MyCharacterController : MonoBehaviour, ICharacterController
@@ -125,26 +125,26 @@ namespace Assets.Player.Scripts
             }
 
             // Impulse/Wind Ability input
-            if (_ability.AllowWindAbility && _ability.IsAbilityBeingPressed(Weather.Wind))
+            if (_ability.IsAbilityBeingPressed(Weather.Wind))
             {
                 _timeSinceWindAbilityRequested = 0f;
                 _windAbilityRequested = true;
             }
 
             // Sprint input
-            if (AllowSprint)
-            {
-                if (!_sprintActivated && inputs.SprintHoldDown && _moveInputVector.magnitude > 0.1)
-                {
-                    _maxMoveSpeed += SprintSpeedBoost;
-                    _sprintActivated = true;
+            //if (AllowSprint)
+            //{
+            //    if (!_sprintActivated && inputs.SprintHoldDown && _moveInputVector.magnitude > 0.1)
+            //    {
+            //        _maxMoveSpeed += SprintSpeedBoost;
+            //        _sprintActivated = true;
 
-                } else if (!inputs.SprintHoldDown)
-                {
-                    _maxMoveSpeed = MaxStableMoveSpeed;
-                    _sprintActivated = false;
-                }
-            }
+            //    } else if (!inputs.SprintHoldDown)
+            //    {
+            //        _maxMoveSpeed = MaxStableMoveSpeed;
+            //        _sprintActivated = false;
+            //    }
+            //}
         }
 
 
