@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class IceTrigger : MonoBehaviour
 {
-    [SerializeField]
-    private IceGridMesh _iceGrid;
-    [SerializeField]
-    private MeshCollider _icePlane;
+    public IceGridMesh _iceGrid;
+    public MeshCollider _icePlane;
 
     private void OnCollisionStay(Collision collision)
     {

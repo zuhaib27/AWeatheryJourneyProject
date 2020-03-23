@@ -35,7 +35,14 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel(LevelIndex levelIndex)
     {
-        LoadLevel((int)levelIndex);
+        if (levelIndex == LevelIndex.NextLevel)
+        {
+            LoadNextLevel();
+        }
+        else
+        {
+            LoadLevel((int)levelIndex);
+        }
     }
 
     public void LoadNextLevel()
@@ -60,5 +67,5 @@ public enum LevelIndex
     MainMenu,
     Level1,
     Level2,
-    Level3
+    NextLevel
 }

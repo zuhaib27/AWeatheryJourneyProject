@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ExitLevelTrigger : MonoBehaviour
 {
+    public LevelIndex nextLevel = LevelIndex.NextLevel;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            LevelManager.Instance.LoadNextLevel();
+            LevelManager.Instance.LoadLevel(nextLevel);
         }
     }
 }
