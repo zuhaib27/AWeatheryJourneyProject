@@ -76,6 +76,7 @@ public class CheckpointManager : MonoBehaviour
     {
         _cc.Motor.SetPositionAndRotation(_currentCheckpoint.position, _currentCheckpoint.rotation);
 
-        OnSpawn.Invoke();
+        if (OnSpawn != null)
+            OnSpawn.Invoke();
     }
 }
