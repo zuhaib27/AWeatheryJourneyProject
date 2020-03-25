@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Player.Scripts;
 using UnityEngine;
+using System;
 
 public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance { get; private set; }
 
+    public event Action OnSpawn;
 
     // Private variables
     private Vector3 _currentCheckpoint;
@@ -52,14 +54,17 @@ public class CheckpointManager : MonoBehaviour
         _animator.ResetTrigger("FadeOut");
         _animator.ResetTrigger("FadeIn");
         _animator.SetTrigger("FadeOut");
-        StartCoroutine(FindObjectOfType<MusicPlayer>().FadeOutSong(1));
+        MusicPlayer.Instance.FadeOutSong(1);
     }
 
+    // Called by animator when death fade out is completed
     public void OnFadeOutComplete()
     {
         _animator.SetTrigger("FadeIn");
         _playerInputs.enabled = true;
         _playerAbility.enabled = true;
         _cc.Motor.SetPosition(_currentCheckpoint);
+
+        OnSpawn.Invoke();
     }
 }

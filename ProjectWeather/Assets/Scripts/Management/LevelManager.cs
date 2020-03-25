@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     {
         animator.SetTrigger("FadeOut");
         _levelToLoad = levelIndex;
-        StartCoroutine(FindObjectOfType<MusicPlayer>().FadeOutSong(1));
+        MusicPlayer.Instance.FadeOutSong(1);
     }
 
     public void LoadLevel(LevelIndex levelIndex)

@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 public class MusicPlayer : MonoBehaviour
 {
     public static MusicPlayer Instance { get; private set; }
+
+    public AudioMixerGroup mixerGroup;
     
     public float fadeTimeBetweenSongs = 1f;
 
@@ -14,6 +16,7 @@ public class MusicPlayer : MonoBehaviour
     public Song[] playlist;
 
     private int _currentTrack = 0;
+    private float _volume;
 
     void Awake()
     {
@@ -38,10 +41,12 @@ public class MusicPlayer : MonoBehaviour
             s.source.volume = s.volume;
             s.source.loop = true;
             s.source.outputAudioMixerGroup = s.mixerGroup;
-            s.source.Play();
         }
 
-        PlaySong(_currentTrack);
+        if (CheckpointManager.Instance)
+            CheckpointManager.Instance.OnSpawn += OnSpawn;
+
+        OnSpawn();
     }
     
     void Update()
@@ -55,6 +60,23 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    private void OnSpawn()
+    {
+        StopAllCoroutines();
+
+        foreach (Song s in playlist)
+        {
+            s.source.Stop();
+            s.source.Play();
+        }
+
+        _volume = SettingsManager.Instance.Settings.musicVolume;
+        mixerGroup.audioMixer.SetFloat("MasterVolume", _volume);
+
+        _currentTrack = 0;
+        PlaySong(_currentTrack);
+    }
+
     #region fading songs
     //IEnumerator WaitForFadeOut(float waitSeconds)
     //{
@@ -62,24 +84,26 @@ public class MusicPlayer : MonoBehaviour
     //    StartCoroutine(FadeOutSong(fadeTimeOnSongEnd));
     //}
 
-    public IEnumerator FadeOutSong(float fadeTime)
+    public void FadeOutSong(float fadeTime)
     {
-        Song currentSong = playlist[_currentTrack];
+        StartCoroutine(FadeOutSongCoroutine(fadeTime));
+    }
 
-        while (currentSong.source.volume > 0f)
+    private IEnumerator FadeOutSongCoroutine(float fadeTime)
+    {
+        float initialVolumePositive = SettingsManager.Instance.Settings.musicVolume + 80f;
+
+        for (float t = 0f; t < 1f; t += .1f / fadeTime)
         {
-            currentSong.source.volume -= (.03f / fadeTime) * playlist[_currentTrack].volume;
-            yield return new WaitForSecondsRealtime(.03f);
+            _volume = -80f + initialVolumePositive - t * t * initialVolumePositive;
+            mixerGroup.audioMixer.SetFloat("MasterVolume", _volume);
+            yield return new WaitForSecondsRealtime(.1f);
         }
-
-        currentSong.source.Stop();
     }
     #endregion
 
     public void PlaySong(int index)
     {
-        StopAllCoroutines();
-
         _currentTrack = index;
         Song song = playlist[_currentTrack];
 

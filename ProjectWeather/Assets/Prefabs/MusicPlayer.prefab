@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367ed1e9ebc0bb94b817eb792a681c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 24300002, guid: cf8f220f09ee97144b332af8239861f3, type: 2}
   fadeTimeBetweenSongs: 0.3
   loopOverPlaylist: 0
   switchThemeOnAbilityChange: 1
