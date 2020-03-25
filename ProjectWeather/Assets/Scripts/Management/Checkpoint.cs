@@ -7,13 +7,13 @@ public class Checkpoint : MonoBehaviour
     [Header("Variables")]
     public float SecondsDelayBeforeDestroy = 0.6f;
 
-
+    public Transform respawnPoint;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            CheckpointManager.Instance.SetCheckpoint(other.transform.position);
+            CheckpointManager.Instance.SetCheckpoint(respawnPoint);
             StartCoroutine(DelayBeforeDestroyEnumerator());
         }
     }

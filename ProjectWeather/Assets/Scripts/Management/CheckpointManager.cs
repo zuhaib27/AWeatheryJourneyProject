@@ -10,8 +10,11 @@ public class CheckpointManager : MonoBehaviour
 
     public event Action OnSpawn;
 
+    public Transform startPoint;
+    public Transform tempStartPoint;
+
     // Private variables
-    private Vector3 _currentCheckpoint;
+    private Transform _currentCheckpoint;
     private Animator _animator;
     private MyCharacterController _cc;
     private PlayerInputs _playerInputs;
@@ -38,15 +41,17 @@ public class CheckpointManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialize Checkpoint0 to the level's spawn point
-        _currentCheckpoint = _cc.GetCharacterPosition();
-        _currentCheckpoint.y += 0.5f;
+        if (tempStartPoint)
+            _currentCheckpoint = tempStartPoint;
+        else
+            _currentCheckpoint = startPoint;
+
+        SpawnPlayer();
     }
 
-    public void SetCheckpoint(Vector3 pos)
+    public void SetCheckpoint(Transform checkpoint)
     {
-        _currentCheckpoint = pos;
-        _currentCheckpoint.y += 0.5f;
+        _currentCheckpoint = checkpoint;
     }
 
     public void LoadCheckpoint()
@@ -63,7 +68,13 @@ public class CheckpointManager : MonoBehaviour
         _animator.SetTrigger("FadeIn");
         _playerInputs.enabled = true;
         _playerAbility.enabled = true;
-        _cc.Motor.SetPosition(_currentCheckpoint);
+
+        SpawnPlayer();
+    }
+
+    private void SpawnPlayer()
+    {
+        _cc.Motor.SetPositionAndRotation(_currentCheckpoint.position, _currentCheckpoint.rotation);
 
         OnSpawn.Invoke();
     }
