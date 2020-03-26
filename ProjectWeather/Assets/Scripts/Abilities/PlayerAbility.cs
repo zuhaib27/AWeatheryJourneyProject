@@ -7,8 +7,6 @@ public class PlayerAbility : MonoBehaviour
 {
     public float powerRadius = 3f;
 
-    public WeatherHUD weatherUI;
-
     [Header("Wind Ability")]
     public float ImpulseMagnitude = 20f;
     public float WindPreGroundingGraceTime = 0f;
@@ -26,6 +24,8 @@ public class PlayerAbility : MonoBehaviour
     private SpellParticleEffects _spellEffects;
     private PlayerSounds _playerSounds;
 
+    private WeatherHUD _weatherHUD;
+
     private void Awake()
     {
         _spellEffects = GetComponent<SpellParticleEffects>();
@@ -35,12 +35,21 @@ public class PlayerAbility : MonoBehaviour
     private void Start()
     {
         #region dependency checks
-        if (!weatherUI)
-            Debug.LogWarning("No WeatherUI found in scene.");
+        _weatherHUD = FindObjectOfType<WeatherHUD>();
+        if (!_weatherHUD)
+            Debug.LogWarning("No WeatherHUD found in scene.");
 
         if (!MusicPlayer.Instance)
             Debug.LogWarning("No MusicPlayer found in scene.");
         #endregion
+
+        if (CheckpointManager.Instance)
+            CheckpointManager.Instance.OnSpawn += OnSpawn;
+    }
+
+    private void OnSpawn()
+    {
+        ActivateAbility(Weather.None);
     }
     
     void Update()
@@ -117,8 +126,8 @@ public class PlayerAbility : MonoBehaviour
     public void ActivateAbility(Weather ability)
     {
         _currentAbility = ability;
-        if (weatherUI)
-            weatherUI.SetUIIcon(ability);
+        if (_weatherHUD)
+            _weatherHUD.SetUIIcon(ability);
         if (MusicPlayer.Instance)
             MusicPlayer.Instance.SwitchSong((int)ability);
 

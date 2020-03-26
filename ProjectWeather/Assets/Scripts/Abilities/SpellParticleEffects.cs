@@ -51,11 +51,16 @@ public class SpellParticleEffects : MonoBehaviour
             ClearParticleEffects();
         }
 
-        _state = State.Activate;
+        if (ability == Weather.None)
+            _state = State.None;
+        else
+            _state = State.Activate;
+
         _currentWeather = ability;
         SetParticleEffect(ability);
 
-        PlayParticleEffect();
+        if (_state != State.None)
+            PlayParticleEffect();
     }
 
     public void UseEffect(Weather ability)

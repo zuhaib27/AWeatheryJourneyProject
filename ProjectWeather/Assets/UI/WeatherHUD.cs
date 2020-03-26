@@ -71,6 +71,11 @@ public class WeatherHUD : MonoBehaviour
                 frostPanel.SetAsActivePanel(scaleFactor);
                 _activePanel = frostPanel;
                 break;
+            default:
+                if (_activePanel)
+                    _activePanel.SetAsInActivePanel();
+                _activePanel = null;
+                break;
         }
     }
 }
