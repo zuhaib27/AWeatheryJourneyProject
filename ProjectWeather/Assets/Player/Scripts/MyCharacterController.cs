@@ -1,6 +1,7 @@
 using UnityEngine;
 using KinematicCharacterController;
 using AWeatheryJourney;
+using Cinemachine;
 
 
 namespace Assets.Player.Scripts
@@ -67,6 +68,7 @@ namespace Assets.Player.Scripts
         private float _moveSpeed;
         private float _turnSpeedMultiplier;
         private Vector3 _lookDirection;           // Character look direction
+        private CinemachineFreeLook _freeLookCam;
         private Camera _mainCamera;
         private Quaternion _currentRotation;
 
@@ -75,6 +77,7 @@ namespace Assets.Player.Scripts
         {
             _ability = GetComponent<PlayerAbility>();
             _mainCamera = Camera.main;
+            _freeLookCam = FindObjectOfType<CinemachineFreeLook>();
         }
 
         private void Start()
