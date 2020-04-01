@@ -32,6 +32,8 @@ namespace AWeatheryJourney
 
         private const KeyCode _abilityUse0 = KeyCode.JoystickButton1;
         private const KeyCode _abilityUse1 = KeyCode.F;
+        private const KeyCode _abilityUse2 = KeyCode.JoystickButton5;
+
 
         private const KeyCode _jump0 = KeyCode.JoystickButton0;
         private const KeyCode _jump1 = KeyCode.Space;
@@ -78,7 +80,7 @@ namespace AWeatheryJourney
                     result = Input.GetAxisRaw(_frostActivate0) > 0 || Input.GetKeyDown(_frostActivate1);
                     break;
                 case Button.AbilityUse:
-                    result = Input.GetKeyDown(_abilityUse0) || Input.GetKeyDown(_abilityUse1);
+                    result = Input.GetKeyDown(_abilityUse0) || Input.GetKeyDown(_abilityUse1) || Input.GetKeyDown(_abilityUse2);
                     break;
                 case Button.Jump:
                     result = Input.GetKeyDown(_jump0) || Input.GetKeyDown(_jump1);
@@ -110,7 +112,7 @@ namespace AWeatheryJourney
                     result = Input.GetAxisRaw(_frostActivate0) > 0 || Input.GetKey(_frostActivate1);
                     break;
                 case Button.AbilityUse:
-                    result = Input.GetKey(_abilityUse0) || Input.GetKey(_abilityUse1);
+                    result = Input.GetKey(_abilityUse0) || Input.GetKey(_abilityUse1) || Input.GetKey(_abilityUse2);
                     break;
                 case Button.Jump:
                     result = Input.GetKey(_jump0) || Input.GetKey(_jump1);
@@ -142,7 +144,7 @@ namespace AWeatheryJourney
                     result = Input.GetAxisRaw(_frostActivate0) > 0 || Input.GetKeyUp(_frostActivate1);
                     break;
                 case Button.AbilityUse:
-                    result = Input.GetKeyUp(_abilityUse0) || Input.GetKeyUp(_abilityUse1);
+                    result = Input.GetKeyUp(_abilityUse0) || Input.GetKeyUp(_abilityUse1) || Input.GetKeyUp(_abilityUse2);
                     break;
                 case Button.Jump:
                     result = Input.GetKeyUp(_jump0) || Input.GetKeyUp(_jump1);
