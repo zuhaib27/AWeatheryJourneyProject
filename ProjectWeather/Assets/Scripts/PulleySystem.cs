@@ -9,17 +9,27 @@ public class PulleySystem : MonoBehaviour
     public Transform minBucketPos;
     public float verticalSpeed = 5f;
     public bool enableRain;
+
+    private int _count;
     // Start is called before the first frame update
     void Start()
     {
         enableRain = false;
+        _count = 0;
     }
 
     private void Update()
     {
-        if (enableRain)
+        if (enableRain )
         {
             RaiseLowerBuckets();
+            _count++;
+            if (_count > 3)
+            {
+                _count = 0; //temp fix
+                enableRain = false;
+            }
+               
         }
     }
 
