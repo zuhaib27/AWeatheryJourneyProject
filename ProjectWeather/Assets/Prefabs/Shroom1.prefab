@@ -13,6 +13,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8792586484180348971, guid: 4aeb7b3f12092ae4596af6cd731e1494,
         type: 3}
+    - target: {fileID: 3155543778117946976, guid: 66aab4ed3728c464ab9dc7c3a88388cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155543778117946978, guid: 66aab4ed3728c464ab9dc7c3a88388cc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3155543778237294542, guid: 66aab4ed3728c464ab9dc7c3a88388cc,
         type: 3}
       propertyPath: m_Name
