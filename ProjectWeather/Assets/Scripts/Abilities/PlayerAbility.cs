@@ -52,7 +52,7 @@ public class PlayerAbility : MonoBehaviour
         ActivateAbility(Weather.None);
     }
     
-    void Update()
+    private void Update()
     {
         // Update active ability
         if (isWindEnabled && ButtonMappings.GetButtonDown(Button.WindActivate))
