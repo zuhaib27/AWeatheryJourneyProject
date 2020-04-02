@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Player.Scripts;
-using AWeatheryJourney;
+//using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Menu : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class Menu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ButtonMappings.GetButtonDown(AWeatheryJourney.Button.Back))
+        if (AWeatheryJourney.ButtonMappings.GetButtonDown(AWeatheryJourney.Button.Back))
         {
             GoBack();
         }
@@ -52,8 +53,9 @@ public class Menu : MonoBehaviour
 
     private void OnEnable()
     {
-        _eventSystem = UIManager.Instance.GetEventSystem();
+        _eventSystem = EventSystem.current;// UIManager.Instance.GetEventSystem();
         _eventSystem.SetSelectedGameObject(defaultButton);
+
 
         if (atlasPosition != null)
         {

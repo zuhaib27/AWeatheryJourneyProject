@@ -54,6 +54,7 @@ public class UIManager : MonoBehaviour
             pauseSession.gameObject.SetActive(false);
             inGameHUD.gameObject.SetActive(false);
             _canPause = false;
+            _gameIsPaused = true;
             menuMushrooms.SetActive(true);
             menuReplacedMushrooms.SetActive(false);
         }
@@ -66,8 +67,13 @@ public class UIManager : MonoBehaviour
             pauseSession.gameObject.SetActive(false);
             inGameHUD.gameObject.SetActive(true);
             _canPause = true;
-            menuMushrooms.SetActive(false);
-            menuReplacedMushrooms.SetActive(true);
+            _gameIsPaused = false;
+
+            if (menuMushrooms != null)
+            {
+                menuMushrooms.SetActive(false);
+                menuReplacedMushrooms.SetActive(true);
+            }
         }
     }
 
@@ -83,7 +89,15 @@ public class UIManager : MonoBehaviour
             {
                 PauseGame();
             }
+        }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.visible = true;
+        }
+        if (!_gameIsPaused && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Cursor.visible = false;
         }
     }
 

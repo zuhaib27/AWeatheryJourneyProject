@@ -37,10 +37,10 @@ public class PlayerAbility : MonoBehaviour
         #region dependency checks
         _weatherHUD = FindObjectOfType<WeatherHUD>();
         if (!_weatherHUD)
-            //Debug.LogWarning("No WeatherHUD found in scene.");
+            Debug.LogWarning("No WeatherHUD found in scene.");
 
         if (!MusicPlayer.Instance)
-            //Debug.LogWarning("No MusicPlayer found in scene.");
+            Debug.LogWarning("No MusicPlayer found in scene.");
         #endregion
 
         if (CheckpointManager.Instance)
