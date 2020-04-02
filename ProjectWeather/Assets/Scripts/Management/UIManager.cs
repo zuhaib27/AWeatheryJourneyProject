@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     public GameObject menuReplacedMushrooms;
 
     private static bool _gameIsPaused = false;
-    public bool _canPause = false;
+    private bool _canPause = false;
 
     #region singleton
     public static UIManager Instance { get; private set; }
