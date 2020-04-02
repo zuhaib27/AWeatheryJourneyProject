@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6798565115352721437}
   - component: {fileID: 6798565115352721436}
+  - component: {fileID: 3795621786307957287}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -44,11 +45,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startInMenu: 1
-  pauseScreen: {fileID: 0}
-  mainScreen: {fileID: 0}
+  pauseSession: {fileID: 0}
+  mainSession: {fileID: 0}
   inGameHUD: {fileID: 0}
   eventSystem: {fileID: 0}
   player: {fileID: 0}
   playerCamera: {fileID: 0}
   menuCamera: {fileID: 0}
-  _canPause: 0
+  menuMushrooms: {fileID: 0}
+  menuReplacedMushrooms: {fileID: 0}
+--- !u!114 &3795621786307957287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6798565115352721439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d7f72d6fdc07ee458277828b97c0f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
