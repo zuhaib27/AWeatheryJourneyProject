@@ -64,8 +64,8 @@ public class LevelManager : MonoBehaviour
 // Valid levels to load
 public enum LevelIndex
 {
-    MainMenu,
     Level1,
-    Level2,
-    NextLevel
+    TutorialLevel,
+    NextLevel,
+    MainMenu = Level1
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Player.Scripts;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class CheckpointManager : MonoBehaviour
     private MyCharacterController _cc;
     private PlayerInputs _playerInputs;
     private PlayerAbility _playerAbility;
+
+    private bool _isBeginningOfLevel = false;
 
     private void Awake()
     {
@@ -46,12 +49,26 @@ public class CheckpointManager : MonoBehaviour
         else
             _currentCheckpoint = startPoint;
 
-        SpawnPlayer();
+        if (SceneManager.GetActiveScene().buildIndex != (int)LevelIndex.MainMenu)
+        {
+            SpawnPlayer();
+        }
     }
 
     public void SetCheckpoint(Transform checkpoint)
     {
         _currentCheckpoint = checkpoint;
+    }
+
+    public void LoadBeginningOfLevel()
+    {
+        if (tempStartPoint)
+            _currentCheckpoint = tempStartPoint;
+        else
+            _currentCheckpoint = startPoint;
+
+        _isBeginningOfLevel = true;
+        LoadCheckpoint();
     }
 
     public void LoadCheckpoint()
@@ -70,6 +87,12 @@ public class CheckpointManager : MonoBehaviour
         _playerAbility.enabled = true;
 
         SpawnPlayer();
+
+        if (_isBeginningOfLevel)
+        {
+            FindObjectOfType<SceneSequenceL01>().PlaySequence();
+            _isBeginningOfLevel = false;
+        }
     }
 
     private void SpawnPlayer()

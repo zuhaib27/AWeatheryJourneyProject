@@ -21,8 +21,8 @@ public class Options: MonoBehaviour
         }
         #endregion
 
-        invertCameraY.isOn = SettingsManager.Instance.Settings.playerSettings.invertCameraY;
-        cameraSensitivitySlider.value = SettingsManager.Instance.Settings.playerSettings.cameraSensitivity;
+        //invertCameraY.isOn = SettingsManager.Instance.Settings.playerSettings.invertCameraY;
+        //cameraSensitivitySlider.value = SettingsManager.Instance.Settings.playerSettings.cameraSensitivity;
 
         gameVolumeSlider.value = SettingsManager.Instance.Settings.sfxVolume;
         musicVolumeSlider.value = SettingsManager.Instance.Settings.musicVolume;

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6798565115352721437}
   - component: {fileID: 6798565115352721436}
-  - component: {fileID: 824844924008180780}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -44,20 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c52712b6d91c8ec448e371fc4a5c6c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPause: 0
-  pauseMenu: {fileID: 0}
-  player: {fileID: 0}
+  startInMenu: 1
+  pauseScreen: {fileID: 0}
+  mainScreen: {fileID: 0}
+  inGameHUD: {fileID: 0}
   eventSystem: {fileID: 0}
-  selectedObjectOnPause: {fileID: 0}
---- !u!114 &824844924008180780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6798565115352721439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d7f72d6fdc07ee458277828b97c0f7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  playerCamera: {fileID: 0}
+  menuCamera: {fileID: 0}
+  _canPause: 0

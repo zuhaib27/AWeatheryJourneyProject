@@ -13,6 +13,9 @@ namespace AWeatheryJourney
         FrostActivate,
         AbilityUse,
         Jump,
+        // UI inputs
+        Pause,
+        Back,
     }
 
     public static class ButtonMappings
@@ -37,6 +40,10 @@ namespace AWeatheryJourney
 
         private const KeyCode _jump0 = KeyCode.JoystickButton0;
         private const KeyCode _jump1 = KeyCode.Space;
+
+        // UI inputs
+        private const string _pause = "Pause";
+        private const string _back = "Back";
 
 
         public static float GetAxisInput(string axis)
@@ -85,6 +92,12 @@ namespace AWeatheryJourney
                 case Button.Jump:
                     result = Input.GetKeyDown(_jump0) || Input.GetKeyDown(_jump1);
                     break;
+                case Button.Pause:
+                    result = Input.GetButtonDown(_pause);
+                    break;
+                case Button.Back:
+                    result = Input.GetButtonDown(_back);
+                    break;
                 default:
                     result =  false;
                     break;
@@ -117,6 +130,12 @@ namespace AWeatheryJourney
                 case Button.Jump:
                     result = Input.GetKey(_jump0) || Input.GetKey(_jump1);
                     break;
+                case Button.Pause:
+                    result = Input.GetButton(_pause);
+                    break;
+                case Button.Back:
+                    result = Input.GetButton(_back);
+                    break;
                 default:
                     result = false;
                     break;
@@ -148,6 +167,12 @@ namespace AWeatheryJourney
                     break;
                 case Button.Jump:
                     result = Input.GetKeyUp(_jump0) || Input.GetKeyUp(_jump1);
+                    break;
+                case Button.Pause:
+                    result = Input.GetButtonUp(_pause);
+                    break;
+                case Button.Back:
+                    result = Input.GetButtonUp(_back);
                     break;
                 default:
                     result = false;

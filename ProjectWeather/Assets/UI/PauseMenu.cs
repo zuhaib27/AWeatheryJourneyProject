@@ -11,10 +11,12 @@ public class PauseMenu : Menu
         LevelManager.Instance.LoadLevel(LevelIndex.MainMenu);
     }
 
-    public void RestartLevel()
+    public void LoadLastCheckpoint()
     {
         Time.timeScale = 1f;
-        LevelManager.Instance.ReloadLevel();
+        //LevelManager.Instance.ReloadLevel();
+        CheckpointManager.Instance.LoadCheckpoint();
+        UIManager.Instance.ResumeGame();
     }
 
     override public void GoBack()

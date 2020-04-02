@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AWeatheryJourney;
 
 public class SceneSequenceL01 : MonoBehaviour
 {
@@ -12,10 +13,17 @@ public class SceneSequenceL01 : MonoBehaviour
     public GameObject MainCamera;
     public GameObject PlayerControls;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlaySequence()
     {
         StartCoroutine(LevelSequence());
+    }
+
+    private void Update()
+    {
+        if (ButtonMappings.GetButtonDown(Button.Jump))
+        {
+            StopSequence();
+        }
     }
 
     IEnumerator LevelSequence()
@@ -40,11 +48,17 @@ public class SceneSequenceL01 : MonoBehaviour
 
         CameraSunPuzzle.SetActive(false);
         CameraWaterwheel.SetActive(true);
-        yield return new WaitForSeconds(2.9f);
+        yield return new WaitForSeconds(4.9f);
+        StopSequence();
+    }
 
+    private void StopSequence()
+    {
+        StopAllCoroutines();
         PlayerControls.SetActive(true);
         MainCamera.SetActive(true);
+        CameraWaterfall.SetActive(false);
+        CameraSunPuzzle.SetActive(false);
         CameraWaterwheel.SetActive(false);
-
     }
 }
