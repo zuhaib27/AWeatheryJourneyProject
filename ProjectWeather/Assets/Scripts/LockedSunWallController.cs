@@ -10,10 +10,7 @@ public class LockedSunWallController : MonoBehaviour
     public GameObject MainCamera;
 
     public static LockedSunWallController instance;
-    public bool sunKey1 = false;
-    public bool sunKey2 = false;
-    public bool sunKey3 = false;
-    public bool sunKey4 = false;
+    public bool[] sunKey;
 
     private bool _doorOpened = false;
     private float _originalypos;
@@ -34,7 +31,7 @@ public class LockedSunWallController : MonoBehaviour
     void Update()
     {
         //play with different bools to set combinations.
-        if(sunKey1 && sunKey2 && sunKey3 && sunKey4 && !_doorOpened)
+        if(sunKey[0] && sunKey[1] && sunKey[2] && sunKey[3] && !_doorOpened)
         {
             //shake camera, maybe play sound effect?
             if (_startAnimation)
@@ -43,7 +40,7 @@ public class LockedSunWallController : MonoBehaviour
                 StartCoroutine(OpenDoorSequence());
                 _startAnimation = false; 
             }
-            Door.transform.Translate(Vector3.up * Time.deltaTime * 10 * .5f);
+            Door.transform.Translate(Vector3.up * Time.deltaTime * 10 * .25f);
         }
         if (Door.transform.position.y > (_originalypos + 10))
         {
@@ -57,7 +54,7 @@ public class LockedSunWallController : MonoBehaviour
         CameraDoor.SetActive(true);
         MainCamera.SetActive(false);
         _audioDoor.Play(0);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(5f);
         MainCamera.SetActive(true);
         CameraDoor.SetActive(false);
         
