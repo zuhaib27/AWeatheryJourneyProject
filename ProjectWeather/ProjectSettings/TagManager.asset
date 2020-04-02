@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Static Environment
   - SunablePlant
+  - Collectible
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - 
   - Post Processing
   - Spell Effects
-  - 
+  - Ignore Realtime Dir Light
   - 
   - 
   - 

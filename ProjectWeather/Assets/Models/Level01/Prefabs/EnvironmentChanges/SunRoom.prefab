@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 2254688704920402812}
   - component: {fileID: 7379396097753536396}
   - component: {fileID: 7060272645927124194}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1516169246287687599
 Transform:
@@ -128,7 +128,6 @@ Transform:
   - {fileID: 570914501988785142}
   - {fileID: 4701986601392949282}
   - {fileID: 4701986601417939515}
-  - {fileID: 8585627184209202808}
   m_Father: {fileID: 4701986600153700627}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -220,12 +219,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1729996744960561551}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: lf_Ramp (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1729996744960561551
 Transform:
@@ -251,12 +250,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 570914501988785142}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: rt_Ramp (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &570914501988785142
 Transform:
@@ -332,6 +331,7 @@ Transform:
   m_LocalScale: {x: 0.90160006, y: 0.90160006, z: 0.90160006}
   m_Children:
   - {fileID: 5132940214606982040}
+  - {fileID: 9009826279694546966}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -348,12 +348,12 @@ GameObject:
   - component: {fileID: 4701986601392949280}
   - component: {fileID: 4701986601392949295}
   - component: {fileID: 4701986601392949294}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SunRamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4701986601392949282
 Transform:
@@ -735,12 +735,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9035448092481764503}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SunRoom (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &9035448092481764503
 Transform:
@@ -757,6 +757,37 @@ Transform:
   m_Father: {fileID: 5132940214606982040}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5666575398656524350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9009826279694546966}
+  m_Layer: 0
+  m_Name: Interactibles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9009826279694546966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5666575398656524350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8585627184209202808}
+  m_Father: {fileID: 4701986600153700627}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7042320031220698232
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,12 +800,12 @@ GameObject:
   - component: {fileID: 7332516548335082525}
   - component: {fileID: 2080933760529002733}
   - component: {fileID: 4798303345215802562}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8035147930088982734
 Transform:
@@ -988,7 +1019,6 @@ GameObject:
   - component: {fileID: 8585627182204050687}
   - component: {fileID: 8585627182204050680}
   - component: {fileID: 8585627182204050682}
-  - component: {fileID: 8585627182204050683}
   m_Layer: 0
   m_Name: Icosphere
   m_TagString: Untagged
@@ -1071,19 +1101,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: a3d2be866ec97f44b9e7e82baf194460, type: 3}
---- !u!114 &8585627182204050683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8585627182204050661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b65dfa4ff963e84cb7b99b9fd505186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyLight: {fileID: 0}
 --- !u!1 &8585627182337365404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,7 +1246,6 @@ GameObject:
   - component: {fileID: 8585627182529385901}
   - component: {fileID: 8585627182529385888}
   - component: {fileID: 8585627182529385889}
-  - component: {fileID: 8585627182529385890}
   - component: {fileID: 8585627182529385900}
   m_Layer: 0
   m_Name: Icosphere
@@ -1299,19 +1315,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &8585627182529385890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8585627182529385902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f0f076167447314e87c19bcde740539, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyLight: {fileID: 0}
 --- !u!64 &8585627182529385900
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1684,10 +1687,7 @@ MonoBehaviour:
   Door: {fileID: 8585627182683142409}
   CameraDoor: {fileID: 0}
   MainCamera: {fileID: 0}
-  sunKey1: 0
-  sunKey2: 0
-  sunKey3: 0
-  sunKey4: 1
+  sunKey: 
 --- !u!1 &8585627182849344229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,7 +2103,6 @@ GameObject:
   - component: {fileID: 8585627183805480973}
   - component: {fileID: 8585627183805480974}
   - component: {fileID: 8585627183805480968}
-  - component: {fileID: 8585627183805480969}
   m_Layer: 0
   m_Name: Icosphere
   m_TagString: Untagged
@@ -2186,19 +2185,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 289301614986012343, guid: a3d2be866ec97f44b9e7e82baf194460, type: 3}
---- !u!114 &8585627183805480969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8585627183805480971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88b046c47ac0dce41a18b1a3e361f99b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyLight: {fileID: 0}
 --- !u!1 &8585627183875079815
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,7 +2850,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a094de1ac238f244abbdf359af87c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyIndex: 0
   keyLight: {fileID: 8585627184100607061}
+  audioStartSeconds: 0
 --- !u!1 &8585627184109471153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,7 +3004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585627184209202809}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 138.94002, y: 6.1400003, z: 26.770002}
+  m_LocalPosition: {x: 138.94002, y: 6.140001, z: 26.770002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8585627182419086420}
@@ -3024,8 +3012,8 @@ Transform:
   - {fileID: 8585627182427193494}
   - {fileID: 8585627182337365395}
   - {fileID: 8585627182498774564}
-  m_Father: {fileID: 5132940214606982040}
-  m_RootOrder: 7
+  m_Father: {fileID: 9009826279694546966}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9103250017629160961
 GameObject:
@@ -3039,12 +3027,12 @@ GameObject:
   - component: {fileID: 8803465912602744420}
   - component: {fileID: 220275418638269076}
   - component: {fileID: 332512537797677562}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8101114885979931319
 Transform:

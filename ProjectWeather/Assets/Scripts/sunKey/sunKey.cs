@@ -9,7 +9,7 @@ public class sunKey : Interactible
 
     public float audioStartSeconds = 0f;
 
-    public override void OnSunDown(AbilityEvent e)
+    public override void OnSun(AbilityEvent e)
     {
         base.OnSun(e);
 
