@@ -32,7 +32,7 @@ public class PlayerAbility : MonoBehaviour
         _playerSounds = GetComponent<PlayerSounds>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         #region dependency checks
         _weatherHUD = FindObjectOfType<WeatherHUD>();

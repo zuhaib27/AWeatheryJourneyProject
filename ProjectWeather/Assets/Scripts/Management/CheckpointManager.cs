@@ -20,6 +20,8 @@ public class CheckpointManager : MonoBehaviour
     private PlayerInputs _playerInputs;
     private PlayerAbility _playerAbility;
 
+    private bool _isBeginningOfLevel = false;
+
     private void Awake()
     {
         #region singleton
@@ -54,6 +56,17 @@ public class CheckpointManager : MonoBehaviour
         _currentCheckpoint = checkpoint;
     }
 
+    public void LoadBeginningOfLevel()
+    {
+        if (tempStartPoint)
+            _currentCheckpoint = tempStartPoint;
+        else
+            _currentCheckpoint = startPoint;
+
+        _isBeginningOfLevel = true;
+        LoadCheckpoint();
+    }
+
     public void LoadCheckpoint()
     {
         _animator.ResetTrigger("FadeOut");
@@ -70,6 +83,12 @@ public class CheckpointManager : MonoBehaviour
         _playerAbility.enabled = true;
 
         SpawnPlayer();
+
+        if (_isBeginningOfLevel)
+        {
+            FindObjectOfType<SceneSequenceL01>().PlaySequence();
+            _isBeginningOfLevel = false;
+        }
     }
 
     private void SpawnPlayer()
