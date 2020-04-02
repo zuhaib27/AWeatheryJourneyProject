@@ -48,7 +48,7 @@ public class SceneSequenceL01 : MonoBehaviour
 
         CameraSunPuzzle.SetActive(false);
         CameraWaterwheel.SetActive(true);
-        yield return new WaitForSeconds(4.9f);
+        yield return new WaitForSeconds(2.5f);
         StopSequence();
     }
 
