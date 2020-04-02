@@ -19,7 +19,7 @@ public class sunKeyOnSun2 : Interactible
 
     public override void OnSunDown(AbilityEvent e)
     {
-        base.OnSunDown(e);
+        base.OnSun(e);
         Debug.Log("activated key1");
         keyLight.enabled = true;
         LockedSunWallController.instance.sunKey2 = true;
