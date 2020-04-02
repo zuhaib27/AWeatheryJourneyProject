@@ -57,6 +57,8 @@ public class SceneSequenceL01 : MonoBehaviour
         StopAllCoroutines();
         PlayerControls.SetActive(true);
         MainCamera.SetActive(true);
+        CameraVertPuzzle.SetActive(false);
+        CameraWaterRise.SetActive(false);
         CameraWaterfall.SetActive(false);
         CameraSunPuzzle.SetActive(false);
         CameraWaterwheel.SetActive(false);
