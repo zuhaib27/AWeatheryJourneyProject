@@ -27,6 +27,7 @@ public class LockedSunWallController : MonoBehaviour
         instance = this;
         _originalypos = Door.transform.position.y;
         _audioDoor = GetComponentInChildren<AudioSource>();
+        CameraDoor.SetActive(false);
     }
 
     // Update is called once per frame
