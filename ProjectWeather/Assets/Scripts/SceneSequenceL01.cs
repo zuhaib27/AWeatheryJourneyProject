@@ -41,6 +41,7 @@ public class SceneSequenceL01 : MonoBehaviour
 
     private void StopSequence()
     {
+        StopAllCoroutines();
         PlayerControls.SetActive(true);
         MainCamera.SetActive(true);
         CameraWaterfall.SetActive(false);

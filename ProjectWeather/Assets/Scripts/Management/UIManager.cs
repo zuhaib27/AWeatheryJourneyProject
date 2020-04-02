@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
     public GameObject playerCamera;
     public GameObject menuCamera;
 
+    public GameObject menuMushrooms;
+    public GameObject menuReplacedMushrooms;
+
     private static bool _gameIsPaused = false;
     public bool _canPause = false;
 
@@ -51,6 +54,8 @@ public class UIManager : MonoBehaviour
             pauseSession.gameObject.SetActive(false);
             inGameHUD.gameObject.SetActive(false);
             _canPause = false;
+            menuMushrooms.SetActive(true);
+            menuReplacedMushrooms.SetActive(false);
         }
         else
         {
@@ -61,6 +66,8 @@ public class UIManager : MonoBehaviour
             pauseSession.gameObject.SetActive(false);
             inGameHUD.gameObject.SetActive(true);
             _canPause = true;
+            menuMushrooms.SetActive(false);
+            menuReplacedMushrooms.SetActive(true);
         }
     }
 
@@ -100,6 +107,8 @@ public class UIManager : MonoBehaviour
         inGameHUD.gameObject.SetActive(true);
         mainSession.gameObject.SetActive(false);
         _canPause = true;
+        menuMushrooms.SetActive(false);
+        menuReplacedMushrooms.SetActive(true);
 
         ResumeGame();
     }

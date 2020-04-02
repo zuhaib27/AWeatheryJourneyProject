@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Player.Scripts;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -48,7 +49,10 @@ public class CheckpointManager : MonoBehaviour
         else
             _currentCheckpoint = startPoint;
 
-        SpawnPlayer();
+        if (SceneManager.GetActiveScene().buildIndex != (int)LevelIndex.MainMenu)
+        {
+            SpawnPlayer();
+        }
     }
 
     public void SetCheckpoint(Transform checkpoint)
