@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AWeatheryJourney;
 
 public class SceneSequence : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class SceneSequence : MonoBehaviour
     {
         StartCoroutine(LevelSequence());
     }
+    
+    private void Update()
+    {
+        if (ButtonMappings.GetButtonDown(Button.Jump))
+        {
+            StopSequence();
+        }
+    }
 
     IEnumerator LevelSequence()
     {
@@ -20,10 +29,17 @@ public class SceneSequence : MonoBehaviour
         CameraLevel.enabled = true;
         MainCamera.enabled = false;
         yield return new WaitForSeconds(6f);
-        PlayerControls.SetActive(true);
-        MainCamera.enabled = true;
-        CameraLevel.enabled = false;
 
+        StopSequence();
+
+    }
+
+    private void StopSequence()
+    {
+        StopAllCoroutines();
+        CameraLevel.enabled = false;
+        MainCamera.enabled = true;
+        PlayerControls.SetActive(true);
     }
 }
 
